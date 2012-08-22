@@ -1,6 +1,6 @@
 
 define(function(require, exports, model){
-	Ext.define('BaseStore', function(){
+	Ext.define('BaseStore', {
 
 		inheritableStatics : {
 
@@ -11,7 +11,7 @@ define(function(require, exports, model){
 		},
 
 		constructor: function(){
-			alert(123);
+			
 		}
 
 	});
