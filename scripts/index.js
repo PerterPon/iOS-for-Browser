@@ -1,5 +1,4 @@
 ﻿seajs.config({
-	'base'   : '../../',
 	'charset': 'utf-8',
 	'debug'  : true
 });
