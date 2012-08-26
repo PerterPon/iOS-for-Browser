@@ -1,8 +1,8 @@
-﻿var wss  = creatHttpServer(),
-	fs   = require('fs'),
+﻿var fs   = require('fs'),
 	http = require('http'),
-	webSocket = require('ws'); 
-
+	webSocket = require('ws'), 
+	wss  = creatHttpServer();
+	
 wss.on('connection', function( ws ) {
 	console.log('connected');
 	ws.on('message', function( data, flags ) {
