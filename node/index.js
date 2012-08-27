@@ -5,13 +5,15 @@
 	
 wss.on('connection', function( ws ) {
 	console.log('connected');
-	ws.on('message', function( data, flags ) {
-		ws.send('333');
-	});
+	ws.on('message', onmessage);
 	ws.on('close', function() {
 		console.log('stopping client');
 	});
 });
+
+var nameTable = {
+	"testStore" : "Data/test.json"
+}
 
 function creatHttpServer(){
 	var app = http.createServer( '' ).listen( 4239 ),
@@ -20,9 +22,20 @@ function creatHttpServer(){
 	return wss;
 }
 
-function onmessage(err, data){
-	if(err)
-		throw err;
-
+function onmessage(buffer, flags){
+	var buffer = JSON.parse(buffer),
+		name   = buffer.storeName,
+		data   = buffer.data,
+		dataBuffer = JSON.stringify(data);
+	fs.writeFile(nameTable[name], dataBuffer, function(err){
+		if(err){
+			throw err;
+		}
+		console.log("Store: " + name);
+		console.log("data: " + dataBuffer);
+	});
 }
 
+function doGetData(){
+	
+}
