@@ -4,11 +4,11 @@
 	wss  = createHttpServer(),
 	socket;
 	
-wss.on('connection', function( ws ) {
+wss.on('connection', function( ws ){
 	console.log( 'connected' );
 	socket = ws;
 	ws.on( 'message', onmessage );
-	ws.on( 'close', function() {
+	ws.on( 'close', function(){
 		console.log( 'stopping client' );
 	});
 });
@@ -20,7 +20,7 @@ var nameTable = {
 function createHttpServer(){
 	var app = http.createServer( '' ).listen( 4239 ),
 		WebSocketServer = webSocket.Server,
-		wss = new WebSocketServer( { server : app } );
+		wss = new WebSocketServer({ server : app });
 	return wss;
 }
 
@@ -43,26 +43,26 @@ function onmessage( buffer, flags ){
 
 function doGetData( name ){
 	var result;
-	fs.readFile( nameTable[name], function( err, data ){
+	fs.readFile( nameTable[name], 'utf-8', function( err, data ){
 		if( err )
 			throw err;
 		result = JSON.stringify( data );
-		console.log( 'GET' );
-		console.log( 'store: ' + name );
-		console.log( 'result: ' + result );
+		console.log( '-GET' );
+		console.log( '-store: ' + name );
+		console.log( '-result: ' + result );
 		socket.send( result );
 	});
-	
+
 }
 
 function doSaveData( name, dataBuffer ){
 	fs.writeFile( nameTable[name], dataBuffer, function( err ){
 		if(err)
 			throw err;
-		console.log( 'SAVE' );
-		console.log( 'Store:' + name );
-		console.log( 'data:'  + dataBuffer );
-		socket.send( 'succeed!' );
+		console.log( '-SAVE' );
+		console.log( '-Store:' + name );
+		console.log( '-data:'  + dataBuffer );
+		socket.send( 'saveSucceed!' );
 	});
 }
 
