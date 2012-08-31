@@ -1,7 +1,9 @@
-﻿var fs   = require( 'fs' ),
+﻿require( 'seajs' );
+var fs   = require( 'fs' ),
 	http = require( 'http' ),
 	webSocket = require( 'ws' ), 
 	wss  = createHttpServer(),
+	scktMngr = require( '../Util/SocketUtil' ),
 	socket;
 	
 wss.on('connection', function( ws ){

@@ -1,6 +1,6 @@
 
-define(function(require, exports, module){
-	Ext.define('BaseStore', {
+define( function( require, exports, module ){
+	Ext.define( 'BaseStore', {
 
 		inheritableStatics : {
 			//store的ID，唯一
@@ -16,20 +16,20 @@ define(function(require, exports, module){
 			dataPool : null
 		},
 
-		constructor: function(name){
-			this.registStore(name, this);
+		constructor: function( name ){
+			this.registStore( name, this );
 			this._creatWebSocket();
 		},
 
 		_creatWebSocket: function(){
 			var sttc   = this.self,
 				socket;
-			if(!sttc.socket){
-				sttc.socket = new WebSocket(sttc.scktAdd);
+			if( !sttc.socket ){
+				sttc.socket = new WebSocket( sttc.scktAdd );
 			}
 		},
 
-		_registStore: function(name, store){
+		_registStore: function( name, store ){
 
 		},
 
