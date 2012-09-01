@@ -2,6 +2,8 @@
 //store管理器，每个store实例化的时候都会注册到storeManager上面
 
 define(function(require, exports, module){
+    "use strict";
+
 	//store缓存池
 	var storePool = {};
 

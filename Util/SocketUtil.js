@@ -1,21 +1,15 @@
-﻿//供webSocket使用
+//供webSocket使用
 
-define( function( require, exports, module )){
+define( function( require, exports, module ){
+    "use strict";
 
-    var brswEvntTree = {},
-        nodeEvntTree = {},
-        brswSocket = null,
-        nodeSocket = null;
-
+    var eventTree = {},
+        socket    = null;
     function on( eventName, eventBody ){
-        window ? brswEvntTree[ eventName ] = eventBody : 
-                 nodeEvntTree[ eventName ] = eventBody;
+        eventTree[ eventName ] = eventBody;
     }
 
     function emit( eventName, data ){
-        var socket;
-        window ? socket = brswSocket :
-                 socket = nodeSocket;
         var bffrData = {
             eventName : eventName,
             data      : data
@@ -23,16 +17,9 @@ define( function( require, exports, module )){
         socket.send( JSON.stringify( bffrData ));
     }
 
-    function setSocket( socket ){
-        var eventTree = null;
-        if( window ){
-            brswSocket = socket;
-            eventTree  = brswEvntTree;
-        } else{
-            nodeSocket = socket;
-            eventTree  = nodeEvntTree;
-        }
-        socket.onmessage = function( buffer, flags ){
+    function setSocket( sockObj ){
+        socket = sockObj;
+        function mssgHandler( buffer ){
             var bffrData = JSON.parse( buffer ),
                 eventName= bffrData.eventName;
             if( !eventTree[ eventName ]){
@@ -41,11 +28,18 @@ define( function( require, exports, module )){
             }
             eventTree[ eventName ]( bffrData );
         }
+        if( socket.on ){
+            socket.on( 'message', mssgHandler );
+        } else {
+            socket.onmessage = mssgHandler;
+        }
     }
 
-    return {
+    var result = {
         setSocket : setSocket,
         on        : on,
         emit      : emit
     };
-};
+
+    return result;
+});

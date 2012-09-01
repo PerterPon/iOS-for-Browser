@@ -5,15 +5,20 @@ var fs   = require( 'fs' ),
 	wss  = createHttpServer(),
 	scktMngr = require( '../Util/SocketUtil' ),
 	socket;
-	
-wss.on('connection', function( ws ){
-	console.log( 'connected' );
-	socket = ws;
-	ws.on( 'message', onmessage );
-	ws.on( 'close', function(){
-		console.log( 'stopping client' );
-	});
+wss.on('connection', onconnection );
+
+scktMngr.on( 'myEvent', function( data ){
+	console.log( 'myEvent' + data );
 });
+
+function onconnection( ws ){
+	console.log( ' - connected!' );
+	socket = ws;
+	scktMngr.setSocket( ws );
+	ws.on( 'close', function(){
+		console.log( ' - disconnected!' );
+	});
+}
 
 var nameTable = {
 	"testStore" : "Data/test.json"
@@ -29,6 +34,7 @@ function createHttpServer(){
 function onmessage( buffer, flags ){
 	var buffer = JSON.parse( buffer ),
 		name   = buffer.storeName;
+	console.log( typeof buffer );
 	if( !name ){
 		socket.send( 'store name is empty!' );
 		throw 'store name is empty!';

@@ -2,6 +2,8 @@
 //nodejs和前端代码公用的文件
 
 define( function( require, exports, module )){
+    "use strict";
+
     function deepCopy( obj ){
         var out = [],i = 0,len = obj.length;
         for ( ; i < len; i++ ) {
@@ -23,8 +25,12 @@ define( function( require, exports, module )){
         };
     }
 
-    return {
+    var result = {
         deepcopy : deepcopy,
         bind     : bind
     };
+
+    iOS.Util.Util = result;
+
+    return result;
 };
