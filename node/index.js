@@ -1,15 +1,12 @@
 ﻿require( 'seajs' );
-var fs   = require( 'fs' ),
-	http = require( 'http' ),
-	webSocket = require( 'ws' ), 
-	wss  = createHttpServer(),
-	scktMngr = require( '../Util/SocketUtil' ),
+var fs       = require( 'fs' ),
+	http     = require( 'http' ),
+	webSocket= require( 'ws' ), 
+	wss      = createHttpServer(),
+	scktMngr = require( '../util/SocketUtil' ),
+	filePath = require( './filePath' ),
 	socket;
 wss.on('connection', onconnection );
-
-scktMngr.on( 'myEvent', function( data ){
-	console.log( 'myEvent' + data );
-});
 
 function onconnection( ws ){
 	console.log( ' - connected!' );
@@ -20,9 +17,24 @@ function onconnection( ws ){
 	});
 }
 
-var nameTable = {
-	"testStore" : "Data/test.json"
-}
+scktMngr.on( 'getData', function( data ){
+	var name = data.data.storeName,
+		result;
+	if( !name )
+		throw 'store name can not be empty!';
+	else 
+	    result = doGetData( name );
+	scktMngr.emit( 'getDataBak', JSON.stringify( result ));
+});
+
+scktMngr.on( 'saveData', function( data ){
+	var name = data.data.storeName;
+	if( !name )
+		throw 'store name can not be empty!';
+	else 
+	    doSaveData( name, JSON.stringify( data.data.storeData ));
+	scktMngr.emit( 'saveDataBak', { "result" : "succeed" });
+});
 
 function createHttpServer(){
 	var app = http.createServer( '' ).listen( 4239 ),
@@ -31,47 +43,17 @@ function createHttpServer(){
 	return wss;
 }
 
-function onmessage( buffer, flags ){
-	var buffer = JSON.parse( buffer ),
-		name   = buffer.storeName;
-	console.log( typeof buffer );
-	if( !name ){
-		socket.send( 'store name is empty!' );
-		throw 'store name is empty!';
-	}
-	var data   = buffer.data,
-		oprtn  = buffer.operation,
-		dataBuffer = JSON.stringify( data );
-	if( oprtn == 'get' ){
-		doGetData( name );
-	} else if( oprtn == 'save' ){
-		doSaveData( name, dataBuffer );
-	}
-}
-
 function doGetData( name ){
-	var result;
-	fs.readFile( nameTable[name], 'utf-8', function( err, data ){
-		if( err )
-			throw err;
-		result = JSON.stringify( data );
-		console.log( '-GET' );
-		console.log( '-store: ' + name );
-		console.log( '-result: ' + result );
-		socket.send( result );
-	});
-
+	var result = fs.readFileSync( filePath[name], 'utf-8' );
+	console.log( ' - getData' );
+	console.log( ' - storeName: ' + name );
+	return JSON.parse( result );
 }
 
 function doSaveData( name, dataBuffer ){
-	fs.writeFile( nameTable[name], dataBuffer, function( err ){
-		if(err)
-			throw err;
-		console.log( '-SAVE' );
-		console.log( '-Store:' + name );
-		console.log( '-data:'  + dataBuffer );
-		socket.send( 'saveSucceed!' );
-	});
+	console.log( ' - saveData' );
+	console.log( ' - storeName: ' + name );
+	fs.writeFileSync( filePath[name], dataBuffer );
 }
 
 

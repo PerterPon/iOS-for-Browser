@@ -2,7 +2,8 @@
 define( function( require, exports, module ){
 	"use strict";
 
-	var sockMngr = require( '../../Util/SocketUtil' );
+	var sockMngr = require( '../../util/SocketUtil' ),
+		strMngr  = require( './StoreManager' );
 	Ext.define( 'BaseStore', {
 
 		inheritableStatics : {
@@ -30,15 +31,15 @@ define( function( require, exports, module ){
 			if( !sttc.socket ){
 				sttc.socket = new WebSocket( sttc.scktAdd );
 				sockMngr.setSocket( sttc.socket );
-				sttc.socket.onopen  = function(){
-					sockMngr.emit( 'myEvent1', { data : "hello nodejs!" });	
-				};
+				sockMngr.emit( 'saveData', { "storeName" : "testStore", "storeData" : { "test" : "123123132" } });
 			}
-
+			sockMngr.on( 'saveDataBak', function( data ){
+				console.log( data.data.result );
+			});
 		},
 
 		_registStore: function( name, store ){
-
+			strMngr.register( name, store );
 		},
 
 		getData: function(){

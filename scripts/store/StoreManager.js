@@ -7,9 +7,15 @@ define(function(require, exports, module){
 	//store缓存池
 	var storePool = {};
 
-	exports.registStore = function(name, store){
+	function register( name, store ){
 		if(!name || !store){
 			return false;
 		}
+        storePool[ name ] = store;
 	}
+
+    return {
+        register : register
+    };
+
 });
