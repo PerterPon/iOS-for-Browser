@@ -18,4 +18,4 @@ define(function(require, exports, module){
         register : register
     };
 
-});
+}); 
