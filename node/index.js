@@ -6,7 +6,7 @@ var fs       = require( 'fs' ),
     scktMngr = require( '../util/SocketUtil' ),
     filePath = require( './filePath' ),
     socket;
-wss.on('connection', onconnection );
+wss.on( 'connection', onconnection );
 
 function onconnection( ws ){
     console.log( ' - connected!' );

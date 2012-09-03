@@ -1,5 +1,4 @@
 ﻿//nodejs和前端代码公用的文件
-//nodejs和前端代码公用的文件
 
 define( function( require, exports, module )){
     "use strict";

@@ -2,16 +2,40 @@
 define( function( require, exports, module ){
     "use strict";
 
-    var height, width;
+    var height, width, divece;
     
     function checkBroswer(){
-        var bIsIpad     = sUserAgent.match(/ipad/i) == "ipad",   
-            bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os",    
-            bIsMidp     = sUserAgent.match(/midp/i) == "midp",
-            bIsUc7      = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4",   
-            bIsUc7      = sUserAgent.match(/ucweb/i) == "ucweb",
-            bIsAndroid  = sUserAgent.match(/android/i) == "android",    
-            bIsCE       = sUserAgent.match(/windows ce/i) == "windows ce",    
-            bIsWM       = sUserAgent.match(/windows mobile/i) == "windows mobile";
+        var diviceTest = {
+            ipad       : sUserAgent.match(/ipad/i) == "ipad",   
+            iphone     : sUserAgent.match(/iphone os/i) == "iphone os",    
+            midp       : sUserAgent.match(/midp/i) == "midp",  
+            ucweb      : sUserAgent.match(/ucweb/i) == "ucweb",
+            android    : sUserAgent.match(/android/i) == "android",    
+            windowsCe  : sUserAgent.match(/windows ce/i) == "windows ce",    
+            windowsMobile : sUserAgent.match(/windows mobile/i) == "windows mobile"
+        };
+        for( var i in diviceTest ){
+            if( diviceTest[ i ] ){
+                divice = i;
+                break;
+            }
+        }
     }
+
+    function checkSize(){
+        $( function(){
+            var iOS = $( '#iOS' );
+            height  = iOS.height();
+            width   = iOS.width();
+        });
+    }
+
+    checkBroswer();
+    checkSize();
+
+    return {
+        width  : width,
+        height : height,
+        divice : divice 
+    };
 });
