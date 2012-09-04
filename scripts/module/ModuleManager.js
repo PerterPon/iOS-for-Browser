@@ -1,5 +1,5 @@
 
-define(function(require, exports, module){
+define( function( require, exports, module ){
     "use strict";
 
     Ext.define( 'ModuleManager', function(){
