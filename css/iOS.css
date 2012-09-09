@@ -1,0 +1,4 @@
+﻿body { background: #25262B }
+
+#ios-bg { width: 380px; height: 742px; margin: 0 auto; background-image: url(../resource/images/background/iphone-bg.png) }
+#ios-base { position: relative; left: 32px; top: 129px; width: 320px; height: 480px; background: url(../resource/images/background/background.jpg) no-repeat }

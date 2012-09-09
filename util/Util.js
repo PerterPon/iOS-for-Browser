@@ -41,12 +41,17 @@ define( function( require, exports, module )){
      * @param  {Object}   tarName   监听对象
      * @param  {String}   eventName 事件名称
      * @param  {Function} handler   事件处理函数
+     * @param  {Object}   scope     事件处理函数宿主对象
      * @return {void}
      */
-    function listen( tarObj, eventName, handler ){
-        tarObj[ 'ios_' + eventName ] = handler;
-
+    function listen( tarObj, eventName, handler, scope ){
+        tarObj[ 'ios_' + eventName ] = {
+            handler : handler,
+            scope   : scope
+        };
     }
+
+    var objPool = {};
 
     /**
      * 派发事件
@@ -56,7 +61,8 @@ define( function( require, exports, module )){
      * @return {void}
      */
     function notify( tarObj, eventName, params ){
-        tarObj[ 'ios_' + eventName ].apply( tarObj, params );
+        var evntInstnc = tarObj[ eventName ];
+        evntInstnc.handler.apply( evntInstnc.scope || tarObj, params );
     }
 
     var result = {
