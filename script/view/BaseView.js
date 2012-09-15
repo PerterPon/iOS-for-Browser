@@ -9,7 +9,7 @@ define( function( require, exports, module ){
             name : null,
 
             //viewManager
-            viewMngr : require( 'scripts/view/ViewManager' ),
+            viewMngr : require( './scripts/view/ViewManager' ),
 
             util : require( 'util/Util' )
         },
@@ -20,13 +20,7 @@ define( function( require, exports, module ){
             }
         },
 
-        /**
-         * 构造函数
-         * @param  {String} name       本view的名称
-         * @param  {Object} controller 本view对应的controller对象
-         * @return {void}
-         */
-        constructor : function( name, controller ){
+        constructor : function( cfg ){
             this._registerSelf();
             this._attachEventListener();
         },

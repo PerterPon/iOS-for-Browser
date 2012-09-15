@@ -6,10 +6,22 @@ define( function( require, exports, module ){
     var eventTree = {},
         socket    = null;
 
+    /**
+     * [on 在socket连接上绑定事件]
+     * @param  {String} eventName [事件名称]
+     * @param  {Object} eventBody [事件处理函数]
+     * @return {void}
+     */
     function on( eventName, eventBody ){
         eventTree[ eventName ] = eventBody;
     }
 
+    /**
+     * [emit 触发socket连接的事件]
+     * @param  {String} eventName [事件名称]
+     * @param  {*} data           [传输的数据]
+     * @return {void}
+     */
     function emit( eventName, data ){
         var bffrData = {
             eventName : eventName,
@@ -24,6 +36,10 @@ define( function( require, exports, module ){
         }
     }
 
+    /**
+     * [setSocket 设置socket对象，理论上一次连接只会对应一个]
+     * @param {Object} sockObj [webSocket实例对象]
+     */
     function setSocket( sockObj ){
         socket = sockObj;
         function mssgHandler( bffrData ){

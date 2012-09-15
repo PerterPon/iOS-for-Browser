@@ -2,8 +2,8 @@
 define( function( require, exports, module ){
     "use strict";
 
-    var sockMngr = require( '../../util/SocketUtil' ),
-        strMngr  = require( './StoreManager' );
+    var sockMngr = require( './util/SocketUtil' ),
+        strMngr  = require( './script/store/StoreManager' );
     Ext.define( 'BaseStore', {
 
         inheritableStatics : {
