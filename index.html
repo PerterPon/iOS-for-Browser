@@ -3,15 +3,18 @@
 <head>
 <title>iOS-for-Browser</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+<!-- <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" /> -->
 <meta content="telephone=no" name="format-detection" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-touch-fullscreen" content="yes" />
+
+<link rel="stylesheet" type="text/css" href="css/reset.css">
+<link rel="stylesheet" type="text/css" href="css/iOS.css">
+
 <script type="text/javascript" src="lib/jQuery/jquery-1.8.1.min.js"></script>
 <script type="text/javascript" src="lib/Ext/ExtOO.js"></script>
 <script type="text/javascript" src="lib/seajs/sea.js" id="seajsnode"></script>
 <script type="text/javascript" src="lib/seajs/sea-config.js"></script>
-<script type="text/javascript" src="script/index.js"></script>
 </head>
 <body>
     <div id="iOS_outSide_bg">
@@ -19,3 +22,6 @@
     </div>
 </body>
 </html>
+<script type="text/javascript">
+seajs.use( './script/index' );
+</script>

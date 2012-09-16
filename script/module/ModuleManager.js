@@ -2,7 +2,14 @@
 define( function( require, exports, module ){
     "use strict";
 
-    Ext.define( 'ModuleManager', function(){
+    require( '../BaseManager' );
+    Ext.define( 'ModuleManager', {
+        extend : 'BaseManager',
+
+        statics : {
+            pool : [],
+            pool2 : []
+        },
 
         getModule : function( name ){
             return this.get( name );
@@ -17,4 +24,4 @@ define( function( require, exports, module ){
         getModule : moduleMgr.getModule
     };
 
-}); 
+});

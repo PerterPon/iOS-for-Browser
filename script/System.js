@@ -2,20 +2,22 @@
 define( function( require, exports, module ){
     "use strict";
 
-    var height, width, divece;
+    var height, width, divice,
+        sUserAgent = window.navigator.userAgent;
     
     function checkBroswer(){
         var diviceTest = {
-            ipad       : sUserAgent.match(/ipad/i) == "ipad",   
-            iphone     : sUserAgent.match(/iphone os/i) == "iphone os",    
-            midp       : sUserAgent.match(/midp/i) == "midp",  
-            ucweb      : sUserAgent.match(/ucweb/i) == "ucweb",
-            android    : sUserAgent.match(/android/i) == "android",    
-            windowsCe  : sUserAgent.match(/windows ce/i) == "windows ce",    
-            windowsMobile : sUserAgent.match(/windows mobile/i) == "windows mobile"
+            ipad       : sUserAgent.indexOf( 'ipad' ),   
+            iphone     : sUserAgent.indexOf( 'iphone os' ),    
+            midp       : sUserAgent.indexOf( 'midp os' ),  
+            ucweb      : sUserAgent.indexOf( 'ucweb' ),
+            android    : sUserAgent.indexOf( 'android' ),    
+            windowsCe  : sUserAgent.indexOf( 'window ce' ),    
+            windowsMobile : sUserAgent.indexOf( 'windows mobile' ),
+            windowsDesktop: sUserAgent.indexOf( 'Windows NT' )
         };
         for( var i in diviceTest ){
-            if( diviceTest[ i ] ){
+            if( diviceTest[ i ] >= 0 ){
                 divice = i;
                 break;
             }
@@ -24,7 +26,8 @@ define( function( require, exports, module ){
 
     function checkSize(){
         $( function(){
-            var iOS = $( '#iOS' );
+            var iOS = $( '#iOS_system_content' );
+            iOS.length ? '' : iOS = $( 'body' );
             height  = iOS.height();
             width   = iOS.width();
         });
@@ -33,7 +36,8 @@ define( function( require, exports, module ){
     checkBroswer();
     checkSize();
 
-    return {
+    Ext.namespace( 'iOS.System' );
+    window.iOS.System = {
         width  : width,
         height : height,
         divice : divice 

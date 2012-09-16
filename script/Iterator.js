@@ -2,7 +2,7 @@
 define( function( require, exports, module ){
     "use strick";
 
-    var mdlMngr = require( './script/module/ModuleManager' );
+    var mdlMngr = require( './module/ModuleManager' );
     Ext.define( 'Iterator', {
 
         statics : {
@@ -30,9 +30,9 @@ define( function( require, exports, module ){
 
         __doItrtr : function( cfg ){
             var sttc   = this.self, 
-                module = Ext.ClassManager.get( cfg.class ),
+                module = cfg.class,
                 cls    = '',
-                id     = 'ios-' + sttc.curIdx
+                id     = 'ios-' + sttc.curIdx,
                 html, instance;
             for( var i = 0; i < cfg.clsList.length; i++ ){
                 cls += cfg.clsList[ i ] + ' ';
