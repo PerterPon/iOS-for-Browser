@@ -1,6 +1,6 @@
 ﻿//nodejs和前端代码公用的文件
 
-define( function( require, exports, module )){
+define( function( require, exports, module ){
     "use strict";
 
     /**
@@ -8,7 +8,7 @@ define( function( require, exports, module )){
      * @param  {[type]} obj [需要深拷贝的对象或者数组]
      * @return {Object} out [拷贝完成的对象或数组]     
      */
-    function deepCopy( obj ){
+    function deepcopy( obj ){
         var out = [],i = 0,len = obj.length;
         for ( ; i < len; i++ ) {
             if ( obj[ i ] instanceof Array ){
@@ -73,4 +73,4 @@ define( function( require, exports, module )){
     };
 
     return result;
-};
+});

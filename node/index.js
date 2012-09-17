@@ -6,6 +6,9 @@ var fs       = require( 'fs' ),
     scktMngr = require( '../util/SocketUtil' ),
     filePath = require( './filePath' ),
     socket;
+
+console.log( ' - started!' );
+
 wss.on( 'connection', onconnection );
 
 function onconnection( ws ){

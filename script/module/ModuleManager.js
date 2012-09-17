@@ -3,13 +3,9 @@ define( function( require, exports, module ){
     "use strict";
 
     require( '../BaseManager' );
+    var Util = require( '../../util/Util' );
     Ext.define( 'ModuleManager', {
         extend : 'BaseManager',
-
-        statics : {
-            pool : [],
-            pool2 : []
-        },
 
         getModule : function( name ){
             return this.get( name );
@@ -20,8 +16,8 @@ define( function( require, exports, module ){
     var moduleMgr = new ModuleManager( 'module' );
 
     return {
-        register  : moduleMgr.register,
-        getModule : moduleMgr.getModule
+        register  : Util.bind( moduleMgr.register,  moduleMgr ),
+        getModule : Util.bind( moduleMgr.getModule, moduleMgr )
     };
 
 });

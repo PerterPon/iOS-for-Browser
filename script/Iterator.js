@@ -25,7 +25,7 @@ define( function( require, exports, module ){
          * @param {[type]} id [父节点ID]
          */
         setPreDom : function( id ){
-            this.self.preDom = $( '#ios-' + id );
+            this.self.preDom = $( '#' + id );
         },
 
         __doItrtr : function( cfg ){
