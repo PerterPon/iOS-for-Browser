@@ -43,6 +43,11 @@ define( function( require, exports, module ){
             mdlMngr.register( cfg.name, instance );
             sttc.preDom = html;
             sttc.curIdx++;
+            if( cfg.subView && cfg.subView.length ){
+                for( i = 0; i < cfg.subView.length; i++ ){
+                    this.__doItrtr( cfg.subView[ i ]);
+                }
+            }
         }
 
     });

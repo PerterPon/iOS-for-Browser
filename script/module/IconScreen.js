@@ -2,9 +2,9 @@
 define( function(){
     "use strick";
 
-    Ext.define( 'BaseIOS', {
+    Ext.define( 'IconScreen', {
 
     });
 
-    return BaseIOS;
+    return IconScreen;
 });
