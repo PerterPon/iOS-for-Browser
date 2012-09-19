@@ -2,7 +2,7 @@
 define( function( require, exports, module ){
     "use strict";
 
-    Ext.define( 'BaseModule', {
+    Ext.define( 'BaseModel', {
 
         inheritableStatics : {
 
@@ -29,7 +29,7 @@ define( function( require, exports, module ){
                     continue;
                 sttc[ i ] = cfg[ i ];
             }
-        }
+        },
 
         _initView : function( ){
             var sttc = this.self,
@@ -45,5 +45,5 @@ define( function( require, exports, module ){
 
     });
 
-    return BaseStore;
+    return BaseModel;
 });

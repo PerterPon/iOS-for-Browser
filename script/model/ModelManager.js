@@ -4,20 +4,20 @@ define( function( require, exports, module ){
 
     require( '../BaseManager' );
     var Util = require( '../../util/Util' );
-    Ext.define( 'ModuleManager', {
+    Ext.define( 'ModelManager', {
         extend : 'BaseManager',
 
-        getModule : function( name ){
+        getModel : function( name ){
             return this.get( name );
         }
 
     });
 
-    var moduleMgr = new ModuleManager( 'module' );
+    var modelMgr = new ModelManager( 'module' );
 
     return {
-        register  : Util.bind( moduleMgr.register,  moduleMgr ),
-        getModule : Util.bind( moduleMgr.getModule, moduleMgr )
+        register : Util.bind( modelMgr.register, modelMgr ),
+        getModel : Util.bind( modelMgr.getModel, modelMgr )
     };
 
 });

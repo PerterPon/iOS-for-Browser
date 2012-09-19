@@ -2,7 +2,7 @@
 define( function( require, exports, module ){
     "use strick";
 
-    var mdlMngr = require( './module/ModuleManager' );
+    var mdlMngr = require( './model/ModelManager' );
     Ext.define( 'Iterator', {
 
         statics : {

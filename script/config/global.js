@@ -2,11 +2,11 @@
 define( function( require, exports, module ){
     "use strick";
 
-    var BaseIOS    = require( '../module/BaseIOS' ),
-        BootScreen = require( '../module/BootScreen' ),
-        LockScreen = require( '../module/LockScreen' ),
-        IconScreen = require( '../module/IconScreen' ),
-        AppScreen  = require( '../module/AppScreen' );
+    var BaseIOS    = require( '../model/BaseIOS' ),
+        BootScreen = require( '../model/BootScreen' ),
+        LockScreen = require( '../model/LockScreen' ),
+        IconScreen = require( '../model/IconScreen' ),
+        AppScreen  = require( '../model/AppScreen' );
     return {
         "class"      : BaseIOS,
         "clsList"    : [ "iOS" ],
