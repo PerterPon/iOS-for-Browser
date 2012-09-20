@@ -2,9 +2,11 @@
 define( function(){
     "use strick";
 
-    Ext.define( 'IconScreen', {
+    require( './BaseController' );
+    Ext.define( 'CIconScreen', {
+        extend : 'BaseController'
 
     });
 
-    return IconScreen;
+    return CIconScreen;
 });

@@ -2,8 +2,11 @@
 define( function( require, exports, module ){
     "use strick";
 
-    Ext.define( 'LockScreen', {
+    require( './BaseView' );
+    Ext.define( 'VLockScreen', {
         extend : 'BaseView',
         
     });
+
+    return VLockScreen;
 });

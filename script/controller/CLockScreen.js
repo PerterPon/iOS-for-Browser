@@ -2,9 +2,11 @@
 define( function(){
     "use strick";
 
-    Ext.define( 'LockScreen', {
+    require( './BaseController' );
+    Ext.define( 'CLockScreen', {
+        extend : 'BaseController'
 
     });
 
-    return LockScreen;
+    return CLockScreen;
 });

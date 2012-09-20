@@ -1,10 +1,12 @@
 ﻿
-define( function(){
+define( function( require, exports, module ){
     "use strick";
 
-    Ext.define( 'AppScreen', {
+    require( './BaseView' );
+    Ext.define( 'VAppScreen', {
+        extend : 'BaseView'
 
     });
 
-    return AppScreen;
+    return VAppScreen;
 });

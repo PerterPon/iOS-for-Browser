@@ -7,5 +7,5 @@ define( function( require, exports, module ){
         extend : 'BaseController'
     });
 
-    return BootScreen;
+    return CBootScreen;
 });
