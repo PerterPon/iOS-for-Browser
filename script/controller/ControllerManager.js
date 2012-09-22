@@ -1,21 +1,23 @@
 
-//store管理器，每个store实例化的时候都会注册到storeManager上面
+define( function( require, exports, module ){
+    "use strick";
 
-define(function(require, exports, module){
-    "use strict";
+    require( '../BaseManager' );
+    Ext.define( 'ControllerManager', {
+        extend : 'BaseManager',
 
-    //store缓存池
-    var storePool = {};
-
-    function register( name, store ){
-        if(!name || !store){
-            return false;
+        getController : function( name ){
+            return this.get( name );
         }
-        storePool[ name ] = store;
-    }
+
+    });
+
+    var ctrlMgr = new ControllerManager( 'module' ),
+        Util    = require( '../../util/Util' );
 
     return {
-        register : register
+        register      : Util.bind( ctrlMgr.register, ctrlMgr ),
+        getController : Util.bind( ctrlMgr.getController, ctrlMgr )
     };
 
-}); 
+});

@@ -1,46 +1,49 @@
 
 define( function( require, exports, module ){
-    "use strict";
+    "use strick";
 
     Ext.define( 'BaseModel', {
 
         inheritableStatics : {
-
+            manager : require( './ModelManager' );
         },
 
         statics : {
+
             name : null,
+
 
         },
 
         constructor : function( cfg ){
-            this._applyCfg( cfg );
+            this.callParent([ cfg ]);
+            this._initController();
         },
 
         /**
-         * 将配置文件中的信息保存到实例中去
-         * @param   {Object} cfg 配置信息
-         * @return  {void}
+         * [_initView 初始化view]
+         * @return  {}
+         * @private
          */
-        _applyCfg : function( cfg ){
-            var sttc = this.self;
-            for( var i in cfg ){
-                if( i == 'subView' )
-                    continue;
-                sttc[ i ] = cfg[ i ];
-            }
+        _initView : function(){
+            var sttc    = this.self,
+                view    = sttc.view,
+                viewCfg = {
+                    clsList : sttc.clsList,
+                    name    : 'V' + sttc.name
+                };
+            sttc._view = new view( viewCfg );
         },
 
-        _initView : function( ){
+        /**
+         * [_initController 初始化controller]
+         * @return  {}
+         * @private
+         */
+        _initController : function(){
             var sttc = this.self,
-                view = Ext.ClassManager.get( sttc.view )
-            sttc.viewInstance = new view( sttc.viewCfg );
-        },
-
-        _initController : function( ){
-            var sttc = this.self,
-                ctrl = Ext.ClassManager.get( sttc.controller );
-            sttc.ctrlInstance = new ctrl( ctrlCfg );
+                ctrl = sttc.controller;
+            sttc._controller = new ctrl( sttc.ctrlCfg );
         }
 
     });

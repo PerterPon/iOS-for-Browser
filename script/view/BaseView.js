@@ -1,17 +1,19 @@
 
 define( function( require, exports, module ){
-    "use strict";
+    "use strick";
 
+    require( 'Component' );
     Ext.define( 'BaseView', {
+        extend : 'Component',
 
         inheritableStatics : {
             //本view的名称
-            name : null,
+            name    : null,
 
             //viewManager
-            viewMngr : require( './scripts/view/ViewManager' ),
+            manager : require( './ViewManager' ),
 
-            util : require( 'util/Util' )
+            util : require( '../../util/Util' )
         },
 
         statics : {
@@ -21,17 +23,8 @@ define( function( require, exports, module ){
         },
 
         constructor : function( cfg ){
-            this._registerSelf();
+            this.callParent([ cfg ]);
             this._attachEventListener();
-        },
-
-        /**
-         * 将view本身注册到viewManager中去
-         * @return {void}
-         */
-        _registerSelf : function(){
-            var sttc = this.self;
-            sttc.viewMngr.register( sttc.name, this );
         },
 
         /**

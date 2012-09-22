@@ -1,6 +1,6 @@
 ﻿
-define(function(require, exports, module){
-    "use strict";
+define( function( equire, exports, module ){
+    "use strick";
 
     Ext.define( 'StoreManager', {
 
@@ -10,11 +10,12 @@ define(function(require, exports, module){
 
     });
 
-    var storeMngr = new StoreManager( 'store' );
+    var storeMngr = new StoreManager( 'store' ),
+        Util      = require( '../../util/Util' );
 
     return {
-        register : storeMngr.register,
-        getStore : storeMngr.getStore
+        register : Util.bind( storeMngr.register, storeMngr ),
+        getStore : Util.bind( storeMngr.getStore, storeMngr )
     };
 
-}); 
+});

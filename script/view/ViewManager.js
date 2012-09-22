@@ -1,8 +1,10 @@
 ﻿
 define( function( require, exports, module ){
-    "use strict";
+    "use strick";
 
+    require( '../BaseManager' );
     Ext.define( 'ViewManager', {
+        extend : 'BaseManager',
         
         getView : function( name ){
             return this.get( name );
@@ -10,11 +12,12 @@ define( function( require, exports, module ){
 
     });
 
-    var viewMngr = new ViewManager( 'view' );
+    var viewMngr = new ViewManager( 'view' ),
+        Util     = require( '../../util/Util' );
 
     return {
-        register : viewMngr.register,
-        getView  : viewMngr.getView
+        register : Util.bind( viewMngr.register, viewMngr ),
+        getView  : Util.bind( viewMngr.getView, viewMngr )
     };
 
 }); 

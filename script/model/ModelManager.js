@@ -1,9 +1,8 @@
 ﻿
 define( function( require, exports, module ){
-    "use strict";
+    "use strick";
 
     require( '../BaseManager' );
-    var Util = require( '../../util/Util' );
     Ext.define( 'ModelManager', {
         extend : 'BaseManager',
 
@@ -13,7 +12,8 @@ define( function( require, exports, module ){
 
     });
 
-    var modelMgr = new ModelManager( 'module' );
+    var modelMgr = new ModelManager( 'module' ),
+        Util     = require( '../../util/Util' );
 
     return {
         register : Util.bind( modelMgr.register, modelMgr ),

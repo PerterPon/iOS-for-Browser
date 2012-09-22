@@ -2,7 +2,6 @@
 define( function( require, exports, module ){
     "use strick";
 
-    var mdlMngr = require( './model/ModelManager' );
     Ext.define( 'Iterator', {
 
         statics : {
@@ -29,7 +28,7 @@ define( function( require, exports, module ){
         },
 
         __doItrtr : function( cfg ){
-            var sttc   = this.self, 
+            var sttc   = this.self,
                 module = cfg.class,
                 cls    = '',
                 id     = 'ios-' + sttc.curIdx,
@@ -40,7 +39,6 @@ define( function( require, exports, module ){
             html = $( '<div id="'+ id +'" class="'+ cls +'"></div>' );
             sttc.preDom.append( html );
             instance = new module( cfg );
-            mdlMngr.register( cfg.name, instance );
             sttc.preDom = html;
             sttc.curIdx++;
             if( cfg.subView && cfg.subView.length ){

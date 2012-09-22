@@ -1,6 +1,6 @@
 
 define( function( require, exports, module ){
-    "use strict";
+    "use strick";
 
     var sockMngr = require( './util/SocketUtil' ),
         strMngr  = require( './script/store/StoreManager' );
