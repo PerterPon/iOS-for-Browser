@@ -7,7 +7,9 @@ define( function( require, exports, module ){
         LockScreen  = require( '../model/LockScreen' ),
         IconScreen  = require( '../model/IconScreen' ),
         AppScreen   = require( '../model/AppScreen' ),
+        PopScreen   = require( '../model/PopScreen' ),
         VBootScreen = require( '../view/VBootScreen' ),
+        VIconScreen = require( '../view/VIconScreen' ),
         VLockScreen = require( '../view/VLockScreen' ),
         VAppScreen  = require( '../view/VAppScreen' ),
         VPopScreen  = require( '../view/VPopScreen' ),
@@ -18,41 +20,41 @@ define( function( require, exports, module ){
     return {
         "class"      : BaseIOS,
         "clsList"    : [ "iOS" ],
-        "name"       : "iOS",
+        "_name"      : "iOS",
         "view"       : "VIos",
         "controller" : "CIos",
         "subView"    : [{
             "class"      : BootScreen,
             "clsList"    : [ "iOS-bootScreen" ],
-            "visiable"   : "true",
-            "name"       : "bootScreen",
+            "_name"      : "bootScreen",
             "view"       : VBootScreen,
             "controller" : CBootScreen
         }, {
             "class"      : LockScreen,
             "clsList"    : [ "iOS-lockScreen" ],
-            "visiable"   : "false",
-            "name"       : "lockScreen",
+            "visiable"   : false,
+            "_name"      : "lockScreen",
             "view"       : VLockScreen,
             "controller" : CLockScreen
         }, {
             "class"      : IconScreen,
             "clsList"    : [ "iOS-iconScreen" ],
-            "visiable"   : "false",
-            "name"       : "iconScreen",
+            "visiable"   : false,
+            "_name"      : "iconScreen",
             "view"       : VIconScreen,
             "controller" : CIconScreen
         }, {
             "class"      : AppScreen,
             "clsList"    : [ "iOS-appScreen" ],
-            "visiable"   : "false",
-            "name"       : "appScreen",
+            "visiable"   : false,
+            "_name"      : "appScreen",
             "view"       : VAppScreen,
             "controller" : CAppScreen
         }, {
             "class"      : PopScreen,
             "clsList"    : [ "iOS-popScreen" ],
-            "visiable"   : "false",
+            "visiable"   : false,
+            "_name"      : "popScreen",
             "view"       : VPopScreen,
             "controller" : CPopScreen
         }]

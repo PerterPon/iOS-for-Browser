@@ -2,22 +2,24 @@
 define( function( require, exports, module ){
     "use strick";
 
-    Ext.define( 'BaseModel', {
+    require( '../Component' );
+    Ext.define( 'BaseModel', {  
+        extend : 'Component',
 
         inheritableStatics : {
-            manager : require( './ModelManager' );
+            manager : require( './ModelManager' )
         },
 
         statics : {
 
-            name : null,
-
+            name : null
 
         },
 
         constructor : function( cfg ){
             this.callParent([ cfg ]);
             this._initController();
+            this._initView();
         },
 
         /**
@@ -30,9 +32,11 @@ define( function( require, exports, module ){
                 view    = sttc.view,
                 viewCfg = {
                     clsList : sttc.clsList,
-                    name    : 'V' + sttc.name
+                    _name   : 'V' + sttc._name,
+                    visiable: sttc.visiable,
+                    selector: sttc.selector
                 };
-            sttc._view = new view( viewCfg );
+            sttc.view = new view( viewCfg );
         },
 
         /**
@@ -43,7 +47,7 @@ define( function( require, exports, module ){
         _initController : function(){
             var sttc = this.self,
                 ctrl = sttc.controller;
-            sttc._controller = new ctrl( sttc.ctrlCfg );
+            sttc.controller = new ctrl( sttc.ctrlCfg );
         }
 
     });

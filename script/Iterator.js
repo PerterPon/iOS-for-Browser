@@ -27,23 +27,24 @@ define( function( require, exports, module ){
             this.self.preDom = $( '#' + id );
         },
 
-        __doItrtr : function( cfg ){
+        __doItrtr : function( cfg, dom ){
             var sttc   = this.self,
                 module = cfg.class,
                 cls    = '',
                 id     = 'ios-' + sttc.curIdx,
-                html, instance;
+                html, instance, preDom;
             for( var i = 0; i < cfg.clsList.length; i++ ){
                 cls += cfg.clsList[ i ] + ' ';
             }
             html = $( '<div id="'+ id +'" class="'+ cls +'"></div>' );
-            sttc.preDom.append( html );
+            preDom   = dom || sttc.preDom;
+            preDom.append( html );
             instance = new module( cfg );
-            sttc.preDom = html;
+            instance.self.selector = '#' + id;
             sttc.curIdx++;
             if( cfg.subView && cfg.subView.length ){
                 for( i = 0; i < cfg.subView.length; i++ ){
-                    this.__doItrtr( cfg.subView[ i ]);
+                    this.__doItrtr( cfg.subView[ i ], html );
                 }
             }
         }

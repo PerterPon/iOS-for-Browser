@@ -14,7 +14,7 @@ define( function( require, exports, module ){
         _applyCfg : function( cfg ){
             var sttc  = this.self;
             for( var i in cfg ){
-                if( i = 'subView' )
+                if( i == 'subView' )
                     continue;
                 sttc[ i ] = cfg[ i ];    
             }
@@ -23,7 +23,7 @@ define( function( require, exports, module ){
         _registerSelf : function(){
             var sttc    = this.self,
                 manager = sttc.manager;
-            manager.register( sttc.name, this ); 
+            manager.register( sttc._name, this ); 
         }
 
     });

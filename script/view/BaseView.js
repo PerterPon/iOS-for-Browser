@@ -2,7 +2,7 @@
 define( function( require, exports, module ){
     "use strick";
 
-    require( 'Component' );
+    require( '../Component' );
     Ext.define( 'BaseView', {
         extend : 'Component',
 
@@ -13,17 +13,19 @@ define( function( require, exports, module ){
             //viewManager
             manager : require( './ViewManager' ),
 
-            util : require( '../../util/Util' )
+            util : require( '../../util/Util' ),
+
+            elPool : {}
         },
 
         statics : {
-            eventList : {
-
-            }
+            eventList : {},
+            
         },
 
         constructor : function( cfg ){
-            this.callParent([ cfg ]);
+            this.callParent( [ cfg ] );
+            this._initView();
             this._attachEventListener();
         },
 
@@ -31,13 +33,28 @@ define( function( require, exports, module ){
          * 初始化本view，会在最初的时候调用
          * @return {void}
          */
-        _initView : function(){},
+        _initView : function(){
+            var sttc = this,self;
+            sttc.elPool = {};
+            if( sttc.visiable === false ){
+                this._getEl().hide();
+            }
+        },
 
         /**
          * 渲染前执行
          * @return {void}
          */
         _beforeRender : function(){},
+
+        /**
+         * [_initInnerDom 初始化DOM]
+         * @return  {void}
+         * @private
+         */
+        _initInnerDom : function(){
+
+        },
 
         /**
          * 渲染
@@ -73,6 +90,19 @@ define( function( require, exports, module ){
                 util.listen(  );
             }
         },
+
+        /**
+         * [getEl 获得当前View的jQuery对象]
+         * @return {jQuery} [当前View的jQuery对象]
+         */
+        _getEl : function(){
+            var sttc = this.self;
+            if( sttc.elPool[ sttc.selector ] ){
+                return sttc.elPool[ sttc.selector ];
+            } else {
+                return $( sttc.selector );
+            }
+        }
 
     });
 
