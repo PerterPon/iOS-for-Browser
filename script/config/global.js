@@ -3,20 +3,18 @@ define( function( require, exports, module ){
     "use strick";
 
     var BaseIOS     = require( '../model/BaseIOS' ),
-        BootScreen  = require( '../model/BootScreen' ),
         LockScreen  = require( '../model/LockScreen' ),
         IconScreen  = require( '../model/IconScreen' ),
         AppScreen   = require( '../model/AppScreen' ),
         PopScreen   = require( '../model/PopScreen' ),
-        VBootScreen = require( '../view/VBootScreen' ),
         VIconScreen = require( '../view/VIconScreen' ),
         VLockScreen = require( '../view/VLockScreen' ),
         VAppScreen  = require( '../view/VAppScreen' ),
         VPopScreen  = require( '../view/VPopScreen' ),
-        CBootScreen = require( '../controller/CBootScreen' ),
         CLockScreen = require( '../controller/CLockScreen' ),
-        CIconScreen = require( '../controller/CAppScreen' ),
-        CPopScreen  = require( '../controller/CPopScreen' );
+        CAppScreen  = require( '../controller/CAppScreen' ),
+        CPopScreen  = require( '../controller/CPopScreen' ),
+        CIconScreen = require( '../controller/CIconScreen' );
     return {
         "class"      : BaseIOS,
         "clsList"    : [ "iOS" ],
@@ -24,15 +22,8 @@ define( function( require, exports, module ){
         "view"       : "VIos",
         "controller" : "CIos",
         "subView"    : [{
-            "class"      : BootScreen,
-            "clsList"    : [ "iOS-bootScreen" ],
-            "_name"      : "bootScreen",
-            "view"       : VBootScreen,
-            "controller" : CBootScreen
-        }, {
             "class"      : LockScreen,
             "clsList"    : [ "iOS-lockScreen" ],
-            "visiable"   : false,
             "_name"      : "lockScreen",
             "view"       : VLockScreen,
             "controller" : CLockScreen

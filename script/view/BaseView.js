@@ -34,7 +34,7 @@ define( function( require, exports, module ){
          * @return {void}
          */
         _initView : function(){
-            var sttc = this,self;
+            var sttc = this.self;
             sttc.elPool = {};
             if( sttc.visiable === false ){
                 this._getEl().hide();

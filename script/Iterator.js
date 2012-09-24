@@ -39,8 +39,8 @@ define( function( require, exports, module ){
             html = $( '<div id="'+ id +'" class="'+ cls +'"></div>' );
             preDom   = dom || sttc.preDom;
             preDom.append( html );
+            cfg[ 'selector' ] = '#' + id;
             instance = new module( cfg );
-            instance.self.selector = '#' + id;
             sttc.curIdx++;
             if( cfg.subView && cfg.subView.length ){
                 for( i = 0; i < cfg.subView.length; i++ ){
