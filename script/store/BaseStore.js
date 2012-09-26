@@ -25,6 +25,11 @@ define( function( require, exports, module ){
             this._creatWebSocket();
         },
 
+        /**
+         * [_creatWebSocket description]
+         * @return  {[type]} [description]
+         * @protected
+         */
         _creatWebSocket: function(){
             var sttc   = this.self,
                 socket;
@@ -34,13 +39,19 @@ define( function( require, exports, module ){
             }
         },
 
+        /**
+         * [__registStore description]
+         * @param   {[type]} name  [description]
+         * @param   {[type]} store [description]
+         * @return  {[type]}       [description]
+         * @protected
+         */
         _registStore: function( name, store ){
             strMngr.register( name, store );
         },
 
         getData: function(){
             var sttc = this.self;
-            
         }
 
     });

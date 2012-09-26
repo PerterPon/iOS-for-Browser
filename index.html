@@ -11,13 +11,11 @@
 <link rel="stylesheet" type="text/css" href="css/reset.css">
 <link rel="stylesheet" type="text/css" href="css/iOS.css">
 
-<script type="text/javascript" src="lib/jQuery/jquery-1.8.1.min.js"></script>
-<script type="text/javascript" src="lib/Ext/ExtOO.js"></script>
 <script type="text/javascript" src="lib/seajs/sea.js" id="seajsnode"></script>
 <script type="text/javascript" src="lib/seajs/sea-config.js"></script>
 </head>
 <body>
-    <button>开机</button>
+    <button style="position:absolute">开机</button>
     <div id="iOS_outSide_bg">
         <div id="iOS_system_content"></div>
     </div>
@@ -25,7 +23,10 @@
 </html>
 <script type="text/javascript">
 document.getElementsByTagName( 'button' )[0].onclick = function(){
-    document.getElementById( 'iOS_system_content' ).style.background = 'url(resource/images/boot/bootLogo.jpg)';
-    seajs.use( './script/index' );
-}
+    setTimeout( function(){
+        document.getElementById( 'iOS_system_content' ).style.background = 'url(resource/images/boot/bootLogo.jpg)';
+        seajs.use( './script/index' );
+    }, 500 );
+    this.style.display = 'none';
+};
 </script>

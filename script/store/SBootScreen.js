@@ -2,9 +2,10 @@
 define( function( require, exports, module ){
     "use strick";
 
-    Ext.define( 'BootScreen', {
-        extend : 'BaseModule'
+    Ext.define( 'SBootScreen', {
+        extend : 'BaseStore'
+        
     });
 
-    return BootScreen;
+    return SBootScreen;
 });
