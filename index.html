@@ -22,9 +22,10 @@
 </body>
 </html>
 <script type="text/javascript">
+var enterButton = document.getElementsByTagName( 'button' ) || document.body;
 document.getElementsByTagName( 'button' )[0].onclick = function(){
     setTimeout( function(){
-        document.getElementById( 'iOS_system_content' ).style.background = 'url(resource/images/boot/bootLogo.jpg)';
+        addBootLogo();
         seajs.use( './script/index', function( app ){
             app.run();
         });
@@ -32,6 +33,16 @@ document.getElementsByTagName( 'button' )[0].onclick = function(){
     this.style.display = 'none';
 };
 function addBootLogo(){
-    
+    var bootScreen = document.createElement( 'div' ),
+        prent      = document.getElementById('iOS_system_content') || document.body,
+        bootLogo   = document.createElement( 'img' );
+        bootLogo.src = 'resource/images/boot/bootLogo.png'; 
+    bootScreen.className = 'iOS_bootScreen';
+    bootScreen.appendChild( bootLogo );
+    prent.appendChild( bootScreen );
+}
+
+function removeBootLogo(){
+    document.getElementsByClassName( 'iOS_bootScreen' )[ 0 ].remove();
 }
 </script>

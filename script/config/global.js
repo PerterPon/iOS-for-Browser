@@ -20,7 +20,7 @@ define( function( require, exports, module ){
         CIconScreen = require( '../controller/CIconScreen' );
     return [{
         "class"      : TopBar,
-        "clsList"    : [ 'iOS-topBar' ],
+        "clsList"    : [ 'iOS_topBar' ],
         "_name"      : "topBar",
         "view"       : VTopBar,
         "controller" : CTopBar
@@ -32,27 +32,27 @@ define( function( require, exports, module ){
         "controller" : "CIos",
         "subView"    : [{
             "class"      : LockScreen,
-            "clsList"    : [ "iOS-lockScreen" ],
+            "clsList"    : [ "iOS_lockScreen" ],
             "_name"      : "lockScreen",
             "view"       : VLockScreen,
             "controller" : CLockScreen
         }, {
             "class"      : IconScreen,
-            "clsList"    : [ "iOS-iconScreen" ],
+            "clsList"    : [ "iOS_iconScreen" ],
             "visiable"   : false,
             "_name"      : "iconScreen",
             "view"       : VIconScreen,
             "controller" : CIconScreen
         }, {
             "class"      : AppScreen,
-            "clsList"    : [ "iOS-appScreen" ],
+            "clsList"    : [ "iOS_appScreen" ],
             "visiable"   : false,
             "_name"      : "appScreen",
             "view"       : VAppScreen,
             "controller" : CAppScreen
         }, {
             "class"      : PopScreen,
-            "clsList"    : [ "iOS-popScreen" ],
+            "clsList"    : [ "iOS_popScreen" ],
             "visiable"   : false,
             "_name"      : "popScreen",
             "view"       : VPopScreen,

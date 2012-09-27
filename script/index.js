@@ -13,7 +13,7 @@ define( function( require, exports, module ){
         iterator.setPreDom( 'iOS_system_content' );
         iterator.itrtrView( cfg );
         setTimeout( function(){
-            document.getElementById( 'iOS_system_content' ).style.background = '';
+            removeBootLogo();
         }, 500 );
     }
 
