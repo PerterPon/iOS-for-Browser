@@ -27,24 +27,25 @@ define( function( require, exports, module ){
             this.self.preDom = $( '#' + id );
         },
 
-        __doItrtr : function( cfg, dom ){
-            var sttc   = this.self,
-                module = cfg.class,
-                cls    = '',
-                id     = 'ios-' + sttc.curIdx,
-                html, instance, preDom;
-            for( var i = 0; i < cfg.clsList.length; i++ ){
-                cls += cfg.clsList[ i ] + ' ';
-            }
-            html = $( '<div id="'+ id +'" class="'+ cls +'"></div>' );
-            preDom   = dom || sttc.preDom;
-            preDom.append( html );
-            cfg[ 'selector' ] = '#' + id;
-            instance = new module( cfg );
-            sttc.curIdx++;
-            if( cfg.subView && cfg.subView.length ){
-                for( i = 0; i < cfg.subView.length; i++ ){
-                    this.__doItrtr( cfg.subView[ i ], html );
+        __doItrtr : function( tCfg, dom ){
+            var sttc   = this.self, 
+                module, cls, id, html, instance, preDom, cfg;
+            for( var i = 0; i < tCfg.length; i++ ){
+                cfg    = tCfg[ i ];
+                module = cfg.class;
+                cls    = '';
+                id     = 'ios-' + sttc.curIdx;
+                for( var j = 0; j < cfg.clsList.length; j++ ){
+                    cls += cfg.clsList[ j ] + ' ';
+                }
+                html   = $( '<div id="'+ id +'" class="'+ cls +'"></div>' );
+                preDom = dom || sttc.preDom;
+                preDom.append( html );
+                cfg[ 'selector' ] = '#' + id;
+                instance = new module( cfg );
+                sttc.curIdx++;
+                if( cfg.subView && cfg.subView.length ){
+                    this.__doItrtr( cfg.subView, html );
                 }
             }
         }

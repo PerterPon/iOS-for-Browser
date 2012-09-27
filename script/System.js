@@ -3,7 +3,7 @@ define( function( require, exports, module ){
     "use strick";
 
     var height, width, divice,
-        sUserAgent = window.navigator.userAgent;
+        sUserAgent = ( window.navigator.userAgent ).toLowerCase();
     
     function checkBroswer(){
         var diviceTest = {
@@ -25,12 +25,10 @@ define( function( require, exports, module ){
     }
 
     function checkSize(){
-        $( function(){
-            var iOS = $( '#iOS_system_content' );
-            iOS.length ? '' : iOS = $( 'body' );
-            height  = iOS.height();
-            width   = iOS.width();
-        });
+        var iOS = $( '#iOS_system_content' );
+        iOS.length ? '' : iOS = $( 'body' );
+        height  = iOS.height();
+        width   = iOS.width();
     }
 
     function cancleBounce(){

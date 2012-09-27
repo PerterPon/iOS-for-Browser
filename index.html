@@ -25,8 +25,13 @@
 document.getElementsByTagName( 'button' )[0].onclick = function(){
     setTimeout( function(){
         document.getElementById( 'iOS_system_content' ).style.background = 'url(resource/images/boot/bootLogo.jpg)';
-        seajs.use( './script/index' );
+        seajs.use( './script/index', function( app ){
+            app.run();
+        });
     }, 500 );
     this.style.display = 'none';
 };
+function addBootLogo(){
+    
+}
 </script>

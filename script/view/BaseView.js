@@ -15,11 +15,20 @@ define( function( require, exports, module ){
 
             util : require( '../../util/Util' ),
 
-            elPool : {}
+            elPool : {},
+
+            /**
+             * [eventList 需要添加的事件列表]
+             * @type {Array}
+             * @example: [
+             *     [ eventName, eventBody, tarObj, scope ]
+             * ]
+             * eventBody的名称默认和eventName一致;
+             */
+            eventList : [],
         },
 
         statics : {
-            eventList : {},
             
         },
 
@@ -50,7 +59,7 @@ define( function( require, exports, module ){
         /**
          * [_initInnerDom 初始化DOM]
          * @return  {void}
-         * @private
+         * @protected
          */
         _initInnerDom : function(){
 
@@ -84,10 +93,13 @@ define( function( require, exports, module ){
             var sttc   = this.self,
                 events = sttc.eventList,
                 util   = sttc.util,
-                view;
-            for( var i in events ){
-                view = viewMngr.getView( events[ i ].view );
-                util.listen(  );
+                that   = this,
+                manager= sttc.manager,
+                view, eventName, eventBody, scope;
+            for( var i = 0; i < events.length; i++ ){
+                view   = manager.getView( events[ 1 ] || that );
+                eventName = events[ 0 ];
+                util.listen( tarObj, eventName, eventName, that );
             }
         },
 
@@ -95,13 +107,38 @@ define( function( require, exports, module ){
          * [getEl 获得当前View的jQuery对象]
          * @return {jQuery} [当前View的jQuery对象]
          */
-        _getEl : function(){
-            var sttc = this.self;
-            if( sttc.elPool[ sttc.selector ] ){
-                return sttc.elPool[ sttc.selector ];
+        _getEl : function( select, isForce ){
+            var sttc     = this.self,
+                elCache  = sttc.elPool,
+                selector = select || sttc.selector,
+                $el;
+            if( elCache[ selector ] && !isForce ){
+                $el      = elCache[ selector ];
             } else {
-                return $( sttc.selector );
+                $el = selector == sttc.selector ? $( selector ) : $( sttc.selector ).find( selector );
+                sttc.elPool[ selector ] = $el;
             }
+            return $el;
+        },
+
+        /**
+         * [_getElCacheByCls 根据class名称获取当前view下的节点]
+         * @param   {string} class [根据class名称从当当前view下获取节点]
+         * @return  {jQuery}       [匹配的jQuery对象]
+         * @protected
+         */
+        _getElCacheByCls : function( className ){
+            return this._getEl( className );
+        },
+
+        /**
+         * [_getElByCls 根据Class获取当前view下的节点,此方法不会将节点缓存至缓存池，适用于只需要取一次或者两次的情况]
+         * @param   {string} class [class名称]
+         * @return  {jQuery}       [匹配的jQuery对象]
+         * @protected
+         */
+        _getElByCls : function( className ){
+            return $( this.self.selector ).find( '.' + className );
         }
 
     });

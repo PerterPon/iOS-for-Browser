@@ -16,6 +16,12 @@ define( function( require, exports, module ){
             sttc.managerId = managerId; 
         },
 
+        /**
+         * [register 注册相应的实例]
+         * @param  {string} name   [实例名称]
+         * @param  {Object} object [对应实例对象]
+         * @return {void}
+         */
         register : function( name, object ){
             var sttc  = this.self;
             if( !name || !object )
@@ -23,11 +29,19 @@ define( function( require, exports, module ){
             sttc.pool[ name ] = object;
         },
 
+        /**
+         * [get 获取相应实例]
+         * @param  {string/object} name [实例名字，或者实例]
+         * @return {Object}
+         */
         get : function( name ){
             var sttc = this.self;
             if( !name )
                 throw sttc.managerId + ' name can not be empty!';
-            return sttc.pool[ name ];
+            if( typeof name === 'string' )
+                return sttc.pool[ name ];
+            else 
+                return name;
         }
 
     });

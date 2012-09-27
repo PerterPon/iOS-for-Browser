@@ -3,19 +3,28 @@ define( function( require, exports, module ){
     "use strick";
 
     var BaseIOS     = require( '../model/BaseIOS' ),
+        TopBar      = require( '../model/TopBar' ),
         LockScreen  = require( '../model/LockScreen' ),
         IconScreen  = require( '../model/IconScreen' ),
         AppScreen   = require( '../model/AppScreen' ),
         PopScreen   = require( '../model/PopScreen' ),
+        VTopBar     = require( '../view/VTopBar' ),
         VIconScreen = require( '../view/VIconScreen' ),
         VLockScreen = require( '../view/VLockScreen' ),
         VAppScreen  = require( '../view/VAppScreen' ),
         VPopScreen  = require( '../view/VPopScreen' ),
+        CTopBar     = require( '../controller/CTopBar' ),
         CLockScreen = require( '../controller/CLockScreen' ),
         CAppScreen  = require( '../controller/CAppScreen' ),
         CPopScreen  = require( '../controller/CPopScreen' ),
         CIconScreen = require( '../controller/CIconScreen' );
-    return {
+    return [{
+        "class"      : TopBar,
+        "clsList"    : [ 'iOS-topBar' ],
+        "_name"      : "topBar",
+        "view"       : VTopBar,
+        "controller" : CTopBar
+    }, {
         "class"      : BaseIOS,
         "clsList"    : [ "iOS" ],
         "_name"      : "iOS",
@@ -49,5 +58,5 @@ define( function( require, exports, module ){
             "view"       : VPopScreen,
             "controller" : CPopScreen
         }]
-    };
+    }];
 });

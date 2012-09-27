@@ -4,6 +4,17 @@ define( function( require, exports, module ){
     
     var iterator = require( './Iterator' ),
         cfg      = require( './config/global' );
-    iterator.setPreDom( 'iOS_system_content' );
-    iterator.itrtrView( cfg );
+    
+    /**
+     * [run 整个程序的入口函数，会在按下开机按钮，等所有文件被加载好时调用]
+     * @return {void}
+     */
+    exports.run  = function(){
+        iterator.setPreDom( 'iOS_system_content' );
+        iterator.itrtrView( cfg );
+        setTimeout( function(){
+            document.getElementById( 'iOS_system_content' ).style.background = '';
+        }, 500 );
+    }
+
 });

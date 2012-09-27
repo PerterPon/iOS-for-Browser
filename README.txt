@@ -4,7 +4,7 @@ iOS-for-Browser是一个在浏览器上模拟iOS的web应用，并非模拟iOS�
 
 # 安装
 
-其实iOS-for-Browser本身不需要安装，需要安装的是nodejs，用于前后段进行通信，保存和获取数据，有关nodejs的安装可以点击这里：http://nodejs.org ，安装很简单，不管是Windows下还是Linux下，安装好之后，用node运行node/index.js文件，然后再打开index.html文件即可。
+其实iOS-for-Browser本身不需要安装，需要安装的是nodejs，用于前后端进行通信，保存和获取数据，有关nodejs的安装可以点击这里：http://nodejs.org ，安装很简单，不管是Windows下还是Linux下，安装好之后，用node运行node/index.js文件，然后再打开index.html文件即可。
 
 # 注意
 
@@ -12,4 +12,4 @@ iOS-for-Browser是一个在浏览器上模拟iOS的web应用，并非模拟iOS�
 
 # 建议
 
-有任何好的建议，或者说想一起合作的，都非常欢迎你联系我：PerterPon@gmail.com，注：没有任何报酬，纯粹个人兴趣爱好。
+有任何建议，或者说想一起合作的，都非常欢迎你联系我：PerterPon@gmail.com，注：没有任何报酬，纯粹个人兴趣爱好。
