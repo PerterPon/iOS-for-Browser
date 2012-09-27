@@ -33,8 +33,17 @@ define( function( require, exports, module ){
         });
     }
 
+    function cancleBounce(){
+        if( divice == 'iphone' || divice == 'ipad' ){
+            document.addEventListener( 'touchmove', function( event ){
+                event.preventDefault();
+            });
+        }
+    }
+
     checkBroswer();
     checkSize();
+    cancleBounce();
 
     Ext.namespace( 'iOS.System' );
     window.iOS.System = {

@@ -1,1 +1,15 @@
-test
+﻿# 简介
+
+iOS-for-Browser是一个在浏览器上模拟iOS的web应用，并非模拟iOS的运行环境，只是利用HTML5以及CSS3等技术，在浏览器上模拟iOS的外观以及动画效果等。最早的一个版本应该可以算是自己写的第一个程序，这个也可以算是第四个版本了，从第三版开始只支持webkit内核(Google Chrome, Apple Safari)，原因无非性能优势，待到别的浏览器性能同样好时，也会添加相应的支持。从这一版开始，将会加强对移动设备的支持。
+
+# 安装
+
+其实iOS-for-Browser本身不需要安装，需要安装的是nodejs，用于前后段进行通信，保存和获取数据，有关nodejs的安装可以点击这里：http://nodejs.org ，安装很简单，不管是Windows下还是Linux下，安装好之后，用node运行node/index.js文件，然后再打开index.html文件即可。
+
+# 注意
+
+前后端使用WebSocket来进行数据通信，使用的端口是：4239，运行node前最好保证4239端口不被占用，不然无法正常运行，如果没有运行nodejs，或者socket连接不正常，将会读取resource/defaultData文件夹里面的默认数据。
+
+# 建议
+
+有任何好的建议，或者说想一起合作的，都非常欢迎你联系我：PerterPon@gmail.com，注：没有任何报酬，纯粹个人兴趣爱好。
