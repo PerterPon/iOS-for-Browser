@@ -8,6 +8,7 @@ iOS-for-Browser是一个在浏览器上模拟iOS的web应用，并非模拟iOS�
 
 # 注意
 
+使用之前最好升级一下chrome的版本，有些方法低版本的并不支持。
 前后端使用WebSocket来进行数据通信，使用的端口是：4239，运行node前最好保证4239端口不被占用，不然无法正常运行，如果没有运行nodejs，或者socket连接不正常，将会读取resource/defaultData文件夹里面的默认数据。
 
 # 建议

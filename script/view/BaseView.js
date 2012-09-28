@@ -29,7 +29,6 @@ define( function( require, exports, module ){
         },
 
         statics : {
-            
         },
 
         constructor : function( cfg ){

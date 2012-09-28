@@ -23,16 +23,19 @@ define( function( require, exports, module ){
         "clsList"    : [ 'iOS_topBar' ],
         "_name"      : "topBar",
         "view"       : VTopBar,
-        "controller" : CTopBar
+        "controller" : CTopBar,
+        "height"     : '20px'
     }, {
         "class"      : BaseIOS,
         "clsList"    : [ "iOS" ],
         "_name"      : "iOS",
         "view"       : "VIos",
         "controller" : "CIos",
+        "flex"       : "460",
         "subView"    : [{
             "class"      : LockScreen,
             "clsList"    : [ "iOS_lockScreen" ],
+            "visiable"   : false,
             "_name"      : "lockScreen",
             "view"       : VLockScreen,
             "controller" : CLockScreen

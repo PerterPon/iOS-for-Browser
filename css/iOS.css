@@ -1,7 +1,7 @@
 ﻿body { background: #25262B; -webkit-box-orign: vertical }
 
 #iOS_outSide_bg { width: 380px; height: 742px; margin: 0 auto; background-image: url(../resource/images/background/iphone-bg.png) }
-#iOS_system_content { -webkit-box-orient : vertical; position: relative; width: 320px; height: 480px; -webkit-transform: translate3d( 32px, 129px, 0 ); overflow: hidden; }
+#iOS_system_content { -webkit-box-orient : vertical; width: 320px; height: 480px; -webkit-transform: translate3d( 32px, 129px, 0 ); overflow: hidden }
 
 /**
  * bootScreen
@@ -10,10 +10,11 @@
 
 /**
  * topBar
+ * 为保证topBar的高度，在CSS中写死为20px
  */
-.iOS_topBar { -webkit-box-flex: 20; background: white }
+.iOS_topBar { background: white; opacity: 0.5; position: relative; z-index: 2; }
 
 /**
  * iOS
  */
-.iOS { -webkit-box-flex: 460; }
+.iOS {  }

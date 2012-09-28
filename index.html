@@ -22,7 +22,6 @@
 </body>
 </html>
 <script type="text/javascript">
-var enterButton = document.getElementsByTagName( 'button' ) || document.body;
 document.getElementsByTagName( 'button' )[0].onclick = function(){
     setTimeout( function(){
         addBootLogo();
@@ -43,6 +42,7 @@ function addBootLogo(){
 }
 
 function removeBootLogo(){
-    document.getElementsByClassName( 'iOS_bootScreen' )[ 0 ].remove();
+    $( '.iOS_bootScreen' ).remove();
+    // document.getElementsByClassName( 'iOS_bootScreen' )[ 0 ].remove();
 }
 </script>

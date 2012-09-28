@@ -24,7 +24,7 @@ define( function( require, exports, module ){
          * @param {[type]} id [父节点ID]
          */
         setPreDom : function( id ){
-            this.self.preDom = $( '#' + id );
+            this.self.preDom = $( '#' + id )[ 0 ];
         },
 
         __doItrtr : function( tCfg, dom ){
@@ -38,9 +38,17 @@ define( function( require, exports, module ){
                 for( var j = 0; j < cfg.clsList.length; j++ ){
                     cls += cfg.clsList[ j ] + ' ';
                 }
-                html   = $( '<div id="'+ id +'" class="'+ cls +'"></div>' );
+                html    = document.createElement( 'div' );
+                html.id = id;
+                html.className = cls;
+                if( cfg.flex )
+                    html.style[ '-webkit-box-flex' ] = cfg.flex;
+                if( cfg.height )
+                    html.style[ 'height' ] = cfg.height;
+                if( cfg.width )
+                    html.style[ 'width' ]  = cfg.width; 
                 preDom = dom || sttc.preDom;
-                preDom.append( html );
+                preDom.appendChild( html );
                 cfg[ 'selector' ] = '#' + id;
                 instance = new module( cfg );
                 sttc.curIdx++;
