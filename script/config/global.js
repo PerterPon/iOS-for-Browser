@@ -8,6 +8,7 @@ define( function( require, exports, module ){
         IconScreen  = require( '../model/IconScreen' ),
         AppScreen   = require( '../model/AppScreen' ),
         PopScreen   = require( '../model/PopScreen' ),
+        VIOS        = require( '../view/VIOS' ),
         VTopBar     = require( '../view/VTopBar' ),
         VIconScreen = require( '../view/VIconScreen' ),
         VLockScreen = require( '../view/VLockScreen' ),
@@ -29,8 +30,7 @@ define( function( require, exports, module ){
         "class"      : BaseIOS,
         "clsList"    : [ "iOS" ],
         "_name"      : "iOS",
-        "view"       : "VIos",
-        "controller" : "CIos",
+        "view"       : VIOS,
         "flex"       : "460",
         "subView"    : [{
             "class"      : LockScreen,

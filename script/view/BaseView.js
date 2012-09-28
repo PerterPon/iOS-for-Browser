@@ -34,6 +34,9 @@ define( function( require, exports, module ){
         constructor : function( cfg ){
             this.callParent( [ cfg ] );
             this._initView();
+            this._beforeRender();
+            this._render();
+            this._afterRender();
             this._attachEventListener();
         },
 
@@ -69,7 +72,7 @@ define( function( require, exports, module ){
          * @return {void}
          */
         _render : function(){
-            this.initDom();
+            this._initInnerDom();
         },
 
         /**

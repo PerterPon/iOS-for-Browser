@@ -2,17 +2,12 @@
 define( function( require, exports, module ){
     "use strick";
 
-    require( 'BaseModel' );
+    require( './BaseModel' );
     Ext.define( 'BaseIOS', {
-        extend : 'BaseModel'
+        extend : 'BaseModel',
 
         constructor : function( cfg ){
             this.callParent([ cfg ]);
-
-        },
-        
-        __initBackground : function(){
-            
         }
     });
 

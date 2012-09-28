@@ -47,7 +47,7 @@ define( function( require, exports, module ){
                     html.style[ 'height' ] = cfg.height;
                 if( cfg.width )
                     html.style[ 'width' ]  = cfg.width; 
-                preDom = dom || sttc.preDom;
+                preDom = dom || sttc.preDom || document.body;
                 preDom.appendChild( html );
                 cfg[ 'selector' ] = '#' + id;
                 instance = new module( cfg );

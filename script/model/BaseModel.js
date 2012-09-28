@@ -28,8 +28,10 @@ define( function( require, exports, module ){
          * @protected
          */
         _initView : function(){
-            var sttc    = this.self,
-                view    = sttc.view,
+            var sttc    = this.self;
+            if( !sttc.view )
+                return;
+            var view    = sttc.view,
                 viewCfg = {
                     clsList : sttc.clsList,
                     _name   : 'V' + sttc._name,
@@ -45,8 +47,10 @@ define( function( require, exports, module ){
          * @protected
          */
         _initController : function(){
-            var sttc = this.self,
-                ctrl = sttc.controller;
+            var sttc = this.self;
+            if( !sttc.controller )
+                return;
+            var ctrl = sttc.controller;
             sttc.controller = new ctrl( sttc.ctrlCfg );
         },
 
