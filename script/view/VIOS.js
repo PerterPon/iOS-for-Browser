@@ -22,7 +22,7 @@ define( function( require, exports, module ){
          */
         __initBackground : function(){
             var bgDom = document.getElementById( this.self.bgId ) || document.body;
-            bgDom.style.background = 'url(resource/images/background/background.jpg)';
+            bgDom.style.background = '#25262B url(resource/images/background/background.jpg) no-repeat center center';
         }
     });
 
