@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require ){
     "use strick";
 
     Ext.define( 'Iterator', {
@@ -32,7 +32,7 @@ define( function( require, exports, module ){
                 module, cls, id, html, instance, preDom, cfg;
             for( var i = 0; i < tCfg.length; i++ ){
                 cfg    = tCfg[ i ];
-                module = cfg.class;
+                module = cfg[ 'class' ];
                 cls    = '';
                 id     = 'ios-' + sttc.curIdx;
                 for( var j = 0; j < cfg.clsList.length; j++ ){
