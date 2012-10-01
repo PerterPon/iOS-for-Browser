@@ -83,8 +83,9 @@ $(function(){
     checkSize();
     window.iOS = {};
     window.iOS.System = {
-        width  : width,
-        height : height,
-        divice : divice 
+        isWebkit : sUserAgent.indexOf( 'webkit' ) >= 0 ? true : false,
+        width    : width,
+        height   : height,
+        divice   : divice 
     };
 })

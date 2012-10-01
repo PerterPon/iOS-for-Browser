@@ -28,7 +28,7 @@ define( function( require ){
         },
 
         __doItrtr : function( tCfg, dom ){
-            var sttc   = this.self, 
+            var sttc   = this.self,
                 module, cls, id, html, instance, preDom, cfg;
             for( var i = 0; i < tCfg.length; i++ ){
                 cfg    = tCfg[ i ];
@@ -46,7 +46,7 @@ define( function( require ){
                 if( cfg.height )
                     html.style[ 'height' ] = cfg.height;
                 if( cfg.width )
-                    html.style[ 'width' ]  = cfg.width; 
+                    html.style[ 'width' ]  = cfg.width;
                 preDom = dom || sttc.preDom || document.body;
                 preDom.appendChild( html );
                 cfg[ 'selector' ] = '#' + id;

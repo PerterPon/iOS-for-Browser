@@ -45,8 +45,9 @@ define( function( require, exports, module ){
 
     Ext.namespace( 'iOS.System' );
     window.iOS.System = {
-        width  : width,
-        height : height,
-        divice : divice 
+        isWebkit : sUserAgent.indexOf( 'webkit' ) >= 0 ? true : false,
+        width    : width,
+        height   : height,
+        divice   : divice 
     };
 });
