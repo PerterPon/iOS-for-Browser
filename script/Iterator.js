@@ -27,6 +27,13 @@ define( function( require ){
             this.self.preDom = $( '#' + id )[ 0 ];
         },
 
+        /**
+         * [__doItrtr 迭代器]
+         * @param   {Object} tCfg [配置信息]
+         * @param   {Dom}    dom  [Dom对象，如果不填，会自动进行搜寻]
+         * @return  {Void}
+         * @protected
+         */
         __doItrtr : function( tCfg, dom ){
             var sttc   = this.self,
                 module, cls, id, html, instance, preDom, cfg;
