@@ -62,6 +62,9 @@ define( function( require, exports, module ){
      */
     function notify( tarObj, eventName, params ){
         var evntInstnc = tarObj[ eventName ];
+        if( !evntInstnc ){
+            return;
+        }
         evntInstnc.handler.apply( evntInstnc.scope || tarObj, params );
     }
 

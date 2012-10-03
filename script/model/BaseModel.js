@@ -4,15 +4,22 @@ define( function( require, exports, module ){
 
     require( '../Component' );
 
-    var sockMngr = require( '../../util/SocketUtil' );
-    Ext.define( 'BaseModel', {  
+    var sockMngr = require( '../../util/SocketUtil' ),
+        scktAdd  = 'ws://localhost:4239',
+        socket, needSocket;
+    
+    (function(){
+        if( !needSocket ){
+            socket = new WebSocket( scktAdd );
+            sockMngr.setSocket( socket );
+            needSocket = true;
+        }
+    })();
+
+    Ext.define( 'BaseModel', {
         extend : 'Component',
 
         inheritableStatics : {
-            //webSocket连接的实例，理论上来说应该只有一个。
-            socket  : null,
-            //socket服务器连接地址
-            scktAdd : 'ws://localhost:4239',
             manager : require( './ModelManager' )
         },
 
@@ -24,23 +31,8 @@ define( function( require, exports, module ){
 
         constructor : function( cfg ){
             this.callParent([ cfg ]);
-            this.__creatWebSocket();
             this._initController();
             this._initView();
-        },
-
-        /**
-         * [_creatWebSocket description]
-         * @return  {[type]} [description]
-         * @private
-         */
-        __creatWebSocket : function(){
-            var sttc   = this.self,
-                socket;
-            if( sttc.needSocket ){
-                sttc.socket = new WebSocket( sttc.scktAdd );
-                sockMngr.setSocket( sttc.socket );
-            }
         },
 
         /**
@@ -102,17 +94,11 @@ define( function( require, exports, module ){
          * @private
          */
         _getData : function(){
+            var sttc = this.self;
+            if( !sttc.data ){
+                this._requestData();
+            }
             return this.self.data;
-        },
-
-        /**
-         * [_pushInitInfo 向view推送初始化信息，并通知view进行初始化操作]
-         * @return {void}
-         */
-        _pushInitInfo : function(){
-            var sttc = this.self,
-                view = sttc.view;
-            view.init(  );
         }
 
     });
