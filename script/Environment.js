@@ -72,7 +72,20 @@ $(function(){
         });
     }
 
+    /**
+     * [cacheBootLogo 缓存开机logo]
+     * @return {void}
+     */
+    function cacheBootLogo(){
+        var img = new Image();
+        img.src = './resource/images/boot/bootLogo.png';
+        img.onload = function(){
+            delete img;
+        }
+    }
+
     checkBroswer();
+    cacheBootLogo();
 
     if( divice == 'windowsDesktop' || divice == 'macDecktop' || divice == 'linuxDesktop' ){
         initDesktop();

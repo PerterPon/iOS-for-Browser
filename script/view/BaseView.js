@@ -29,11 +29,20 @@ define( function( require, exports, module ){
         },
 
         statics : {
+            initInfo : null
         },
 
         constructor : function( cfg ){
             this.callParent( [ cfg ] );
             this._initView();
+        },
+
+        /**
+         * [init 初始化]
+         * @param  {Object} initInfo [初始化信息，由model推送过来]
+         * @return {void}
+         */
+        init : function( initInfo ){
             this._beforeRender();
             this._render();
             this._afterRender();
@@ -63,9 +72,7 @@ define( function( require, exports, module ){
          * @return  {void}
          * @protected
          */
-        _initInnerDom : function(){
-
-        },
+        _initInnerDom : function(){},
 
         /**
          * 渲染
