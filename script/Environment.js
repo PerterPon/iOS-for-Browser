@@ -94,7 +94,7 @@ $(function(){
     }
 
     checkSize();
-    window.iOS = {};
+    window.iOS ? '' : window.iOS = {};
     window.iOS.System = {
         isWebkit : sUserAgent.indexOf( 'webkit' ) >= 0 ? true : false,
         width    : width,
