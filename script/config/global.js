@@ -35,7 +35,6 @@ define( function( require, exports, module ){
         "subView"    : [{
             "class"      : LockScreen,
             "clsList"    : [ "iOS_lockScreen" ],
-            "visiable"   : false,
             "_name"      : "lockScreen",
             "view"       : VLockScreen,
             "controller" : CLockScreen

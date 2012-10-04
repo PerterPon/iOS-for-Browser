@@ -34,7 +34,7 @@ define( function( require, exports, module ){
                     '<div class="'+ sttc.percent +'">100%</div>' + 
                     '<img src="'+ ( basePath + 'battery.png' ) +'" class="'+ sttc.battery +' '+ sttc.barIcon +'" />' +
                 '</div>'
-            this._getEl().append( htmlData );
+            this._getEl().html( htmlData );
         }
     });
 

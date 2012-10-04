@@ -12,7 +12,7 @@
  * topBar
  * 为保证topBar的高度，在CSS中写死为20px
  */
-.iOS_topBar { background: white; opacity: 0.5; position: relative; z-index: 2; background-color: rgba( 0, 0, 0, 0.6 ); }
+.iOS_topBar { position: relative; z-index: 2; background-color: rgba( 0, 0, 0, 0.6 ); }
 .iOS_topBar_leftIcon { left: 0; height: 100% }
 .iOS_topBar_centerIcon { -webkit-box-flex: 320; -webkit-box-pack: center; height: 100% }
 .iOS_topBar_rightIcon { right: 0; height: 100% }
@@ -21,7 +21,21 @@
 .iOS_topBar_wifi { margin-left: 8px }
 .iOS_topBar_percent { line-height: 20px; margin-right: 3px; color: white; font-size: 12px; font-family: arial }
 .iOS_topBar_battery { margin-right: 3px }
+
 /**
  * iOS
  */
-.iOS {  }
+.iOS { position: relative; }
+
+/**
+ * lockScreen
+ */
+.iOS_lockScreen { width: 100%; position: relative; -webkit-box-orient: block-axis }
+.iOS_lockScreen div { width: 100% }
+.iOS_lockScreen_lockDate { color: white; -webkit-box-orient: block-axis; top: 0; height: 95px; background-image: -webkit-linear-gradient(rgba(44, 44, 44, 0.3), rgba(21, 21, 21, 0.3) 52%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.6)) }
+    .iOS_lockScreen_lockDate div { -webkit-box-pack: center; -webkit-box-align: center }
+    .iOS_lockScreen_lockTime { height: 65px; font-size: 55px; -webkit-transform: translate3d( 0, 5px, 0 ) }
+    .iOS_lockScreen_lockDateInfo { height: 30px }
+.iOS_lockScreen_lockSlider { bottom: 0; height: 94px; background-image: url(../resource/images/lockStuff/lockBottom.png); }
+    .iOS_lockScreen_sliderContainer { width: 274px; height: 50px; -webkit-transform: translate3d( 50px, 23px, 0 ) }
+

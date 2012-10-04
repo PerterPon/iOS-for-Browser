@@ -10,6 +10,11 @@ define( function( require ){
             lock    : './resource/images/status/lock.png',
             signal  : './resource/images/status/signal.png',
             wifi    : './resource/images/status/WiFi.png'
+        },
+        lockStuff : {
+            sliderContainer: './resource/images/lockStuff/lockBottom.png',
+            slider : './resource/images/lockStuff/lockSlider.png',
+            sliderText : './resource/images/lockStuff/sliderToUnlock.gif'
         }
     };
 
