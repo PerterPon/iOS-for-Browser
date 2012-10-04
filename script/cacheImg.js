@@ -12,9 +12,10 @@ define( function( require ){
             wifi    : './resource/images/status/WiFi.png'
         },
         lockStuff : {
+            lockTop    : './resource/images/lockStuff/lockTop.png',
             sliderContainer: './resource/images/lockStuff/lockBottom.png',
-            slider : './resource/images/lockStuff/lockSlider.png',
-            sliderText : './resource/images/lockStuff/sliderToUnlock.gif'
+            slider     : './resource/images/lockStuff/lockSlider.png',
+            sliderText : './resource/images/lockStuff/slideToUnlock.gif'
         }
     };
 
