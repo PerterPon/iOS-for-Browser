@@ -9,7 +9,7 @@ define( function( require ){
             battery : './resource/images/status/battery.png',
             lock    : './resource/images/status/lock.png',
             signal  : './resource/images/status/signal.png',
-            wifi    : './resource/images/status/wifi.png'
+            wifi    : './resource/images/status/WiFi.png'
         }
     };
 

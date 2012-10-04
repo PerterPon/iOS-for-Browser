@@ -35,18 +35,9 @@ define( function( require, exports, module ){
         constructor : function( cfg ){
             this.callParent( [ cfg ] );
             this._initView();
-        },
-
-        /**
-         * [init 初始化]
-         * @param  {Object} initInfo [初始化信息，由model推送过来]
-         * @return {void}
-         */
-        init : function( initInfo ){
             this._beforeRender();
             this._render();
             this._afterRender();
-            this._attachEventListener();
         },
 
         /**
@@ -80,6 +71,7 @@ define( function( require, exports, module ){
          */
         _render : function(){
             this._initInnerDom();
+            this._attachEventListener();
         },
 
         /**

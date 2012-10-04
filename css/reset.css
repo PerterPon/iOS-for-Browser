@@ -9,6 +9,7 @@ body.x-ios.x-phone{font-size:114%}
 body.x-desktop{font-size:114%}
 input,textarea{-webkit-user-select:text}
 div{ display: -webkit-box }
+.abs { position: absolute }
 
 .x-scroller-parent{overflow:hidden; display: -webkit-box }
 .x-scroller-parent,.x-scroller{position:relative}
