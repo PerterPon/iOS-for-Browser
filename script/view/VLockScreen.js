@@ -21,7 +21,9 @@ define( function( require, exports, module ){
                     '<div class="'+ sttc.lockDateInfo +'">12月12日 星期四</div>' +
                 '</div>' + 
                 '<div class="'+ sttc.lockSlider +' abs">' +
-                    '<div class="'+ sttc.sldrCntinr +'"></div>' +
+                    '<div class="'+ sttc.sldrCntinr +'">' +
+                        '<img src="./resource/images/lockStuff/lockSlider.png" />' +
+                    '</div>' +
                 '</div>';
             this._getEl().html( htmlData );
         }

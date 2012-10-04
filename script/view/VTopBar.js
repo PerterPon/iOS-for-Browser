@@ -33,7 +33,7 @@ define( function( require, exports, module ){
                 '<div class="'+ sttc.rightIcon +' abs">' +
                     '<div class="'+ sttc.percent +'">100%</div>' + 
                     '<img src="'+ ( basePath + 'battery.png' ) +'" class="'+ sttc.battery +' '+ sttc.barIcon +'" />' +
-                '</div>'
+                '</div>';
             this._getEl().html( htmlData );
         }
     });
