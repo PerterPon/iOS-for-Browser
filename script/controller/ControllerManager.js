@@ -13,7 +13,7 @@ define( function( require, exports, module ){
     });
 
     var ctrlMgr = new ControllerManager( 'module' ),
-        Util    = require( '../../util/Util' );
+        Util    = require( 'Util' );
 
     return {
         register      : Util.bind( ctrlMgr.register, ctrlMgr ),

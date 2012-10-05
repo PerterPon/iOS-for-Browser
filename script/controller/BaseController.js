@@ -23,6 +23,22 @@ define( function( require, exports, module ){
          */
         setModel : function( model ){
             this.self.model = model;
+        },
+
+        /**
+         * [setMV 设置ctrl的model和view]
+         * @param {Object} model [model]
+         * @param {Object} view  [view]
+         */
+        setMV : function( model, view ){
+            var sttc   = this.self;
+            sttc.model = model;
+            sttc.view  = view;
+            this._init(); 
+        },
+
+        _init : function(){
+            // this.addEventListener();
         }
 
     });

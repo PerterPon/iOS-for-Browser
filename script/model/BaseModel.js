@@ -31,8 +31,9 @@ define( function( require, exports, module ){
 
         constructor : function( cfg ){
             this.callParent([ cfg ]);
-            this._initController();
-            this._initView();
+            // this._initController();
+            // this._initView();
+            this._initProgram();
         },
 
         /**
@@ -48,8 +49,8 @@ define( function( require, exports, module ){
         },
 
         _initProgram : function(){
-            this._initView();
-            this._initController();
+            // this._initView();
+            // this._initController();
             var sttc = this.self,
                 View, Ctrl, viewCfg, ctrlCfg;
             if( sttc.controller ){
@@ -62,13 +63,15 @@ define( function( require, exports, module ){
                     clsList : sttc.clsList,
                     _name   : 'V' + sttc._name,
                     visiable: sttc.visiable,
-                    selector: sttc.selector
+                    selector: sttc.selector,
+                    ctrl    : sttc.controller
                 };
                 sttc.view = new View( viewCfg );
             }
-            sttc.controller.setModel( this );
-            sttc.controller.setView( sttc.view );
-            sttc.view.setCtrl( sttc.ctrl );
+            if( sttc.controller ){
+                sttc.controller.setMV( this, sttc.view );
+            }
+            
         },
 
         /**

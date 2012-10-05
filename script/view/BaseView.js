@@ -9,23 +9,9 @@ define( function( require, exports, module ){
         inheritableStatics : {
             //本view的名称
             name    : null,
-
             //viewManager
             manager : require( './ViewManager' ),
-
-            util : require( '../../util/Util' ),
-
-            elPool : {},
-
-            /**
-             * [eventList 需要添加的事件列表]
-             * @type {Array}
-             * @example: [
-             *     [ eventName, eventBody, tarObj, scope ]
-             * ]
-             * eventBody的名称默认和eventName一致;
-             */
-            eventList : [],
+            elPool : {}
         },
 
         statics : {
@@ -79,7 +65,7 @@ define( function( require, exports, module ){
          */
         _render : function(){
             this._initInnerDom();
-            this._attachEventListener();
+            this._attachDomEvent();
         },
 
         /**
@@ -89,28 +75,10 @@ define( function( require, exports, module ){
         _afterRender : function(){},
 
         /**
-         * 添加Dom节点上的事件
+         * [_attachDomEvent 添加节点上的事件]
          * @return {void}
          */
         _attachDomEvent : function(){},
-
-        /**
-         * 添加view上的事件
-         * @return {void}
-         */
-        _attachEventListener : function(){
-            var sttc   = this.self,
-                events = sttc.eventList,
-                util   = sttc.util,
-                that   = this,
-                manager= sttc.manager,
-                view, eventName, eventBody, scope;
-            for( var i = 0; i < events.length; i++ ){
-                view   = manager.getView( events[ 1 ] || that );
-                eventName = events[ 0 ];
-                util.listen( tarObj, eventName, eventName, that );
-            }
-        },
 
         /**
          * [getEl 获得当前View的jQuery对象]
