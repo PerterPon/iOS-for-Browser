@@ -14,13 +14,13 @@
  */
 .iOS_topBar { position: relative; z-index: 2; background-color: rgba( 0, 0, 0, 0.6 ); }
 .iOS_topBar_leftIcon { left: 0; height: 100% }
+    .iOS_topBar_signal { margin-left: 5px }
+    .iOS_topBar_att { margin-left: 3px }
+    .iOS_topBar_wifi { margin-left: 8px }
 .iOS_topBar_centerIcon { -webkit-box-flex: 320; -webkit-box-pack: center; height: 100% }
 .iOS_topBar_rightIcon { right: 0; height: 100% }
-.iOS_topBar_signal { margin-left: 5px }
-.iOS_topBar_att { margin-left: 3px }
-.iOS_topBar_wifi { margin-left: 8px }
-.iOS_topBar_percent { line-height: 20px; margin-right: 3px; color: white; font-size: 12px; font-family: arial }
-.iOS_topBar_battery { margin-right: 3px }
+    .iOS_topBar_percent { line-height: 20px; margin-right: 3px; color: white; font-size: 12px; font-family: arial }
+    .iOS_topBar_battery { margin-right: 3px }
 
 /**
  * iOS

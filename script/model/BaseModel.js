@@ -47,6 +47,30 @@ define( function( require, exports, module ){
             });
         },
 
+        _initProgram : function(){
+            this._initView();
+            this._initController();
+            var sttc = this.self,
+                View, Ctrl, viewCfg, ctrlCfg;
+            if( sttc.controller ){
+                Ctrl = sttc.controller;
+                sttc.controller = new Ctrl( sttc.ctrlCfg );
+            }
+            if( sttc.view ){
+                View = sttc.view;
+                viewCfg = {
+                    clsList : sttc.clsList,
+                    _name   : 'V' + sttc._name,
+                    visiable: sttc.visiable,
+                    selector: sttc.selector
+                };
+                sttc.view = new View( viewCfg );
+            }
+            sttc.controller.setModel( this );
+            sttc.controller.setView( sttc.view );
+            sttc.view.setCtrl( sttc.ctrl );
+        },
+
         /**
          * [_initView 初始化view]
          * @return  {void}

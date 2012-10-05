@@ -41,6 +41,14 @@ define( function( require, exports, module ){
         },
 
         /**
+         * [setController 设置controller]
+         * @param {Object} ctrl [controller]
+         */
+        setController : function( ctrl ){
+            this.self.ctrl = ctrl;
+        },
+
+        /**
          * 初始化本view，会在最初的时候调用
          * @return {void}
          */
