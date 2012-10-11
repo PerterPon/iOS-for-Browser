@@ -87,7 +87,7 @@ $(function(){
     checkBroswer();
     cacheBootLogo();
 
-    if( divice == 'windowsDesktop' || divice == 'macDecktop' || divice == 'linuxDesktop' ){
+    if( divice.indexOf( 'Desktop' ) >= 0 ){
         initDesktop();
     } else {
         initPhone();
