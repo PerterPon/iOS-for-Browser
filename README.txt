@@ -6,6 +6,11 @@ iOS-for-Browser是一个在浏览器上模拟iOS的web应用，并非模拟iOS�
 
 其实iOS-for-Browser本身不需要安装，需要安装的是nodejs，用于前后端进行通信，保存和获取数据，有关nodejs的安装可以点击这里：http://nodejs.org ，安装很简单，不管是Windows下还是Linux下，安装好之后，用node运行node/index.js文件，然后再打开index.html文件即可。
 
+# 相比上个版本
+
+大量减少页面节点，优化加载速度，对移动设备和桌面设备的设备类型会进行自动判断，并加载相应环境。
+减少对jQuery的使用，生成一个jQuery对象会比较费时，尽量采用了原生的方法。
+
 # 注意
 
 使用之前最好升级一下chrome的版本，有些方法低版本的并不支持。

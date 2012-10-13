@@ -45,10 +45,11 @@ define( function( require, exports, module ){
      * @return {void}
      */
     function listen( tarObj, eventName, handler, scope ){
-        tarObj[ 'ios_' + eventName ] = {
+        tarObj[ 'ios_' + eventName ] ? '' : tarObj[ 'ios_' + eventName ] = [];
+        tarObj[ 'ios_' + eventName ].push({
             handler : handler,
             scope   : scope
-        };
+        });
     }
 
     var objPool = {};
@@ -61,11 +62,14 @@ define( function( require, exports, module ){
      * @return {void}
      */
     function notify( tarObj, eventName, params ){
-        var evntInstnc = tarObj[ eventName ];
+        var evntInstnc = tarObj[ 'ios_' + eventName ];
         if( !evntInstnc ){
             return;
         }
-        evntInstnc.handler.apply( evntInstnc.scope || tarObj, params );
+        for( var i = 0; i < evntInstnc.length; i++ ){
+            evntInstnc[ i ].handler.apply( evntInstnc[ i ].scope || tarObj, params );
+        }
+        
     }
 
     var result = {

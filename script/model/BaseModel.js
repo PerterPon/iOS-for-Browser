@@ -55,7 +55,10 @@ define( function( require, exports, module ){
                 View, Ctrl, viewCfg, ctrlCfg;
             if( sttc.controller ){
                 Ctrl = sttc.controller;
-                sttc.controller = new Ctrl( sttc.ctrlCfg );
+                ctrlCfg = {
+                    _name : 'C' + sttc._name
+                };
+                sttc.controller = new Ctrl( ctrlCfg );
             }
             if( sttc.view ){
                 View = sttc.view;

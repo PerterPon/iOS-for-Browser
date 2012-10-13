@@ -12,6 +12,7 @@ define( function( require, exports, module ){
             lockDateInfo: 'iOS_lockScreen_lockDateInfo', 
             lockSlider  : 'iOS_lockScreen_lockSlider',
             sldrCntinr  : 'iOS_lockScreen_sliderContainer',
+            sldrImg     : 'iOS_lockScreen_sliderImg',
             slider      : 'iOS_lockScreen_slider'
         },
 
@@ -23,6 +24,7 @@ define( function( require, exports, module ){
                 '</div>' + 
                 '<div class="'+ sttc.lockSlider +' abs">' +
                     '<div class="'+ sttc.sldrCntinr +'">' +
+                        '<div class="'+ sttc.sldrImg +'"></div>' +
                         '<img class="'+ sttc.slider +'" draggable="false" src="./resource/images/lockStuff/lockSlider.png" />' +
                     '</div>' +
                 '</div>';
@@ -34,15 +36,15 @@ define( function( require, exports, module ){
             var sttc = this.self,
                 ctrl = sttc.ctrl,
                 Util = sttc.Util;
-            this._getElByCls( sttc.slider ).bind( $.support.mousedown, function( event ){
+            this._getElByCls( sttc.slider ).bind( $.support.touchstart, function( event ){
                 Util.notify( ctrl, 'sliderDown', [ event ]);
-            }).bind( $.support.mousemove, function( event ){
+            }).bind( $.support.touchmove, function( event ){
                 Util.notify( ctrl, 'sliderMove', [ event ]);
-            }).bind( $.support.mouseup, function( event ){
+            }).bind( $.support.touchstop, function( event ){
                 Util.notify( ctrl, 'sliderUp', [ event ]);
             });
         }
-        
+
     });
 
     return VLockScreen;

@@ -6,18 +6,18 @@ define( function( require, exports, module ){
     Ext.define( 'ControllerManager', {
         extend : 'BaseManager',
 
-        getController : function( name ){
+        /*getController : function( name ){
             return this.get( name );
-        }
+        }*/
 
     });
 
     var ctrlMgr = new ControllerManager( 'module' ),
-        Util    = require( 'Util' );
+        Util    = require( '../../util/Util' );
 
     return {
-        register      : Util.bind( ctrlMgr.register, ctrlMgr ),
-        getController : Util.bind( ctrlMgr.getController, ctrlMgr )
+        register : Util.bind( ctrlMgr.register, ctrlMgr ),
+        get      : Util.bind( ctrlMgr.get, ctrlMgr )
     };
 
 });

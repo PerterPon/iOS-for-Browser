@@ -4,9 +4,16 @@ define( function( require, exports, module ){
 
     require( '../Component' );
     Ext.define( 'BaseController', {
+        extend : 'Component',
+
+        inheritableStatics : {
+            manager : require( './ControllerManager' )
+        },
 
         constructor : function( cfg ){
-            this.callParent([ cfg ]);
+            // this.callParent([ cfg ]);
+            this._applyCfg( cfg );
+            this._registerSelf();
         },
 
         /**
@@ -38,7 +45,7 @@ define( function( require, exports, module ){
         },
 
         _init : function(){
-            // this.addEventListener();
+            this._attachEventListener();
         }
 
     });

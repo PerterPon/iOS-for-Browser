@@ -4,11 +4,7 @@ define( function( require, exports, module ){
 
     require( '../BaseManager' );
     Ext.define( 'ModelManager', {
-        extend : 'BaseManager',
-
-        getModel : function( name ){
-            return this.get( name );
-        }
+        extend : 'BaseManager'
 
     });
 
@@ -17,7 +13,7 @@ define( function( require, exports, module ){
 
     return {
         register : Util.bind( modelMgr.register, modelMgr ),
-        getModel : Util.bind( modelMgr.getModel, modelMgr )
+        get      : Util.bind( modelMgr.get, modelMgr )
     };
 
 });

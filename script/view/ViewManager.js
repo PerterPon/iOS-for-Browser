@@ -4,11 +4,7 @@ define( function( require, exports, module ){
 
     require( '../BaseManager' );
     Ext.define( 'ViewManager', {
-        extend : 'BaseManager',
-        
-        getView : function( name ){
-            return this.get( name );
-        }
+        extend : 'BaseManager'
 
     });
 
@@ -17,7 +13,7 @@ define( function( require, exports, module ){
 
     return {
         register : Util.bind( viewMngr.register, viewMngr ),
-        getView  : Util.bind( viewMngr.getView, viewMngr )
+        get      : Util.bind( viewMngr.get, viewMngr )
     };
 
 }); 

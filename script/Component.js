@@ -30,34 +30,33 @@ define( function( require, exports, module ){
             for( var i in cfg ){
                 if( i == 'subView' )
                     continue;
-                sttc[ i ] = cfg[ i ];    
+                sttc[ i ] = cfg[ i ];
             }
         },
 
         _registerSelf : function(){
             var sttc    = this.self,
                 manager = sttc.manager;
-            manager.register( sttc._name, this ); 
+            manager.register( sttc._name, this );
         },
 
         /**
-         * 添加view上的事件
+         * 添加事件
          * @return {void}
          */
         _attachEventListener : function(){
             var sttc   = this.self,
                 events = sttc.eventList,
-                util   = sttc.util,
+                Util   = sttc.Util,
                 that   = this,
                 manager= sttc.manager,
                 view, eventName, eventBody, scope;
             for( var i = 0; i < events.length; i++ ){
-                view   = manager.getView( events[ 1 ] || that );
-                eventName = events[ 0 ];
-                util.listen( tarObj, eventName, eventName, that );
+                view   = manager.get( events[ i ][ 1 ] || that );
+                eventName = events[ i ][ 0 ];
+                Util.listen( view, eventName, view[ 'E' + eventName ], that );
             }
-        },
-
+        }
     });
 
     return Component;
