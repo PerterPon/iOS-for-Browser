@@ -36,24 +36,36 @@ define( function( require, exports, module ){
                 that = this;
             setInterval( function(){
                 var date = new Date(),
-                    day  = 
+                    day  = null;
             }, 10000 );
         },
 
+        /**
+         * [__getTouchPos 获得鼠标或者触摸点信息]
+         * @param  {Event} event      [事件对象]
+         * @param  {Bool}  isTouchEnd [touchend实践或者pageX的方式较为特殊]
+         * @return {Object}
+         */
+        __getTouchPos : function( event, isTouchEnd ){
+            return $.support.touch ? isTouchEnd ? event.originalEvent.touches[ 0 ] : event.originalEvent.changedTouches[ 0 ] : event;
+        },
+
         EsliderDown : function( event ){
-            var sttc = this.self;
-            sttc.slider   = event.target;
+            var sttc   = this.self,
+                evtPos = this.__getTouchPos( event ); 
+            sttc.slider   = evtPos.target;
             sttc.sliderImg= sttc.slider.parentElement.getElementsByClassName( sttc.sliderImgCls )[ 0 ];
-            sttc.startPos = event.pageX;
+            sttc.startPos = evtPos.pageX;
             sttc.sliding  = true;
         },
 
         EsliderMove : function( event ){
-            var sttc = this.self,
+            var sttc   = this.self,
+                evtPos = this.__getTouchPos( event ), 
                 distance;
             if( !sttc.slider || !sttc.sliding )
                 return;
-            distance = event.pageX - sttc.startPos;
+            distance = evtPos.pageX - sttc.startPos;
             if( distance <= 0 ){
                 sttc.slider.style.webkitTransform = 'translate3d( 0, 0, 0 )';
                 return;
@@ -63,14 +75,15 @@ define( function( require, exports, module ){
                 return;
             }
             sttc.sliderImg.style.opacity = 1 - distance / 120;
-            sttc.slider.style.webkitTransform = 'translate3d('+ ( event.pageX - sttc.startPos )+'px, 0, 0 )';
+            sttc.slider.style.webkitTransform = 'translate3d('+ ( evtPos.pageX - sttc.startPos )+'px, 0, 0 )';
         },
 
         EsliderUp   : function( event ){
             var sttc   = this.self,
                 slider = sttc.slider,
-                sliderImg = sttc.sliderImg; 
-            if( event.pageX - sttc.startPos < 207 && event.pageX - sttc.startPos > 0 ){
+                sliderImg = sttc.sliderImg,
+                evtPos = this.__getTouchPos( event );
+            if( evtPos.pageX - sttc.startPos < 207 && evtPos.pageX - sttc.startPos > 0 ){
                 slider.style.webkitTransitionDuration = '300ms';
                 slider.style.webkitTransform = 'translate3d( 0, 0, 0 )';
                 sliderImg.style.webkitTransitionDuration = '300ms';

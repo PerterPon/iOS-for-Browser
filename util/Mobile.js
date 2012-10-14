@@ -38,15 +38,16 @@
         
         tests: [{
             identity: 'CSS3DTransform',
-            fn: function() {
+            fn : function() {
                 return (typeof WebKitCSSMatrix != 'undefined' && new WebKitCSSMatrix().hasOwnProperty('m41'));
             }
         }],
         
         init: function(){
-            this.initEventName();
-            this.initMobileProperty();
+            this.checkTouch();
             this.initPropertyOnReady();
+            this.initEventName();
+            // this.initMobileProperty();
             if($.support.touch){
                 this.setupForMobile();
             }else{
@@ -57,6 +58,10 @@
             this.initTranslate();
         },
         
+        checkTouch : function(){
+            $.support.touch = document.ontouchstart !== undefined ? true : false;
+        },
+
         initPinch: function(){
             $.each( "pinchstart pinch pinchend".split(" "), function(i, name) {
                 $.fn[name] = function(fn) {
