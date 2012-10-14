@@ -11,7 +11,8 @@ define( function( require, exports, module ){
                 [ 'sliderDown' ],
                 [ 'sliderMove' ],
                 [ 'sliderUp' ]
-            ]
+            ],
+            Event : window.iOS.Event
         },
 
         statics : {
@@ -33,10 +34,21 @@ define( function( require, exports, module ){
          */
         __updateTime : function(){
             var sttc = this.self,
-                that = this;
+                that = this,
+                Event= sttc.Event;
             setInterval( function(){
-                var date = new Date(),
-                    day  = null;
+                var date  = new Date(),
+                    time  = {
+                        year   : date.getFullYear(),
+                        month  : date.getMonth() + 1,
+                        day    : date.getDate(),
+                        weekDay: date.getDay(),
+                        hours  : date.getHours(),
+                        minute : date.getMinutes(),
+                        second : date.getSeconds()
+                    };
+                Event.dispatchEvent( 'updateTime', [ time ]);
+                date = time = null;
             }, 10000 );
         },
 
@@ -48,6 +60,20 @@ define( function( require, exports, module ){
          */
         __getTouchPos : function( event, isTouchEnd ){
             return $.support.touch ? isTouchEnd ? event.originalEvent.touches[ 0 ] : event.originalEvent.changedTouches[ 0 ] : event;
+        },
+
+        __unlockHandler : function(){
+            var sttc = this.self,
+                ctrl = sttc.controller,
+                Util = sttc.Util;
+            Util.notify( ctrl, 'unlock' );
+        },
+
+        _attachEventListener : function(){
+            this.callParent();
+            var sttc  = this.self,
+                Event = sttc.Event;
+            Event.addEvent( 'unlock', this.__unlockHandler, this );
         },
 
         EsliderDown : function( event ){
@@ -94,7 +120,8 @@ define( function( require, exports, module ){
                     slider.removeEventListener( 'webkitTransitionEnd' );
                 });
             } else {
-
+                var Event = sttc.Event;
+                Event.dispatchEvent( 'unlock' );
             }
             sttc.sliding = false;
         }
