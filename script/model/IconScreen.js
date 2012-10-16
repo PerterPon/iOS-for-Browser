@@ -4,7 +4,11 @@ define( function( require, exports, module ){
 
     require( './BaseModel' );
     Ext.define( 'IconScreen', {
-        extend : 'BaseModel'
+        extend : 'BaseModel',
+
+        _attachEventListener : function(){
+            
+        }
 
     });
 

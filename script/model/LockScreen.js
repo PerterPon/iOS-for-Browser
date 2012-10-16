@@ -102,6 +102,9 @@ define( function( require, exports, module ){
             }
             sttc.sliderImg.style.opacity = 1 - distance / 120;
             sttc.slider.style.webkitTransform = 'translate3d('+ ( evtPos.pageX - sttc.startPos )+'px, 0, 0 )';
+            delete sttc;
+            delete evtPos;
+            delete distance;
         },
 
         EsliderUp   : function( event ){
