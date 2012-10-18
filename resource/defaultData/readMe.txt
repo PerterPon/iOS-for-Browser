@@ -1,1 +1,1 @@
-��Ŀ¼�����ݽ�����̨nodejs�ű�û�����У�����websocket����û�гɹ�ʱ����ȡ�����ݡ�
+﻿此目录的数据仅当后台nodejs脚本没有运行，或者websocket连接没有成功时候会获取的数据。

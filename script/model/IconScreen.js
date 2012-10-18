@@ -8,6 +8,14 @@ define( function( require, exports, module ){
 
         _attachEventListener : function(){
             
+        },
+
+        _getDefaultData : function(){
+            return require( '../../resource/defaultData/iconScreen/iconScreen' );
+        },
+
+        _initInnerDom : function(){
+            
         }
 
     });

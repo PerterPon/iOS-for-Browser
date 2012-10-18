@@ -24,7 +24,7 @@ define( function( require ){
          * @param {[type]} id [父节点ID]
          */
         setPreDom : function( id ){
-            this.self.preDom = $( '#' + id )[ 0 ];
+            this.self.preDom = $( ( id.indexOf( '#' ) == 0 ? '' : '#' ) + id )[ 0 ];
         },
 
         /**
@@ -66,6 +66,7 @@ define( function( require ){
         }
 
     });
-
-    return new Iterator();
+    
+    var iterator = new Iterator();
+    return iterator;
 });

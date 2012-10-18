@@ -44,7 +44,8 @@ define( function( require, exports, module ){
             "visiable"   : false,
             "_name"      : "iconScreen",
             "view"       : VIconScreen,
-            "controller" : CIconScreen
+            "controller" : CIconScreen,
+            "needData"   : true
         }, {
             "class"      : AppScreen,
             "clsList"    : [ "iOS_appScreen" ],

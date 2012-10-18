@@ -27,14 +27,14 @@ scktMngr.on( 'getData', function( data ){
         throw 'store name can not be empty!';
     else 
         result = doGetData( name );
-    scktMngr.emit( 'getDataBak', JSON.stringify( result ));
+    scktMngr.emit( 'getDataBak', result );
 });
 
 scktMngr.on( 'saveData', function( data ){
     var name = data.data.storeName;
     if( !name )
         throw 'store name can not be empty!';
-    else 
+    else
         doSaveData( name, JSON.stringify( data.data.storeData ));
     scktMngr.emit( 'saveDataBak', { "result" : "succeed" });
 });
@@ -47,10 +47,10 @@ function createHttpServer(){
 }
 
 function doGetData( name ){
-    var result = fs.readFileSync( filePath[name], 'utf-8' );
+    var result = require( './' + filePath[ name ] );
     console.log( ' - getData' );
     console.log( ' - storeName: ' + name );
-    return JSON.parse( result );
+    return result;
 }
 
 function doSaveData( name, dataBuffer ){
@@ -58,5 +58,3 @@ function doSaveData( name, dataBuffer ){
     console.log( ' - storeName: ' + name );
     fs.writeFileSync( filePath[name], dataBuffer );
 }
-
-

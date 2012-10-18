@@ -9,11 +9,9 @@ define( function( require, exports, module ){
         socket, needSocket;
     
     (function(){
-        if( !needSocket ){
-            socket = new WebSocket( scktAdd );
-            sockMngr.setSocket( socket );
-            needSocket = true;
-        }
+        socket = new WebSocket( scktAdd );
+        sockMngr.setSocket( socket );
+        needSocket = true;
     })();
 
     Ext.define( 'BaseModel', {
@@ -24,33 +22,61 @@ define( function( require, exports, module ){
         },
 
         statics : {
-            name : null,
-
-            needSocket : true
+            _name : null,
+            _data : null 
         },
 
         constructor : function( cfg ){
             this.callParent([ cfg ]);
-            // this._initController();
-            // this._initView();
+            if( cfg.needData )
+                this._requestData();
             this._initProgram();
         },
 
+        _attachEventListener : function(){
+            this.callParent();
+            var sttc = this.self,
+                Util = sttc.Util;
+            Util.bind( this, 'dataReady', this._dataReady );
+        },
+
         /**
-         * [_getData 获得数据]
+         * [_requestData 获得数据]
          * @return {Object}   [获取到的数据]
          */
-        _getData : function(){
+        _requestData : function(){
             var sttc = this.self;
-            sockMngr.emit( 'getData', sttc._name );
-            sockMngr.on( 'getDataBak', function( data ){
-                return data;
-            });
+            if( sockMngr.checkSocket() ){
+                sockMngr.emit( 'getData', { "storeName" : sttc._name });
+                sockMngr.on( 'getDataBak', function( data ){
+                    sttc._data = data.data;
+                    sttc.Util.notify( this, 'dataReady' );
+                });
+            } else {
+                sttc._data = this._getDefaultData();
+            }
+        },
+
+        /**
+         * [_getDefaultData 当socket连接不成功的时候，会从resource/dafaultData里面获取数据]
+         * @return {Object} [data]
+         */
+        _getDefaultData : function(){
+            return {};
+        },
+
+        /**
+         * [_iteratorChild 迭代初始化下属]
+         * @return {[type]} [description]
+         */
+        _iteratorChild : function(){
+            var iterator = require( '../Iterator' ),
+                sttc     = this.self;
+            iterator.setPreDom( sttc.selector );
+            iterator.itrtrView( sttc._data.data );
         },
 
         _initProgram : function(){
-            // this._initView();
-            // this._initController();
             var sttc = this.self,
                 View, Ctrl, viewCfg, ctrlCfg;
             if( sttc.controller ){
@@ -71,10 +97,8 @@ define( function( require, exports, module ){
                 };
                 sttc.view = new View( viewCfg );
             }
-            if( sttc.controller ){
+            if( sttc.controller )
                 sttc.controller.setMV( this, sttc.view );
-            }
-            
         },
 
         /**
@@ -110,25 +134,21 @@ define( function( require, exports, module ){
         },
 
         /**
-         * [_requestData 向后台请求数据]
-         * @return  {void} []
-         * @protected
+         * [_dataReady 当数据加载完成时调用]
+         * @return {}
          */
-        _requestData : function(){
-            
+        _dataReady : function(){
+            console.log();
+            this._iteratorChild();
         },
 
         /**
          * [_getData 获取数据]
          * @return  {Object} [取得的数据]
-         * @private
+         * @public
          */
-        _getData : function(){
-            var sttc = this.self;
-            if( !sttc.data ){
-                this._requestData();
-            }
-            return this.self.data;
+        getData : function(){
+            return sttc._data;
         }
 
     });

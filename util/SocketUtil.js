@@ -45,23 +45,32 @@ define( function( require, exports, module ){
         function mssgHandler( bffrData ){
             var sockData = JSON.parse( bffrData.data || bffrData ),
                 eventName= sockData.eventName;
-            if( !eventTree[ eventName ]){
+            if( !eventTree[ eventName ])
                 throw '-eventName: ' + eventName + ' has not register!';
-                return;
-            }
             eventTree[ eventName ]( sockData );
         }
-        if( socket.on ){
+        if( socket.on )
             socket.on( 'message', mssgHandler );
-        } else {
+        else 
             socket.onmessage = mssgHandler;
-        }
+    }
+
+    /**
+     * [checkSocket 检查socket连接是否正常]
+     * @return {Bool} [正常则返回true，否则返回false]
+     */
+    function checkSocket(){
+        if( !socket.readyState )
+            return false;
+        else 
+            return true;
     }
 
     var result = {
-        setSocket : setSocket,
-        on        : on,
-        emit      : emit
+        setSocket  : setSocket,
+        on         : on,
+        emit       : emit,
+        checkSocket: checkSocket
     };
 
     return result;

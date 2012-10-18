@@ -12,6 +12,15 @@ define( function( require, exports, module ){
     }, {
         'name' : 'photo',
         'text' : '照片'
+    }, {
+        'name' : 'camera',
+        'text' : '相机'
+    }, {
+        'name' : 'setting',
+        'text' : '设置'
+    }, {
+        'name' : 'clock',
+        'text' : '时钟'
     }];
 
 });
