@@ -56,9 +56,8 @@ define( function( require, exports, module ){
                     month  : date.getMonth() + 1,
                     day    : date.getDate(),
                     weekDay: date.getDay(),
-                    hours  : date.getHours(),
-                    minute : date.getMinutes(),
-                    second : date.getSeconds()
+                    hours  : date.getHours() < 10 ? '0' + date.getHours() : date.getHours(),
+                    minute : date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
                 };
             this.__updateTime( time );
         },

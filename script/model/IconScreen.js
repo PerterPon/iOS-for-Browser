@@ -7,7 +7,7 @@ define( function( require, exports, module ){
         extend : 'BaseModel',
 
         _attachEventListener : function(){
-            
+            this.callParent();
         },
 
         _getDefaultData : function(){

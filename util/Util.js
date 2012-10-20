@@ -48,7 +48,7 @@ define( function( require, exports, module ){
         tarObj[ 'ios_' + eventName ] ? '' : tarObj[ 'ios_' + eventName ] = [];
         tarObj[ 'ios_' + eventName ].push({
             handler : handler,
-            scope   : scope
+            scope   : scope || tarObj
         });
     }
 

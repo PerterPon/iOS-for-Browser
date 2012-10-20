@@ -37,7 +37,7 @@ define( function( require, exports, module ){
             this.callParent();
             var sttc = this.self,
                 Util = sttc.Util;
-            Util.bind( this, 'dataReady', this._dataReady );
+            Util.listen( this, 'dataReady', this._dataReady );
         },
 
         /**
@@ -45,15 +45,17 @@ define( function( require, exports, module ){
          * @return {Object}   [获取到的数据]
          */
         _requestData : function(){
-            var sttc = this.self;
+            var sttc = this.self,
+                that = this;
             if( sockMngr.checkSocket() ){
-                sockMngr.emit( 'getData', { "storeName" : sttc._name });
                 sockMngr.on( 'getDataBak', function( data ){
                     sttc._data = data.data;
-                    sttc.Util.notify( this, 'dataReady' );
+                    sttc.Util.notify( that, 'dataReady' );
                 });
+                sockMngr.emit( 'getData', { "storeName" : sttc._name });
             } else {
                 sttc._data = this._getDefaultData();
+                sttc.Util.notify( that, 'dataReady' );
             }
         },
 
@@ -138,8 +140,9 @@ define( function( require, exports, module ){
          * @return {}
          */
         _dataReady : function(){
-            console.log();
-            this._iteratorChild();
+            // console.log( 123 );
+            if( this.self.renderChild )
+                this._iteratorChild();
         },
 
         /**
