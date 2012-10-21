@@ -2,9 +2,9 @@
 define( function( require, exports, module ){
     "use strick";
 
-    require( '../Component' );
-    Ext.define( 'Icon', {
-        extend : 'Component',
+    require( './BaseView' );
+    Ext.define( 'VIcon', {
+        extend : 'BaseView',
 
         statics : {
             scaleLayer : 'iOS_icon_scaleLayer',
@@ -14,15 +14,16 @@ define( function( require, exports, module ){
 
         _initInnerDom : function(){
             var sttc = this.self,
-                htmlData = '<div class="'+ sttc.iconCls +'">' +
-                    '<div class="'+ sttc.scaleLayer +'">' +
+                htmlData = '<div class="'+ sttc.scaleLayer +'">' +
                         '<div class="'+ sttc.shakeLayer +'">' +
-                            '<img src="resource/images/icons/icon_'+ sttc._name +'.png" />' +
-                            '<span class="'+ sttc.iconName +'">'+ sttc.text +'</span>' +
+                            '<img src="resource/images/icons/icon_'+ sttc._name.substr( 1 ) +'.png" />' +
+                            '<span class="'+ sttc.iconName +'">'+ sttc.cfg.text +'</span>' +
                         '</div>' +
-                    '</div>' +
-                '</div>';
+                    '</div>';
             this._getEl().html( htmlData );
         }
+
     });
+
+    return VIcon;
 });

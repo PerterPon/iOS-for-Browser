@@ -78,10 +78,15 @@ define( function( require, exports, module ){
 
         Eunlock : function(){
             var sttc       = this.self,
+                that       = this,
                 lockDate   = this._getElByCls( sttc.lockDate ),
                 lockSlider = this._getElByCls( sttc.lockSlider );
             lockDate[ 0 ].style.webkitTransform   = 'translate3d( 0, -'+ ( lockDate.height() + sttc.topBarHeight ) +'px, 0 )';
             lockSlider[ 0 ].style.webkitTransform = 'translate3d( 0, '+ lockSlider.height() +'px, 0)';
+            lockDate[ 0 ].addEventListener( 'webkitTransitionEnd', function(){
+                that._getEl().hide();
+                this.removeEventListener( 'webkitTransitionEnd' );
+            });
         }
 
     });

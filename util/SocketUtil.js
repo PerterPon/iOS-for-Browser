@@ -54,16 +54,23 @@ define( function( require, exports, module ){
         else 
             socket.onmessage = mssgHandler;
     }
-
+    
     /**
-     * [checkSocket 检查socket连接是否正常]
-     * @return {Bool} [正常则返回true，否则返回false]
+     * [checkSocket 检查socket链接，执行相应的动作]
+     * @param  {Function} norFn [socket连接正常时候的处理函数]
+     * @param  {Function} errFn [socket连接不正常时候的处理函数，通常会去加载默认的数据]
      */
-    function checkSocket(){
-        if( !socket.readyState )
-            return false;
-        else 
-            return true;
+    function checkSocket( norFn, errFn ){
+        norFn = norFn || function(){};
+        errFn = errFn || function(){};
+        if( socket.readyState == 2 || socket.readyState == 3 )
+            errFn();
+        else if( socket.readyState == 1 )
+            norFn;
+        else {
+            socket.onopen  = norFn;
+            socket.onclose = errFn; 
+        }
     }
 
     var result = {

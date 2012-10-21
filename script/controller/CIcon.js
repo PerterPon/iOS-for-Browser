@@ -2,9 +2,9 @@
 define( function( require, exports, module ){
     "use strick";
 
-    require( './BaseView' );
-    Ext.define( 'VIconScreen', {
-        extend : 'BaseView',
+    require( './BaseController' );
+    Ext.define( 'CIcon', {
+        extend : 'BaseController',
 
         inheritableStatics : {
             eventList : [
@@ -13,10 +13,11 @@ define( function( require, exports, module ){
         },
 
         Eunlock : function(){
-            this._getEl().show();
+            var sttc = this.self;
+            sttc.Util.notify( sttc.view, 'unlock' );
         }
 
     });
 
-    return VIconScreen;
+    return CIcon;
 });

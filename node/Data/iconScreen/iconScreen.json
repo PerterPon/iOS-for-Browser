@@ -1,45 +1,45 @@
 ﻿{
     "data" : [{
-        "name" : "SMS",
-        "text" : "短信"
+        "_name" : "SMS",
+        "text"  : "短信"
     }, {
-        "name" : "日历",
-        "text" : "calendar"
+        "_name" : "calendar",
+        "text"  : "日历"
     }, {
-        "name" : "photo",
-        "text" : "照片"
+        "_name" : "photo",
+        "text"  : "照片"
     }, {
-        "name" : "camera",
-        "text" : "相机"
+        "_name" : "camera",
+        "text"  : "相机"
     }, {
-        "name" : "setting",
-        "text" : "设置"
+        "_name" : "setting",
+        "text"  : "设置"
     }, {
-        "name" : "clock",
-        "text" : "时钟"
+        "_name" : "clock",
+        "text"  : "时钟"
     }, {
-        "name" : "appstore",
-        "text" : "App Store"
+        "_name" : "appstore",
+        "text"  : "App Store"
     }, {
-        "name" : "calculator",
-        "text" : "计算器"   
+        "_name" : "calculator",
+        "text"  : "计算器"   
     }, {
-        "name" : "itunes",
-        "text" : "iTunes"
+        "_name" : "itunes",
+        "text"  : "iTunes"
     }, {
-        "name" : "map",
-        "text" : "地图"
+        "_name" : "map",
+        "text"  : "地图"
     }, {
-        "name" : "youtube",
-        "text" : "youtube"
+        "_name" : "youtube",
+        "text"  : "youtube"
     }, {
-        "name" : "weather",
-        "text" : "天气"
+        "_name" : "weather",
+        "text"  : "天气"
     }, {
-        "name" : "stocks",
-        "text" : "股票"
+        "_name" : "stocks",
+        "text"  : "股票"
     }, {
-        "name" : "notes",
-        "text" : "备忘录"
+        "_name" : "notes",
+        "text"  : "备忘录"
     }]
 }

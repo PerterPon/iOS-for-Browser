@@ -4,7 +4,18 @@ define( function( require, exports, module ){
 
     require( './BaseController' );
     Ext.define( 'CIconScreen', {
-        extend : 'BaseController'
+        extend : 'BaseController',
+
+        inheritableStatics : {
+            eventList : [
+                [ 'unlock' ]
+            ]
+        },
+
+        Eunlock : function(){
+            var sttc = this.self;
+            sttc.Util.notify( sttc.view, 'unlock' );
+        }
 
     });
 

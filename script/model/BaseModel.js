@@ -30,7 +30,7 @@ define( function( require, exports, module ){
             this.callParent([ cfg ]);
             if( cfg.needData )
                 this._requestData();
-            this._initProgram();
+            this._initProgram( cfg );
         },
 
         _attachEventListener : function(){
@@ -47,15 +47,17 @@ define( function( require, exports, module ){
         _requestData : function(){
             var sttc = this.self,
                 that = this;
-            if( sockMngr.checkSocket() ){
+            sockMngr.checkSocket( norFn, errFn );
+            function norFn(){
                 sockMngr.on( 'getDataBak', function( data ){
                     sttc._data = data.data;
                     sttc.Util.notify( that, 'dataReady' );
                 });
-                sockMngr.emit( 'getData', { "storeName" : sttc._name });
-            } else {
-                sttc._data = this._getDefaultData();
-                sttc.Util.notify( that, 'dataReady' );
+                sockMngr.emit( 'getData', { "storeName" : sttc._name }); 
+            }
+            function errFn(){
+                sttc._data = that._getDefaultData();
+                sttc.Util.notify( that, 'dataReady' )
             }
         },
 
@@ -78,7 +80,7 @@ define( function( require, exports, module ){
             iterator.itrtrView( sttc._data.data );
         },
 
-        _initProgram : function(){
+        _initProgram : function( cfg ){
             var sttc = this.self,
                 View, Ctrl, viewCfg, ctrlCfg;
             if( sttc.controller ){
@@ -95,7 +97,8 @@ define( function( require, exports, module ){
                     _name   : 'V' + sttc._name,
                     visiable: sttc.visiable,
                     selector: sttc.selector,
-                    ctrl    : sttc.controller
+                    ctrl    : sttc.controller,
+                    cfg     : cfg
                 };
                 sttc.view = new View( viewCfg );
             }
@@ -140,7 +143,6 @@ define( function( require, exports, module ){
          * @return {}
          */
         _dataReady : function(){
-            // console.log( 123 );
             if( this.self.renderChild )
                 this._iteratorChild();
         },

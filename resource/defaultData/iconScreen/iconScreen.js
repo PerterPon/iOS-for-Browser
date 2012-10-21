@@ -3,46 +3,46 @@ define( function( require, exports, module ){
 "use strick";
     return {
         "data" : [{
-            "name" : "SMS",
+            "_name" : "SMS",
             "text" : "短信"
         }, {
-            "name" : "日历",
+            "_name" : "日历",
             "text" : "calendar"
         }, {
-            "name" : "photo",
+            "_name" : "photo",
             "text" : "照片"
         }, {
-            "name" : "camera",
+            "_name" : "camera",
             "text" : "相机"
         }, {
-            "name" : "setting",
+            "_name" : "setting",
             "text" : "设置"
         }, {
-            "name" : "clock",
+            "_name" : "clock",
             "text" : "时钟"
         }, {
-            "name" : "appstore",
+            "_name" : "appstore",
             "text" : "App Store"
         }, {
-            "name" : "calculator",
+            "_name" : "calculator",
             "text" : "计算器"   
         }, {
-            "name" : "itunes",
+            "_name" : "itunes",
             "text" : "iTunes"
         }, {
-            "name" : "map",
+            "_name" : "map",
             "text" : "地图"
         }, {
-            "name" : "youtube",
+            "_name" : "youtube",
             "text" : "youtube"
         }, {
-            "name" : "weather",
+            "_name" : "weather",
             "text" : "天气"
         }, {
-            "name" : "stocks",
+            "_name" : "stocks",
             "text" : "股票"
         }, {
-            "name" : "notes",
+            "_name" : "notes",
             "text" : "备忘录"
         }]
     }

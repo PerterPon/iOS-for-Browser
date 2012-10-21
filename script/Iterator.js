@@ -42,7 +42,7 @@ define( function( require ){
                 module = cfg[ 'class' ];
                 cls    = '';
                 id     = 'ios-' + sttc.curIdx;
-                for( var j = 0; j < cfg.clsList.length; j++ ){
+                for( var j = 0; j < ( cfg.clsList || [] ).length; j++ ){
                     cls += cfg.clsList[ j ] + ' ';
                 }
                 html    = document.createElement( 'div' );
