@@ -31,7 +31,10 @@ define( function( require, exports, module ){
             if( cfg.needData )
                 this._requestData();
             this._initProgram( cfg );
+            this._initComplete();
         },
+
+        _initComplete : function(){},
 
         _attachEventListener : function(){
             this.callParent();

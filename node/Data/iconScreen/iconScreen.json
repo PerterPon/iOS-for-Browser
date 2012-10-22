@@ -6,11 +6,12 @@
         "_name" : "calendar",
         "text"  : "日历"
     }, {
-        "_name" : "photo",
-        "text"  : "照片"
-    }, {
         "_name" : "camera",
         "text"  : "相机"
+    }
+    , {
+        "_name" : "photo",
+        "text"  : "照片"
     }, {
         "_name" : "setting",
         "text"  : "设置"
