@@ -4,7 +4,11 @@ define( function( require, exports, module ){
 
     require( './BaseView' );
     Ext.define( 'VAppScreen', {
-        extend : 'BaseView'
+        extend : 'BaseView',
+
+        _initInnerDom : function(){
+            
+        }
 
     });
 

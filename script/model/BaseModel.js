@@ -34,7 +34,11 @@ define( function( require, exports, module ){
             this._initComplete();
         },
 
-        _initComplete : function(){},
+        _initComplete : function(){
+            var sttc = this.self;
+            if( !sttc.needData && sttc.renderChild )
+                this._iteratorChild();
+        },
 
         _attachEventListener : function(){
             this.callParent();
@@ -73,13 +77,23 @@ define( function( require, exports, module ){
         },
 
         /**
+         * [_handleChildCfg 处理subview的配置信息，会直接修改self里面的内容]
+         * @return {void}
+         */
+        _handleChildCfg : function(){},
+
+        /**
          * [_iteratorChild 迭代初始化下属]
          * @return {[type]} [description]
          */
         _iteratorChild : function(){
+            this._handleChildCfg();
             var iterator = require( '../Iterator' ),
                 sttc     = this.self;
             iterator.setPreDom( sttc.selector );
+            if( !sttc._data ){
+                console.log(123);
+            }
             iterator.itrtrView( sttc._data.data );
         },
 

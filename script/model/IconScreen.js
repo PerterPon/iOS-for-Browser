@@ -6,12 +6,14 @@ define( function( require, exports, module ){
     Ext.define( 'IconScreen', {
         extend : 'BaseModel',
 
-        statics : {
-            Event : window.iOS.Event
+        inheritableStatics : {
+            eventList : [
+                [ 'unlock' ]
+            ]
         },
 
-        _getDefaultData : function(){
-            return require( '../../resource/defaultData/iconScreen/iconScreen' );
+        statics : {
+            Event : window.iOS.Event
         },
 
         _attachEventListener : function(){
@@ -21,20 +23,40 @@ define( function( require, exports, module ){
             Event.addEvent( 'unlock', this.__unlockHandler, this );
         },
 
-        _iteratorChild : function(){
-            var sttc  = this.self,
-                data  = sttc._data.data,
-                icon  = require( './Icon' ),
-                VIcon = require( '../view/VIcon' ),
-                CIcon = require( '../controller/CIcon' );
-            for( var i   = 0; i < data.length; i++ ){
-                data[ i ][ 'class' ]   = icon;
-                data[ i ][ 'clsList' ] = [ 'iOS_icon', 'iOS_icon_' + data[ i ][ '_name' ] ];
-                data[ i ][ 'view' ]    = VIcon;
-                data[ i ][ 'controller' ] = CIcon;
-                data[ i ][ 'index' ]   = i;
-            }
-            this.callParent();
+        _getDefaultData : function(){
+            return require( '../../resource/defaultData/iconScreen/iconScreen' );
+        },
+
+        _handleChildCfg : function(){
+            var sttc      = this.self,
+                data      = sttc._data.data,
+                Content   = require( './Content' ),
+                AppIcon   = require( './AppIcon' ),
+                VAppIcon  = require( '../view/VAppIcon' ),
+                CAppIcon  = require( '../controller/CAppIcon' ),
+                DockIcon  = require( './DockIcon' ),
+                VDockIcon = require( '../view/VDockIcon' ),
+                CDockIcon = require( '../controller/CDockIcon' ),
+                newCfg    = [{
+                    "class"   : Content,
+                    "_name"   : "iconContent",
+                    "clsList" : [ "iOS_content", "iOS_content_appContent" ],
+                    "_data"   : {
+                        data  : data[ 'screen' ]
+                    },
+                    "renderChild" : true
+                }, {
+                    "class"   : DockIcon,
+                    "_name"   : "dockIcon",
+                    "clsList" : [ "iOS_iconScreen_dockIcon" ],
+                    "view"    : VDockIcon,
+                    "controller" : CDockIcon,
+                    "_data"   : {
+                        data  : data[ 'dock' ]
+                    },
+                    "renderChild" : true
+                }];
+            sttc._data.data = newCfg;
         },
 
         __unlockHandler : function(){

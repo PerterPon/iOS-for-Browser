@@ -13,7 +13,7 @@ iOS-for-Browser是一个在浏览器上模拟iOS的web应用，并非模拟iOS�
 
 # 注意
 
-使用之前最好升级一下chrome的版本，有些方法低版本的并不支持。
+使用之前最好升级一下chrome的版本，有些方法低版本的并不支持。Chrome19版本之前19版本之前的是一个提升，19版本之后，-webkit-transition-duration的帧数只有40帧，之后的版本提高的60帧，流畅度有很大提高，safari则没有这个问题。
 前后端使用WebSocket来进行数据通信，使用的端口是：4239，运行node前最好保证4239端口不被占用，不然无法正常运行，如果没有运行nodejs，或者socket连接不正常，将会读取resource/defaultData文件夹里面的默认数据。
 
 # 建议
