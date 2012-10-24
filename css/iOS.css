@@ -1,4 +1,4 @@
-﻿body { background-color: #25262B; -webkit-box-orient: vertical }
+﻿body { background-color: #25262B; -webkit-box-orient: vertical; overflow: hidden }
 
 #iOS_outSide_bg { width: 380px; height: 742px; margin: 0 auto; background-image: url(../resource/images/background/iphone-bg.png) }
 #iOS_system_content { -webkit-box-orient : vertical; width: 320px; height: 480px; -webkit-transform: translate3d( 32px, 129px, 0 ); overflow: hidden }
@@ -12,7 +12,7 @@
  * topBar
  * 为保证topBar的高度，在CSS中写死为20px
  */
-.iOS_topBar { position: relative; z-index: 2; background-color: rgba( 0, 0, 0, 0.6 ); }
+.iOS_topBar { width: 100%; position: relative; z-index: 2; background-color: rgba( 0, 0, 0, 0.6 ) }
 .iOS_topBar_leftIcon { left: 0; height: 100% }
     .iOS_topBar_signal { margin-left: 5px }
     .iOS_topBar_att { margin-left: 3px }
@@ -28,21 +28,15 @@
 .iOS { position: relative }
 
 /**
- * iOS_content
- */
-
-.iOS_content { width: 100%; height: 100% }
-
-/**
  * lockScreen
  */
 .iOS_lockScreen { width: 100%; position: relative; -webkit-box-orient: block-axis }
 .iOS_lockScreen_lockDate, .iOS_lockScreen_lockSlider { -webkit-transition-delay: 50ms; -webkit-transition-duration: 500ms }
-.iOS_lockScreen_lockDate { width: 100%; color: white; -webkit-box-orient: block-axis; top: 0; height: 95px; background: url(../resource/images/lockStuff/lockTop.png) repeat-x; /*background-image: -webkit-linear-gradient(rgba(44, 44, 44, 0.3), rgba(21, 21, 21, 0.3) 52%, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.6))*/ }
+.iOS_lockScreen_lockDate { width: 100%; color: white; -webkit-box-orient: block-axis; top: 0; height: 95px; background: url(../resource/images/lockStuff/lockTop.png) repeat-x }
     .iOS_lockScreen_lockDate div { -webkit-box-pack: center; -webkit-box-align: center; font-family: Arial, Helvetica, sans-serif }
     .iOS_lockScreen_lockTime { height: 65px; font-size: 55px; -webkit-transform: translate3d( 0, 5px, 0 ) }
     .iOS_lockScreen_lockDateInfo { font-size: 14px; height: 30px }
-.iOS_lockScreen_lockSlider { -webkit-box-pack: center; width: 100%; bottom: 0; height: 94px; background: url(../resource/images/lockStuff/lockBottom.png) no-repeat center; }
+.iOS_lockScreen_lockSlider { -webkit-box-pack: center; width: 100%; bottom: 0; height: 94px; background: url(../resource/images/lockStuff/lockBottom.png) no-repeat center }
     .iOS_lockScreen_sliderContainer { width: 274px; height: 50px; -webkit-transform: translate3d( -2px, 23px, 0 ) }
     .iOS_lockScreen_sliderImg { top: 0; left: 0px; width: 100%; height: 100%; position: absolute; background: url(../resource/images/lockStuff/slideToUnlock.gif) -20px }
     .iOS_lockScreen_slider { position: relative; z-index: 2 }
@@ -53,15 +47,20 @@
 .iOS_iconScreen { width: 100%; position: relative; -webkit-box-orient: block-axis }
     .iOS_icon { display: -webkit-inline-box; position: absolute }
     .iOS_icon_shakeLayer { -webkit-box-orient: block-axis; -webkit-box-align: center }
-    .iOS_icon_iconName { -webkit-transform: translate3d( 0, -4px, 0 ); display: -webkit-box; font-family: Tahoma, Geneva, sans-serif ;text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); font-size: 12px ;color: rgba(255, 255, 255, 0.8); }
+    .iOS_icon_iconName { -webkit-transform: translate3d( 0, -4px, 0 ); display: -webkit-box; font-family: Tahoma, Geneva, sans-serif ;text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); font-size: 12px ;color: rgba(255, 255, 255, 0.8) }
+
+/**
+ * appIcon
+ */
+.iOS_iconScreen_appIcon { width: 100% }
 
 /**
  * dockIcon
  */
-.iOS_iconScreen_dockIcon { width: 100%; height: 60px } 
+.iOS_iconScreen_dockIcon { width: 100%; height: 90px } 
 
 /**
  * appContent
  */
 
-.iOS_content_appContent { -webkit-box-flex: 1 }
+.iOS_multiScreen { -webkit-box-flex: 1; width: 100%; height: 100% }

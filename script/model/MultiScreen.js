@@ -15,15 +15,15 @@ define( function( require, exports, module ){
                 newCfg   = [];
             for( var i  = 0; i < data.length; i++ ){
                 newCfg.push({
-                    "class"   : AppIcon,
-                    "_name"   : "appIcon_" + i,
-                    "clsList" : [ "iOS_iconScreen_appIcon", "iOS_iconScreen_appIcon_" + i ],
+                    "class"    : AppIcon,
+                    "_name"    : "appIcon_" + i,
+                    "clsList"  : [ "iOS_iconScreen_appIcon", "iOS_iconScreen_appIcon_" + i ],
                     "controller"  : CAppIcon,
-                    "view"    : VAppIcon,
+                    "view"     : VAppIcon,
                     "multiScreen" : i == 0 ? false : true,
                     "renderChild" : true,
-                    "_data"   : {
-                        "data": data[ i ]
+                    "_data"    : {
+                        "data" : data[ i ]
                     }
                 });
             }

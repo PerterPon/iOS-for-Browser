@@ -16,7 +16,7 @@ define( function( require, exports, module ){
                 y  : null
             }
         },
-        
+
         _initComplete : function(){
             var sttc = this.self;
             this.__calPosition();
@@ -52,8 +52,8 @@ define( function( require, exports, module ){
                 disX   = 17 * ( posX + 1 ) + 58 * posX + 3 * Math.floor( posX.toString( 2 ) / 10 ),
                 disY   = posY * 82 + ( posY & 2 ) * 4 + 10,
                 System = window.iOS.System;
-            return { 
-                x : disX / 320 * System.width, 
+            return {
+                x : disX / 320 * System.width,
                 y : disY / 480 * System.height
             };
         },

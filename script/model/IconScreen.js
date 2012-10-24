@@ -16,11 +16,6 @@ define( function( require, exports, module ){
             Event : window.iOS.Event
         },
 
-        constructor : function( cfg ){
-            this.callParent([ cfg ]);
-            console.log( cfg );
-        },
-
         _attachEventListener : function(){
             this.callParent();
             var sttc  = this.self,
@@ -35,7 +30,7 @@ define( function( require, exports, module ){
         _handleChildCfg : function(){
             var sttc      = this.self,
                 data      = sttc._data.data,
-                Content   = require( './Content' ),
+                MultiScreen = require( './MultiScreen' ),
                 AppIcon   = require( './AppIcon' ),
                 VAppIcon  = require( '../view/VAppIcon' ),
                 CAppIcon  = require( '../controller/CAppIcon' ),
@@ -43,9 +38,9 @@ define( function( require, exports, module ){
                 VDockIcon = require( '../view/VDockIcon' ),
                 CDockIcon = require( '../controller/CDockIcon' ),
                 newCfg    = [{
-                    "class"   : Content,
+                    "class"   : MultiScreen,
                     "_name"   : "iconContent",
-                    "clsList" : [ "iOS_content", "iOS_content_appContent" ],
+                    "clsList" : [ "iOS_multiScreen" ],
                     "_data"   : {
                         data  : data[ 'screen' ]
                     },
@@ -61,7 +56,6 @@ define( function( require, exports, module ){
                     },
                     "renderChild" : true
                 }];
-            
             sttc._data.data = newCfg;
         },
 
