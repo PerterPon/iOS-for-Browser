@@ -53,9 +53,9 @@ define( function( require, exports, module ){
          * @return {void}
          */
         __initIconView : function(){
-            // console.log( this.self.cfg );
             var sttc = this.self;
-            this.__doSetIconPos( sttc.inPos );
+            if( sttc.current )
+                this.__doSetIconPos( sttc.outPos );
         },
 
         /**

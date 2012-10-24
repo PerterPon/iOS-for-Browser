@@ -47,7 +47,8 @@ define( function( require, exports, module ){
          * @return {Object}       [相应的位置信息]
          */
         __getInPosition : function( index ){
-            var posX   = index % 4,
+            var sttc   = this.self,
+                posX   = index % 4,
                 posY   = Math.floor( index / 4 ),
                 disX   = 17 * ( posX + 1 ) + 58 * posX + 3 * Math.floor( posX.toString( 2 ) / 10 ),
                 disY   = posY * 82 + ( posY & 2 ) * 4 + 10,
@@ -72,8 +73,8 @@ define( function( require, exports, module ){
                 disY   = ( posY & 2 ) - 1,
                 System = window.iOS.System;
             return {
-                x : sttc.inPos.x + 160 * disX / 320 * System.width,
-                y : sttc.inPos.y + 140 * disY / 480 * System.height
+                x : ( sttc.inPos.x + 160 * disX ) / 320 * System.width,
+                y : sttc.dock ? 90 : ( sttc.inPos.y + 140 * disY ) / 480 * System.height
             };
         },
 

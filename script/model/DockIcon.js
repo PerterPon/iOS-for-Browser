@@ -4,7 +4,11 @@ define( function( require, exports, module ){
 
     require( './IconContent' );
     Ext.define( 'DockIcon', {
-        extend : 'IconContent'
+        extend : 'IconContent',
+
+        statics : {
+            dock : true
+        }
 
     });
 

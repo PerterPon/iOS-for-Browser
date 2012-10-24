@@ -91,9 +91,6 @@ define( function( require, exports, module ){
             var iterator = require( '../Iterator' ),
                 sttc     = this.self;
             iterator.setPreDom( sttc.selector );
-            if( !sttc._data ){
-                console.log(123);
-            }
             iterator.itrtrView( sttc._data.data );
         },
 

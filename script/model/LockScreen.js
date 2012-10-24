@@ -87,21 +87,26 @@ define( function( require, exports, module ){
 
         EsliderMove : function( event ){
             var sttc   = this.self,
-                evtPos = this.__getTouchPos( event ), 
+                evtPos = this.__getTouchPos( event ),
+                Util   = sttc.Util,
+                Ctrl   = sttc.controller,
                 distance;
             if( !sttc.slider || !sttc.sliding )
                 return;
             distance = evtPos.pageX - sttc.startPos;
             if( distance <= 0 ){
-                sttc.slider.style.webkitTransform = 'translate3d( 0, 0, 0 )';
+                // sttc.slider.style.webkitTransform = 'translate3d( 0, 0, 0 )';
+                Util.notify( Ctrl, 'sliderTranslate', [ 0, 0 ] );
                 return;
             }
             if( distance >= 207 ){
-                sttc.slider.style.webkitTransform = 'translate3d( 207px, 0, 0 )';
+                Util.notify( Ctrl, 'sliderTranslate', [ 207, 0 ] );
+                // sttc.slider.style.webkitTransform = 'translate3d( 207px, 0, 0 )';
                 return;
             }
             sttc.sliderImg.style.opacity = 1 - distance / 120;
-            sttc.slider.style.webkitTransform = 'translate3d('+ ( evtPos.pageX - sttc.startPos )+'px, 0, 0 )';
+            Util.notify( Ctrl, 'sliderTranslate', [ evtPos.pageX - sttc.startPos, 0 ] );
+            // sttc.slider.style.webkitTransform = 'translate3d('+ ( evtPos.pageX - sttc.startPos )+'px, 0, 0 )';
             delete sttc;
             delete evtPos;
             delete distance;
@@ -109,10 +114,13 @@ define( function( require, exports, module ){
 
         EsliderUp   : function( event ){
             var sttc   = this.self,
+                Util   = sttc.Util,
+                Ctrl   = sttc.Ctrl,
                 slider = sttc.slider,
                 sliderImg = sttc.sliderImg,
                 evtPos = this.__getTouchPos( event );
             if( evtPos.pageX - sttc.startPos < 207 && evtPos.pageX - sttc.startPos > 0 ){
+                Util.notify( Ctrl, 'sliderBack' );
                 slider.style.webkitTransitionDuration = '300ms';
                 slider.style.webkitTransform = 'translate3d( 0, 0, 0 )';
                 sliderImg.style.webkitTransitionDuration = '300ms';

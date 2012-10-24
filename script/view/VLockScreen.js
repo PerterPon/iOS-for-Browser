@@ -8,7 +8,9 @@ define( function( require, exports, module ){
 
         inheritableStatics : {
             eventList : [
-                [ 'unlock' ]
+                [ 'unlock' ],
+                [ 'sliderTranslate' ],
+                [ 'sliderBack' ]
             ],
             week : [ '日', '一', '二', '三', '四', '五', '六' ]
         },
@@ -24,12 +26,25 @@ define( function( require, exports, module ){
             slider      : 'iOS_lockScreen_slider'
         },
 
-        __updateTime : function( time ){
-            var sttc     = this.self,
-                lockTime = this._getElByCls( sttc.lockTime ),
-                lockDate = this._getElByCls( sttc.lockDateInfo );
-            lockTime.text( time.hours + ':' + time.minute );
-            lockDate.text( time.month + '月' + time.day + ' ' + '星期' + sttc.week[ time.weekDay ] );
+        Eunlock : function(){
+            var sttc       = this.self,
+                that       = this,
+                lockDate   = this._getElByCls( sttc.lockDate ),
+                lockSlider = this._getElByCls( sttc.lockSlider );
+            lockDate[ 0 ].style.webkitTransform   = 'translate3d( 0, -'+ ( lockDate.height() + sttc.topBarHeight ) +'px, 0 )';
+            lockSlider[ 0 ].style.webkitTransform = 'translate3d( 0, '+ lockSlider.height() +'px, 0)';
+            lockDate[ 0 ].addEventListener( 'webkitTransitionEnd', function(){
+                that._getEl().hide();
+                this.removeEventListener( 'webkitTransitionEnd' );
+            });
+        },
+
+        EsliderTranslate : function( x, y ){
+
+        },
+
+        EsliderBack : function(){
+
         },
 
         _attachEventListener : function(){
@@ -60,6 +75,7 @@ define( function( require, exports, module ){
                     minute : date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
                 };
             this.__updateTime( time );
+            sttc.slider = this._getElByCls( sttc.slider )[ 0 ];
         },
 
         _attachDomEvent : function(){
@@ -76,17 +92,17 @@ define( function( require, exports, module ){
             });
         },
 
-        Eunlock : function(){
-            var sttc       = this.self,
-                that       = this,
-                lockDate   = this._getElByCls( sttc.lockDate ),
-                lockSlider = this._getElByCls( sttc.lockSlider );
-            lockDate[ 0 ].style.webkitTransform   = 'translate3d( 0, -'+ ( lockDate.height() + sttc.topBarHeight ) +'px, 0 )';
-            lockSlider[ 0 ].style.webkitTransform = 'translate3d( 0, '+ lockSlider.height() +'px, 0)';
-            lockDate[ 0 ].addEventListener( 'webkitTransitionEnd', function(){
-                that._getEl().hide();
-                this.removeEventListener( 'webkitTransitionEnd' );
-            });
+        __updateTime : function( time ){
+            var sttc     = this.self,
+                lockTime = this._getElByCls( sttc.lockTime ),
+                lockDate = this._getElByCls( sttc.lockDateInfo );
+            lockTime.text( time.hours + ':' + time.minute );
+            lockDate.text( time.month + '月' + time.day + ' ' + '星期' + sttc.week[ time.weekDay ] );
+        },
+
+        __doSetSliderPos : function( x, y ){
+            var slider = this.self.slider;
+            slider.style.webkitTransform = '';
         }
 
     });

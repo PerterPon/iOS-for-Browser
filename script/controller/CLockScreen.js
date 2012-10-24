@@ -11,7 +11,9 @@ define( function( require, exports, module ){
                 [ 'sliderDown' ],
                 [ 'sliderMove' ],
                 [ 'sliderUp' ],
-                [ 'unlock' ]
+                [ 'unlock' ],
+                [ 'sliderTranslate' ],
+                [ 'sliderBack' ]
             ]
         },
 
@@ -41,6 +43,20 @@ define( function( require, exports, module ){
                 view    = sttc.view,
                 Util    = sttc.Util;
             Util.notify( view, 'unlock' );
+        },
+
+        sliderTranslate : function( x, y ){
+            var sttc    = this.self,
+                view    = sttc.view,
+                Util    = sttc.util;
+            Util.notify( view, 'sliderTranslate', [ x, y ] );
+        },
+
+        sliderBack : function(){
+            var sttc    = this.self,
+                view    = sttc.view,
+                Util    = sttc.util;
+            Util.notify( view, 'sliderTranslate' );
         }
 
     });

@@ -33,6 +33,13 @@ define( function( require, exports, module ){
         "view"       : VIOS,
         "flex"       : "460",
         "subView"    : [{
+            "class"      : PopScreen,
+            "clsList"    : [ "iOS_popScreen" ],
+            "visiable"   : false,
+            "_name"      : "popScreen",
+            "view"       : VPopScreen,
+            "controller" : CPopScreen
+        }, {
             "class"      : LockScreen,
             "clsList"    : [ "iOS_lockScreen" ],
             "_name"      : "lockScreen",
@@ -54,13 +61,6 @@ define( function( require, exports, module ){
             "_name"      : "appScreen",
             "view"       : VAppScreen,
             "controller" : CAppScreen
-        }, {
-            "class"      : PopScreen,
-            "clsList"    : [ "iOS_popScreen" ],
-            "visiable"   : false,
-            "_name"      : "popScreen",
-            "view"       : VPopScreen,
-            "controller" : CPopScreen
         }]
     }];
 });

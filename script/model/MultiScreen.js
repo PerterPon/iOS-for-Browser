@@ -20,8 +20,8 @@ define( function( require, exports, module ){
                     "clsList"  : [ "iOS_iconScreen_appIcon", "iOS_iconScreen_appIcon_" + i ],
                     "controller"  : CAppIcon,
                     "view"     : VAppIcon,
-                    "multiScreen" : i == 0 ? false : true,
                     "renderChild" : true,
+                    "current"  : i == 0 ? false : true,
                     "_data"    : {
                         "data" : data[ i ]
                     }
