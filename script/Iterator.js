@@ -6,7 +6,19 @@ define( function( require ){
 
         statics : {
             curIdx : 0,
-            preDom : null
+            preDom : null,
+            /**
+             * [queue 迭代队列，为防止错误产生，只能自己维护一个队列]
+             * @type {Array}
+             */
+            queue  : [],
+
+            Util   : require( '../util/Util' )
+        },
+
+        constructor : function(){
+            var sttc = this.self;
+            sttc.Util.listen( this, 'iteratorComplete', this.__iteratorComplete );
         },
 
         /**
@@ -15,16 +27,30 @@ define( function( require ){
          * @return {void}
          */
         itrtrView : function( cfg ){
-            var sttc = this.self;
-            this.__doItrtr( cfg );
+            var sttc  = this.self,
+                queue = sttc.queue; 
+            queue[ queue.length - 1 ][ 'cfg' ] = cfg;
+            if( queue.length == 1 )
+                this.__doItrtr( cfg );
         },
 
         /**
-         * [setPreDom 设置当前配置文件的父节点ID]
+         * [setPreDom 设置当前配置文件的父节点ID，注意，ID中不能有井号，会被替换成空]
          * @param {[type]} id [父节点ID]
          */
         setPreDom : function( id ){
-            this.self.preDom = $( ( id.indexOf( '#' ) == 0 ? '' : '#' ) + id )[ 0 ];
+            var sttc     = this.self,
+                queue    = sttc.queue,
+                selector = id.replace( '#', '' );
+            queue.push({
+                'preDom' : selector
+            });
+            if( queue.length == 1 )
+                this.__doSetPreDom( selector );
+        },
+
+        __doSetPreDom : function( selector ){
+            this.self.preDom = document.getElementById( selector );
         },
 
         /**
@@ -63,6 +89,21 @@ define( function( require ){
                     this.__doItrtr( cfg.subView, html );
                 }
             }
+            sttc.Util.notify( this, 'iteratorComplete' );
+        },
+
+        /**
+         * [__iteratorComplete 每次迭代完之后会被调用，用以检测队列中是否还有未进行迭代的项目]
+         * @return {}
+         */
+        __iteratorComplete : function(){
+            var sttc  = this.self,
+                queue = sttc.queue; 
+            queue.shift();
+            if( !queue.length )
+                return;
+            this.__doSetPreDom( queue[ 0 ][ 'preDom' ] );
+            this.__doItrtr( queue[ 0 ][ 'cfg' ] );
         }
 
     });

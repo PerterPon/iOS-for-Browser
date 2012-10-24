@@ -16,7 +16,7 @@ define( function( require, exports, module ){
                 y  : null
             }
         },
-
+        
         _initComplete : function(){
             var sttc = this.self;
             this.__calPosition();

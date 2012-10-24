@@ -2,13 +2,9 @@
 define( function( require, exports, module ){
     "use strick";
 
-    require( './BaseModel' );
+    require( './IconContent' );
     Ext.define( 'DockIcon', {
-        extend : 'BaseModel',
-
-        statics : {
-            Event : window.iOS.Event
-        }
+        extend : 'IconContent'
 
     });
 

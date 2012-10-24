@@ -16,6 +16,11 @@ define( function( require, exports, module ){
             Event : window.iOS.Event
         },
 
+        constructor : function( cfg ){
+            this.callParent([ cfg ]);
+            console.log( cfg );
+        },
+
         _attachEventListener : function(){
             this.callParent();
             var sttc  = this.self,
@@ -56,6 +61,7 @@ define( function( require, exports, module ){
                     },
                     "renderChild" : true
                 }];
+            
             sttc._data.data = newCfg;
         },
 

@@ -11,9 +11,10 @@ define( function( require, exports, module ){
                 data     = sttc._data.data,
                 AppIcon  = require( './AppIcon' ),
                 CAppIcon = require( '../controller/CAppIcon' ),
-                VAppIcon = require( '../view/VAppIcon' ); 
-            for( var i  = 0, subView = newCfg[ 0 ][ 'subView' ]; i < data[ 'screen' ].length; i++ ){
-                subView.push({
+                VAppIcon = require( '../view/VAppIcon' ),
+                newCfg   = [];
+            for( var i  = 0; i < data.length; i++ ){
+                newCfg.push({
                     "class"   : AppIcon,
                     "_name"   : "appIcon_" + i,
                     "clsList" : [ "iOS_iconScreen_appIcon", "iOS_iconScreen_appIcon_" + i ],
@@ -22,12 +23,13 @@ define( function( require, exports, module ){
                     "multiScreen" : i == 0 ? false : true,
                     "renderChild" : true,
                     "_data"   : {
-                        "data": data[ 'screen' ][ i ]
+                        "data": data[ i ]
                     }
                 });
             }
+            sttc._data.data = newCfg;
         }
     });
 
     return Content;
-});z
+});
