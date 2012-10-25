@@ -50,7 +50,7 @@ define( function( require, exports, module ){
                 }]   
             ],
             "dock" : [{
-                "_name" : "photo",
+                "_name" : "phone",
                 "text"  : "电话"
             }, {
                 "_name" : "mail",

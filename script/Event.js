@@ -24,9 +24,9 @@ define( function( require ){
         },
 
         /**
-         * [dispatchEvent ] 派发事件
+         * [dispatchEvent 派发事件] 
          * @param  {String} eventName [派发事件的名称]
-         * @param  {Array}  params    [参数] 
+         * @param  {Array}  params    [参数]
          * @return {void}
          */
         dispatchEvent : function( eventName, params ){
@@ -50,6 +50,5 @@ define( function( require ){
             this.eventPool[ eventName ] = null;
             delete this.eventPool[ eventName ];
         }
-         
     };
 });

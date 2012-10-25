@@ -44,7 +44,7 @@
             }, {
                 "_name" : "notes",
                 "text"  : "备忘录"
-            }]   
+            }]
         ],
         "dock" : [{
             "_name" : "phone",
