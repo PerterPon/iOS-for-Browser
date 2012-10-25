@@ -9,16 +9,19 @@ define( function( require, exports, module ){
         _handleChildCfg : function(){
             var sttc  = this.self,
                 data  = sttc._data.data,
-                icon  = require( './Icon' ),
+                Icon  = require( './Icon' ),
                 VIcon = require( '../view/VIcon' ),
                 CIcon = require( '../controller/CIcon' );
             for( var i= 0; i < data.length; i++ ){
-                data[ i ][ 'class' ]   = icon;
-                data[ i ][ 'clsList' ] = [ 'iOS_icon', 'iOS_icon_' + data[ i ][ '_name' ] ];
-                data[ i ][ 'view' ]    = VIcon;
-                data[ i ][ 'controller' ] = CIcon;
-                data[ i ][ 'index' ]   = i;
-                data[ i ][ 'dock' ]    = sttc.dock ? true : false
+                $.extend( data[ i ], {
+                    "class"   : Icon,
+                    "clsList" : [ 'iOS_icon', 'iOS_icon_' + data[ i ][ '_name' ] ],
+                    "view"    : VIcon,
+                    "controller" : CIcon,
+                    "index"   : i,
+                    "current" : sttc.index == false,
+                    "dock"    : sttc.dock ? true : false
+                });
             }
         }
     });

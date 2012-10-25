@@ -29,22 +29,38 @@ define( function( require, exports, module ){
         Eunlock : function(){
             var sttc       = this.self,
                 that       = this,
+                Util       = sttc.Util,
+                ctrl       = sttc.controller,
                 lockDate   = this._getElByCls( sttc.lockDate ),
                 lockSlider = this._getElByCls( sttc.lockSlider );
             lockDate[ 0 ].style.webkitTransform   = 'translate3d( 0, -'+ ( lockDate.height() + sttc.topBarHeight ) +'px, 0 )';
             lockSlider[ 0 ].style.webkitTransform = 'translate3d( 0, '+ lockSlider.height() +'px, 0)';
             lockDate[ 0 ].addEventListener( 'webkitTransitionEnd', function(){
                 that._getEl().hide();
+                Util.notify( ctrl, 'unlockComplete' );
                 this.removeEventListener( 'webkitTransitionEnd' );
             });
         },
 
         EsliderTranslate : function( x, y ){
-
+            var sttc = this.self;
+            this.__doSetSliderPos( x, y );
+            sttc.sliderImg[ 0 ].style.opacity = 1 - x / 120;
         },
 
         EsliderBack : function(){
-
+            var sttc      = this.self,
+                slider    = sttc.slider[ 0 ],
+                sliderImg = sttc.sliderImg[ 0 ];
+            slider.style.webkitTransitionDuration = '300ms';
+            slider.style.webkitTransform = 'translate3d( 0, 0, 0 )';
+            sliderImg.style.webkitTransitionDuration = '300ms';
+            sliderImg.style.opacity = '1';
+            slider.addEventListener( 'webkitTransitionEnd', function(){
+                slider.style.webkitTransitionDuration = '0ms';
+                sliderImg.style.webkitTransitionDuration = '0ms';
+                slider.removeEventListener( 'webkitTransitionEnd' );
+            });
         },
 
         _attachEventListener : function(){
@@ -75,15 +91,16 @@ define( function( require, exports, module ){
                     minute : date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
                 };
             this.__updateTime( time );
-            sttc.slider = this._getElByCls( sttc.slider )[ 0 ];
+            sttc.slider    = this._getElByCls( sttc.slider );
+            sttc.sliderImg = this._getElByCls( sttc.sldrImg ); 
         },
 
         _attachDomEvent : function(){
             this.callParent();
             var sttc = this.self,
-                ctrl = sttc.ctrl,
+                ctrl = sttc.controller,
                 Util = sttc.Util;
-            this._getElByCls( sttc.slider ).bind( $.support.touchstart, function( event ){
+            sttc.slider.on( $.support.touchstart, function( event ){
                 Util.notify( ctrl, 'sliderDown', [ event ]);
             }).bind( $.support.touchmove, function( event ){
                 Util.notify( ctrl, 'sliderMove', [ event ]);
@@ -101,8 +118,8 @@ define( function( require, exports, module ){
         },
 
         __doSetSliderPos : function( x, y ){
-            var slider = this.self.slider;
-            slider.style.webkitTransform = '';
+            var slider = this.self.slider[ 0 ];
+            slider.style.webkitTransform = 'translate3d( '+ x +'px, '+ y +'px, 0 )';
         }
 
     });

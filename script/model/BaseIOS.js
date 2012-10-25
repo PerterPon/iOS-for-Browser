@@ -4,11 +4,7 @@ define( function( require, exports, module ){
 
     require( './BaseModel' );
     Ext.define( 'BaseIOS', {
-        extend : 'BaseModel',
-
-        constructor : function( cfg ){
-            this.callParent([ cfg ]);
-        }
+        extend : 'BaseModel'
     });
 
     return BaseIOS;

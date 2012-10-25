@@ -4,10 +4,7 @@ define( function( require, exports, module ){
 
     require( './BaseController' );
     Ext.define( 'CAppIcon', {
-        extend : 'BaseController',
-
-        inheritableStatics : {
-        }
+        extend : 'BaseController'
 
     });
 

@@ -80,12 +80,14 @@ define( function( require, exports, module ){
 
         __iconIn : function(){
             var sttc = this.self;
-            sttc.Util.notify( sttc.controller, 'iconIn' );
+            if( sttc.current || sttc.dock )
+                sttc.Util.notify( sttc.controller, 'iconIn' );
         },
 
         __iconOut : function(){
             var sttc = this.self;
-            sttc.Util.notify( sttc.controller, 'iconOut' );
+            if( sttc.current || sttc.dock )
+                sttc.Util.notify( sttc.controller, 'iconOut' );
         }
     });
 

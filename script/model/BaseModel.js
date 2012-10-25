@@ -111,7 +111,7 @@ define( function( require, exports, module ){
                     _name   : 'V' + sttc._name,
                     visiable: sttc.visiable,
                     selector: sttc.selector,
-                    ctrl    : sttc.controller,
+                    controller : sttc.controller,
                     cfg     : cfg
                 };
                 sttc.view = new View( viewCfg );

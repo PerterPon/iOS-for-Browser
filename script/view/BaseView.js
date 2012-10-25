@@ -116,6 +116,12 @@ define( function( require, exports, module ){
          */
         _getElByCls : function( className ){
             return $( this.self.selector ).find( '.' + className );
+        },
+        
+        _removeElCacheByCls : function( className ){
+            var sttc = this.self;
+            sttc.elPool[ className ] = null;
+            delete sttc.elPool[ className ];
         }
 
     });

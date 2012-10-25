@@ -13,7 +13,8 @@ define( function( require, exports, module ){
                 [ 'sliderUp' ],
                 [ 'unlock' ],
                 [ 'sliderTranslate' ],
-                [ 'sliderBack' ]
+                [ 'sliderBack' ],
+                [ 'unlockComplete' ]
             ]
         },
 
@@ -45,18 +46,25 @@ define( function( require, exports, module ){
             Util.notify( view, 'unlock' );
         },
 
-        sliderTranslate : function( x, y ){
+        EsliderTranslate : function( x, y ){
             var sttc    = this.self,
                 view    = sttc.view,
-                Util    = sttc.util;
+                Util    = sttc.Util;
             Util.notify( view, 'sliderTranslate', [ x, y ] );
         },
 
-        sliderBack : function(){
+        EsliderBack : function(){
             var sttc    = this.self,
                 view    = sttc.view,
-                Util    = sttc.util;
-            Util.notify( view, 'sliderTranslate' );
+                Util    = sttc.Util;
+            Util.notify( view, 'sliderBack' );
+        },
+
+        EunlockComplete : function(){
+            var sttc    = this.self,
+                model   = sttc.model,
+                Util    = sttc.Util;
+            Util.notify( model, 'unlockComplete' );
         }
 
     });

@@ -10,7 +10,8 @@ define( function( require, exports, module ){
             eventList : [
                 [ 'sliderDown' ],
                 [ 'sliderMove' ],
-                [ 'sliderUp' ]
+                [ 'sliderUp' ],
+                [ 'unlockComplete' ]
             ],
             Event : window.iOS.Event
         },
@@ -18,7 +19,6 @@ define( function( require, exports, module ){
         statics : {
             slider   : null,
             sliderImg: null,
-            sliderImgCls : 'iOS_lockScreen_sliderImg',
             startPos : null,
             sliding  : false
         },
@@ -79,8 +79,6 @@ define( function( require, exports, module ){
         EsliderDown : function( event ){
             var sttc   = this.self,
                 evtPos = this.__getTouchPos( event ); 
-            sttc.slider   = evtPos.target;
-            sttc.sliderImg= sttc.slider.parentElement.getElementsByClassName( sttc.sliderImgCls )[ 0 ];
             sttc.startPos = evtPos.pageX;
             sttc.sliding  = true;
         },
@@ -91,22 +89,16 @@ define( function( require, exports, module ){
                 Util   = sttc.Util,
                 Ctrl   = sttc.controller,
                 distance;
-            if( !sttc.slider || !sttc.sliding )
-                return;
             distance = evtPos.pageX - sttc.startPos;
             if( distance <= 0 ){
-                // sttc.slider.style.webkitTransform = 'translate3d( 0, 0, 0 )';
                 Util.notify( Ctrl, 'sliderTranslate', [ 0, 0 ] );
                 return;
             }
             if( distance >= 207 ){
                 Util.notify( Ctrl, 'sliderTranslate', [ 207, 0 ] );
-                // sttc.slider.style.webkitTransform = 'translate3d( 207px, 0, 0 )';
                 return;
             }
-            sttc.sliderImg.style.opacity = 1 - distance / 120;
-            Util.notify( Ctrl, 'sliderTranslate', [ evtPos.pageX - sttc.startPos, 0 ] );
-            // sttc.slider.style.webkitTransform = 'translate3d('+ ( evtPos.pageX - sttc.startPos )+'px, 0, 0 )';
+            Util.notify( Ctrl, 'sliderTranslate', [ distance, 0 ] );
             delete sttc;
             delete evtPos;
             delete distance;
@@ -115,26 +107,21 @@ define( function( require, exports, module ){
         EsliderUp   : function( event ){
             var sttc   = this.self,
                 Util   = sttc.Util,
-                Ctrl   = sttc.Ctrl,
-                slider = sttc.slider,
-                sliderImg = sttc.sliderImg,
+                Ctrl   = sttc.controller;
                 evtPos = this.__getTouchPos( event );
             if( evtPos.pageX - sttc.startPos < 207 && evtPos.pageX - sttc.startPos > 0 ){
                 Util.notify( Ctrl, 'sliderBack' );
-                slider.style.webkitTransitionDuration = '300ms';
-                slider.style.webkitTransform = 'translate3d( 0, 0, 0 )';
-                sliderImg.style.webkitTransitionDuration = '300ms';
-                sliderImg.style.opacity = '1';
-                slider.addEventListener( 'webkitTransitionEnd', function(){
-                    slider.style.webkitTransitionDuration = '0ms';
-                    sliderImg.style.webkitTransitionDuration = '0ms';
-                    slider.removeEventListener( 'webkitTransitionEnd' );
-                });
             } else {
                 var Event = sttc.Event;
                 Event.dispatchEvent( 'unlock' );
             }
             sttc.sliding = false;
+        },
+
+        EunlockComplete : function(){
+            var sttc  = this.self,
+                Event = sttc.Event;
+            Event.dispatchEvent( 'iconIn' );
         }
 
     });

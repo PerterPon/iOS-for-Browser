@@ -30,11 +30,13 @@ define( function( require, exports, module ){
         EiconIn : function(){
             var sttc = this.self,
                 icon = this._getEl()[ 0 ];
-            icon.style.webkitTransform = 'translate3d('+ sttc.outPos.x +'px, '+ sttc.outPos.y +'px, 0)';
+            icon.style.webkitTransform = 'translate3d('+ sttc.inPos.x +'px, '+ sttc.outPos.y +'px, 0)';
         },
 
         EiconOut : function(){
-            var sttc = this.self;
+            var sttc = this.self,
+                icon = this._getEl()[ 0 ];
+            icon.style.webkitTransform = 'translate3d('+ sttc.outPos.x +'px, '+ sttc.outPos.y +'px, 0)';
         },
 
         _initInnerDom : function(){
@@ -53,9 +55,12 @@ define( function( require, exports, module ){
          * @return {void}
          */
         __initIconView : function(){
-            var sttc = this.self;
-            if( sttc.current )
+            var sttc = this.self,
+                cfg  = sttc.cfg;
+            if( cfg.current || cfg.dock )
                 this.__doSetIconPos( sttc.outPos );
+            else 
+                this.__doSetIconPos( sttc.inPos );
         },
 
         /**

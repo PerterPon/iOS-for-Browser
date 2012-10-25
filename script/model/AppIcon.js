@@ -10,10 +10,6 @@ define( function( require, exports, module ){
             Event : window.iOS.Event
         },
 
-        constructor : function( cfg ){
-            this.callParent([ cfg ]);
-        },
-
         _attachEventListener : function(){
             this.callParent();
             var sttc  = this.self,
