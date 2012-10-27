@@ -8,10 +8,10 @@ define( function( require, exports, module ){
 
         _handleChildCfg : function(){
             var sttc  = this.self,
-                data  = sttc._data.data,
-                Icon  = require( './Icon' ),
-                VIcon = require( '../view/VIcon' ),
-                CIcon = require( '../controller/CIcon' );
+                data  = sttc._data.data;
+                require( './Icon' );
+                require( '../view/VIcon' );
+                require( '../controller/CIcon' );
             for( var i= 0; i < data.length; i++ ){
                 $.extend( data[ i ], {
                     "class"   : Icon,

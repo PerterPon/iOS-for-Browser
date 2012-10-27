@@ -21,6 +21,7 @@ define( function( require, exports, module ){
 
         constructor : function( cfg ){
             this._applyCfg( cfg );
+            this._name = cfg._name || 'test';
             this._registerSelf();
             this._attachEventListener();
         },

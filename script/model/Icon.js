@@ -90,6 +90,6 @@ define( function( require, exports, module ){
                 sttc.Util.notify( sttc.controller, 'iconOut' );
         }
     });
-
-    return Icon;
+    window.iOS.Icon = Icon;
+    // return Icon;
 });

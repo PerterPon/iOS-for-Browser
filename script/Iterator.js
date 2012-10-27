@@ -83,7 +83,12 @@ define( function( require ){
                 preDom = dom || sttc.preDom || document.body;
                 preDom.appendChild( html );
                 cfg[ 'selector' ] = '#' + id;
-                instance = new module( cfg );
+                if( cfg.index == 0 || cfg.index ){   
+                    new window.iOS.Icon( cfg );
+                } else {
+                    new module( cfg );
+                }
+                
                 sttc.curIdx++;
                 if( cfg.subView && cfg.subView.length ){
                     this.__doItrtr( cfg.subView, html );
