@@ -4,6 +4,11 @@ define( function( require, exports, module ){
 
     Ext.define( 'Component', {
 
+        /**
+         * [inheritableStatics]
+         * @type {Object}
+         * @protected
+         */
         inheritableStatics : {
             Util : require( '../util/Util' ),
             /**
@@ -17,17 +22,26 @@ define( function( require, exports, module ){
             eventList : []
         },
 
-        statics : {},
+        /**
+         * [values]
+         * @type {Object}
+         * @private
+         */
+        values : {},
 
         constructor : function( cfg ){
+            this._clearValues();
             this._applyCfg( cfg );
-            this._name = cfg._name || 'test';
             this._registerSelf();
             this._attachEventListener();
         },
 
+        _clearValues : function(){
+            this.values = {};
+        },
+
         _applyCfg : function( cfg ){
-            var sttc  = this.self;
+            var sttc  = this.values;
             for( var i in cfg ){
                 if( i == 'subView' )
                     continue;
@@ -36,9 +50,10 @@ define( function( require, exports, module ){
         },
 
         _registerSelf : function(){
-            var sttc    = this.self,
-                manager = sttc.manager;
-            manager.register( sttc._name, this );
+            var sttc    = this.values,
+                sttcs   = this.self,
+                manager = sttcs.manager;
+            manager.register( sttc.name, this );
         },
 
         /**
@@ -46,11 +61,11 @@ define( function( require, exports, module ){
          * @return {void}
          */
         _attachEventListener : function(){
-            var sttc   = this.self,
-                events = sttc.eventList,
-                Util   = sttc.Util,
-                that   = this,
-                manager= sttc.manager,
+            var sttcs   = this.self,
+                events  = sttcs.eventList,
+                Util    = sttcs.Util,
+                that    = this,
+                manager = sttcs.manager,
                 view, eventName, eventBody, scope;
             for( var i = 0; i < events.length; i++ ){
                 view   = manager.get( events[ i ][ 1 ] || that );

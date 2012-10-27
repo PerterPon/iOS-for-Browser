@@ -12,15 +12,11 @@ define( function( require, exports, module ){
             ]
         },
 
-        statics : {
-            Event : window.iOS.Event
-        },
-
         _attachEventListener : function(){
             this.callParent();
-            var sttc  = this.self,
-                Event = sttc.Event;
-            Event.addEvent( 'unlock', this.__unlockHandler, this );
+            var sttc  = this.values,
+                Event = window.iOS.Event;
+            Event.addEvent( 'unlockComplete', this.__unlockHandler, this );
         },
 
         _getDefaultData : function(){
@@ -28,8 +24,8 @@ define( function( require, exports, module ){
         },
 
         _handleChildCfg : function(){
-            var sttc      = this.self,
-                data      = sttc._data.data,
+            var sttc      = this.values,
+                data      = sttc.data.data,
                 MultiScreen = require( './MultiScreen' ),
                 AppIcon   = require( './AppIcon' ),
                 VAppIcon  = require( '../view/VAppIcon' ),
@@ -39,30 +35,31 @@ define( function( require, exports, module ){
                 CDockIcon = require( '../controller/CDockIcon' ),
                 newCfg    = [{
                     "class"   : MultiScreen,
-                    "_name"   : "iconContent",
+                    "name"   : "iconContent",
                     "clsList" : [ "iOS_multiScreen" ],
-                    "_data"   : {
+                    "data"   : {
                         data  : data[ 'screen' ]
                     },
                     "renderChild" : true
                 }, {
                     "class"   : DockIcon,
-                    "_name"   : "dockIcon",
+                    "name"   : "dockIcon",
                     "clsList" : [ "iOS_iconScreen_dockIcon" ],
                     "view"    : VDockIcon,
                     "controller" : CDockIcon,
-                    "_data"   : {
+                    "data"   : {
                         data  : data[ 'dock' ]
                     },
                     "renderChild" : true
                 }];
-            sttc._data.data = newCfg;
+            sttc.data.data = newCfg;
         },
 
         __unlockHandler : function(){
-            var sttc = this.self,
-                ctrl = sttc.controller,
-                Util = sttc.Util;
+            var sttc  = this.values,
+                sttcs = this.self,
+                ctrl  = sttc.controller,
+                Util  = sttcs.Util;
             Util.notify( ctrl, 'unlock' );
         }
 

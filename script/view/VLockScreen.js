@@ -11,8 +11,7 @@ define( function( require, exports, module ){
                 [ 'unlock' ],
                 [ 'sliderTranslate' ],
                 [ 'sliderBack' ]
-            ],
-            week : [ '日', '一', '二', '三', '四', '五', '六' ]
+            ]
         },
 
         statics : {
@@ -23,17 +22,24 @@ define( function( require, exports, module ){
             lockSlider  : 'iOS_lockScreen_lockSlider',
             sldrCntinr  : 'iOS_lockScreen_sliderContainer',
             sldrImg     : 'iOS_lockScreen_sliderImg',
-            slider      : 'iOS_lockScreen_slider'
+            slider      : 'iOS_lockScreen_slider',
+            week        : [ '日', '一', '二', '三', '四', '五', '六' ]
+        },
+
+        values : {
+            sliderImg : null,
+            slider    : null
         },
 
         Eunlock : function(){
-            var sttc       = this.self,
+            var sttc       = this.values,
+                sttcs      = this.self,
                 that       = this,
-                Util       = sttc.Util,
+                Util       = sttcs.Util,
                 ctrl       = sttc.controller,
-                lockDate   = this._getElByCls( sttc.lockDate ),
-                lockSlider = this._getElByCls( sttc.lockSlider );
-            lockDate[ 0 ].style.webkitTransform   = 'translate3d( 0, -'+ ( lockDate.height() + sttc.topBarHeight ) +'px, 0 )';
+                lockDate   = this._getElByCls( sttcs.lockDate ),
+                lockSlider = this._getElByCls( sttcs.lockSlider );
+            lockDate[ 0 ].style.webkitTransform   = 'translate3d( 0, -'+ ( lockDate.height() + sttcs.topBarHeight ) +'px, 0 )';
             lockSlider[ 0 ].style.webkitTransform = 'translate3d( 0, '+ lockSlider.height() +'px, 0)';
             lockDate[ 0 ].addEventListener( 'webkitTransitionEnd', function(){
                 that._getEl().hide();
@@ -43,13 +49,13 @@ define( function( require, exports, module ){
         },
 
         EsliderTranslate : function( x, y ){
-            var sttc = this.self;
+            var sttc = this.values;
             this.__doSetSliderPos( x, y );
             sttc.sliderImg[ 0 ].style.opacity = 1 - x / 120;
         },
 
         EsliderBack : function(){
-            var sttc      = this.self,
+            var sttc      = this.values,
                 slider    = sttc.slider[ 0 ],
                 sliderImg = sttc.sliderImg[ 0 ];
             slider.style.webkitTransitionDuration = '300ms';
@@ -69,15 +75,16 @@ define( function( require, exports, module ){
         },
 
         _initInnerDom : function(){
-            var sttc     = this.self,
-                htmlData = '<div class="'+ sttc.lockDate +' abs">' +
-                    '<div class="'+ sttc.lockTime +'">12:00</div>' +
-                    '<div class="'+ sttc.lockDateInfo +'">12月12日 星期四</div>' +
+            var sttcs     = this.self,
+                sttc      = this.values,
+                htmlData = '<div class="'+ sttcs.lockDate +' abs">' +
+                    '<div class="'+ sttcs.lockTime +'">12:00</div>' +
+                    '<div class="'+ sttcs.lockDateInfo +'">12月12日 星期四</div>' +
                 '</div>' + 
-                '<div class="'+ sttc.lockSlider +' abs">' +
-                    '<div class="'+ sttc.sldrCntinr +'">' +
-                        '<div class="'+ sttc.sldrImg +'"></div>' +
-                        '<img class="'+ sttc.slider +'" draggable="false" src="./resource/images/lockStuff/lockSlider.png" />' +
+                '<div class="'+ sttcs.lockSlider +' abs">' +
+                    '<div class="'+ sttcs.sldrCntinr +'">' +
+                        '<div class="'+ sttcs.sldrImg +'"></div>' +
+                        '<img class="'+ sttcs.slider +'" draggable="false" src="./resource/images/lockStuff/lockSlider.png" />' +
                     '</div>' +
                 '</div>';
             this._getEl().html( htmlData );
@@ -91,15 +98,16 @@ define( function( require, exports, module ){
                     minute : date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
                 };
             this.__updateTime( time );
-            sttc.slider    = this._getElByCls( sttc.slider );
-            sttc.sliderImg = this._getElByCls( sttc.sldrImg ); 
+            sttc.slider    = this._getElByCls( sttcs.slider );
+            sttc.sliderImg = this._getElByCls( sttcs.sldrImg ); 
         },
 
         _attachDomEvent : function(){
             this.callParent();
-            var sttc = this.self,
-                ctrl = sttc.controller,
-                Util = sttc.Util;
+            var sttc  = this.values,
+                sttcs = this.self, 
+                ctrl  = sttc.controller,
+                Util  = sttcs.Util;
             sttc.slider.on( $.support.touchstart, function( event ){
                 Util.notify( ctrl, 'sliderDown', [ event ]);
             }).bind( $.support.touchmove, function( event ){
@@ -110,15 +118,15 @@ define( function( require, exports, module ){
         },
 
         __updateTime : function( time ){
-            var sttc     = this.self,
-                lockTime = this._getElByCls( sttc.lockTime ),
-                lockDate = this._getElByCls( sttc.lockDateInfo );
+            var sttcs     = this.self,
+                lockTime = this._getElByCls( sttcs.lockTime ),
+                lockDate = this._getElByCls( sttcs.lockDateInfo );
             lockTime.text( time.hours + ':' + time.minute );
-            lockDate.text( time.month + '月' + time.day + ' ' + '星期' + sttc.week[ time.weekDay ] );
+            lockDate.text( time.month + '月' + time.day + ' ' + '星期' + sttcs.week[ time.weekDay ] );
         },
 
         __doSetSliderPos : function( x, y ){
-            var slider = this.self.slider[ 0 ];
+            var slider = this.values.slider[ 0 ];
             slider.style.webkitTransform = 'translate3d( '+ x +'px, '+ y +'px, 0 )';
         }
 

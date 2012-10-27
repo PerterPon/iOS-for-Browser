@@ -7,15 +7,17 @@ define( function( require, exports, module ){
         extend : 'Component',
 
         inheritableStatics : {
-            //本view的名称
-            name    : null,
-            //viewManager
             manager : require( './ViewManager' ),
-            elPool : {}
         },
 
-        statics : {
-            initInfo : null
+        values : {
+            name    : null,
+            initInfo : null,
+            /**
+             * [elPool 节点缓冲池，如果使用缓存方法，则会将节点缓存到此处。]
+             * @type {Object}
+             */
+            elPool : {}
         },
 
         constructor : function( cfg ){
@@ -39,7 +41,7 @@ define( function( require, exports, module ){
          * @return {void}
          */
         _initView : function(){
-            var sttc = this.self;
+            var sttc    = this.values;
             sttc.elPool = {};
             if( sttc.visiable === false ){
                 this._getEl().hide();
@@ -85,7 +87,7 @@ define( function( require, exports, module ){
          * @return {jQuery} [当前View的jQuery对象]
          */
         _getEl : function( select, isForce ){
-            var sttc     = this.self,
+            var sttc     = this.values,
                 elCache  = sttc.elPool,
                 selector = select || sttc.selector,
                 $el;
@@ -115,11 +117,11 @@ define( function( require, exports, module ){
          * @protected
          */
         _getElByCls : function( className ){
-            return $( this.self.selector ).find( '.' + className );
+            return $( this.values.selector ).find( '.' + className );
         },
         
         _removeElCacheByCls : function( className ){
-            var sttc = this.self;
+            var sttc = this.values;
             sttc.elPool[ className ] = null;
             delete sttc.elPool[ className ];
         }

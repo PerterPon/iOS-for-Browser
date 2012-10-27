@@ -13,8 +13,9 @@ define( function( require, exports, module ){
         },
 
         Eunlock : function(){
-            var sttc = this.self;
-            sttc.Util.notify( sttc.view, 'unlock' );
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'unlock' );
         }
 
     });

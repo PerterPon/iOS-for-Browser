@@ -6,7 +6,7 @@ define( function( require, exports, module ){
     Ext.define( 'Icon', {
         extend : 'BaseModel',
 
-        statics : {
+        values : {
             inPos  : {
                 x  : null,
                 y  : null
@@ -18,9 +18,10 @@ define( function( require, exports, module ){
         },
 
         _initComplete : function(){
-            var sttc = this.self;
+            var sttc  = this.values,
+                sttcs = this.self;
             this.__calPosition();
-            sttc.Util.notify( sttc.controller, 'initComplete', [ sttc.inPos, sttc.outPos ] );
+            sttcs.Util.notify( sttc.controller, 'initComplete', [ sttc.inPos, sttc.outPos ] );
         },
 
         _attachEventListener : function(){
@@ -35,7 +36,7 @@ define( function( require, exports, module ){
          * @return {}
          */
         __calPosition : function(){
-            var sttc = this.self,
+            var sttc = this.values,
                 idx  = sttc.index;
             sttc.inPos  = this.__getInPosition( idx );
             sttc.outPos = this.__getOutPosition( idx ); 
@@ -47,8 +48,7 @@ define( function( require, exports, module ){
          * @return {Object}       [相应的位置信息]
          */
         __getInPosition : function( index ){
-            var sttc   = this.self,
-                posX   = index % 4,
+            var posX   = index % 4,
                 posY   = Math.floor( index / 4 ),
                 disX   = 17 * ( posX + 1 ) + 58 * posX + 3 * Math.floor( posX.toString( 2 ) / 10 ),
                 disY   = posY * 82 + ( posY & 2 ) * 4 + 10,
@@ -65,7 +65,7 @@ define( function( require, exports, module ){
          * @return {Object}       [相应的位置信息]
          */
         __getOutPosition : function( index ){
-            var sttc   = this.self,
+            var sttc   = this.values,
                 posY   = Math.floor( index / 4 ),
                 posX   = index % 4,
                 posIn  = this._posIn,
@@ -79,15 +79,17 @@ define( function( require, exports, module ){
         },
 
         __iconIn : function(){
-            var sttc = this.self;
+            var sttc  = this.values,
+                sttcs = this.self;
             if( sttc.current || sttc.dock )
-                sttc.Util.notify( sttc.controller, 'iconIn' );
+                sttcs.Util.notify( sttc.controller, 'iconIn' );
         },
 
         __iconOut : function(){
-            var sttc = this.self;
+            var sttc  = this.values,
+                sttcs = this.self;
             if( sttc.current || sttc.dock )
-                sttc.Util.notify( sttc.controller, 'iconOut' );
+                sttcs.Util.notify( sttc.controller, 'iconOut' );
         }
     });
     window.iOS.Icon = Icon;

@@ -16,23 +16,27 @@ define( function( require, exports, module ){
         },
 
         Eunlock : function(){
-            var sttc = this.self;
-            sttc.Util.notify( sttc.view, 'unlock' );
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'unlock' );
         },
 
         EinitComplete : function( inPos, outPos ){
-            var sttc = this.self;
-            sttc.Util.notify( sttc.view, 'initComplete', [ inPos, outPos ] );
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'initComplete', [ inPos, outPos ] );
         },
 
         EiconIn : function(){
-            var sttc = this.self;
-            sttc.Util.notify( sttc.view, 'iconIn' );
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'iconIn' );
         },
 
         EiconOut : function(){
-            var sttc = this.self;
-            sttc.Util.notify( sttc.view, 'iconOut' );
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'iconOut' );
         }
 
     });

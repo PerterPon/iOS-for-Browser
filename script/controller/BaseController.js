@@ -10,8 +10,13 @@ define( function( require, exports, module ){
             manager : require( './ControllerManager' )
         },
 
+        values : {
+            view  : null,
+            model : null
+        },
+
         constructor : function( cfg ){
-            // this.callParent([ cfg ]);
+            this._clearValues();
             this._applyCfg( cfg );
             this._registerSelf();
         },
@@ -21,7 +26,7 @@ define( function( require, exports, module ){
          * @param {Object} view [view]
          */
         setView : function( view ){
-            this.self.view = view;
+            this.valuess.view = view;
         },
 
         /**
@@ -29,7 +34,7 @@ define( function( require, exports, module ){
          * @param {Model} model [model]
          */
         setModel : function( model ){
-            this.self.model = model;
+            this.values.model = model;
         },
 
         /**
@@ -38,10 +43,14 @@ define( function( require, exports, module ){
          * @param {Object} view  [view]
          */
         setMV : function( model, view ){
-            var sttc   = this.self;
+            var sttc   = this.values;
             sttc.model = model;
             sttc.view  = view;
             this._init(); 
+        },
+
+        _clearValues : function(){
+            this.values = {};
         },
 
         _init : function(){

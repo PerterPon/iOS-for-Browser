@@ -5,6 +5,10 @@ define( function( require ){
     Ext.define( 'Iterator', {
 
         statics : {
+            Util   : require( '../util/Util' )
+        },
+
+        values : {
             curIdx : 0,
             preDom : null,
             /**
@@ -12,13 +16,11 @@ define( function( require ){
              * @type {Array}
              */
             queue  : [],
-
-            Util   : require( '../util/Util' )
         },
 
         constructor : function(){
-            var sttc = this.self;
-            sttc.Util.listen( this, 'iteratorComplete', this.__iteratorComplete );
+            var sttcs = this.self;
+            sttcs.Util.listen( this, 'iteratorComplete', this.__iteratorComplete );
         },
 
         /**
@@ -27,7 +29,7 @@ define( function( require ){
          * @return {void}
          */
         itrtrView : function( cfg ){
-            var sttc  = this.self,
+            var sttc  = this.values,
                 queue = sttc.queue; 
             queue[ queue.length - 1 ][ 'cfg' ] = cfg;
             if( queue.length == 1 )
@@ -39,7 +41,7 @@ define( function( require ){
          * @param {[type]} id [父节点ID]
          */
         setPreDom : function( id ){
-            var sttc     = this.self,
+            var sttc     = this.values,
                 queue    = sttc.queue,
                 selector = id.replace( '#', '' );
             queue.push({
@@ -50,7 +52,7 @@ define( function( require ){
         },
 
         __doSetPreDom : function( selector ){
-            this.self.preDom = document.getElementById( selector );
+            this.values.preDom = document.getElementById( selector );
         },
 
         /**
@@ -61,11 +63,12 @@ define( function( require ){
          * @protected
          */
         __doItrtr : function( tCfg, dom ){
-            var sttc   = this.self,
-                module, cls, id, html, instance, preDom, cfg;
+            var sttcs  = this.self,
+                sttc   = this.values,
+                model, cls, id, html, instance, preDom, cfg;
             for( var i = 0; i < tCfg.length; i++ ){
                 cfg    = tCfg[ i ];
-                module = cfg[ 'class' ];
+                model  = cfg[ 'class' ];
                 cls    = '';
                 id     = 'ios-' + sttc.curIdx;
                 for( var j = 0; j < ( cfg.clsList || [] ).length; j++ ){
@@ -83,18 +86,13 @@ define( function( require ){
                 preDom = dom || sttc.preDom || document.body;
                 preDom.appendChild( html );
                 cfg[ 'selector' ] = '#' + id;
-                if( cfg.index == 0 || cfg.index ){   
-                    new window.iOS.Icon( cfg );
-                } else {
-                    new module( cfg );
-                }
-                
+                new model( cfg );
                 sttc.curIdx++;
                 if( cfg.subView && cfg.subView.length ){
                     this.__doItrtr( cfg.subView, html );
                 }
             }
-            sttc.Util.notify( this, 'iteratorComplete' );
+            sttcs.Util.notify( this, 'iteratorComplete' );
         },
 
         /**
@@ -102,7 +100,7 @@ define( function( require ){
          * @return {}
          */
         __iteratorComplete : function(){
-            var sttc  = this.self,
+            var sttc  = this.values,
                 queue = sttc.queue; 
             queue.shift();
             if( !queue.length )

@@ -12,11 +12,10 @@ define( function( require, exports, module ){
                 [ 'sliderMove' ],
                 [ 'sliderUp' ],
                 [ 'unlockComplete' ]
-            ],
-            Event : window.iOS.Event
+            ]
         },
-
-        statics : {
+        
+        values : {
             slider   : null,
             sliderImg: null,
             startPos : null,
@@ -35,7 +34,7 @@ define( function( require, exports, module ){
         __updateTime : function(){
             var sttc = this.self,
                 that = this,
-                Event= sttc.Event;
+                Event= window.iOS.Event;
             setInterval( function(){
                 var date  = new Date(),
                     time  = {
@@ -63,30 +62,31 @@ define( function( require, exports, module ){
         },
 
         __unlockHandler : function(){
-            var sttc = this.self,
-                ctrl = sttc.controller,
-                Util = sttc.Util;
+            var sttc  = this.values,
+                sttcs = this.self, 
+                ctrl  = sttc.controller,
+                Util  = sttcs.Util;
             Util.notify( ctrl, 'unlock' );
         },
 
         _attachEventListener : function(){
             this.callParent();
-            var sttc  = this.self,
-                Event = sttc.Event;
+            var Event  = window.iOS.Event;
             Event.addEvent( 'unlock', this.__unlockHandler, this );
         },
 
         EsliderDown : function( event ){
-            var sttc   = this.self,
+            var sttc   = this.values,
                 evtPos = this.__getTouchPos( event ); 
             sttc.startPos = evtPos.pageX;
             sttc.sliding  = true;
         },
 
         EsliderMove : function( event ){
-            var sttc   = this.self,
+            var sttc   = this.values,
+                sttcs  = this.self,
                 evtPos = this.__getTouchPos( event ),
-                Util   = sttc.Util,
+                Util   = sttcs.Util,
                 Ctrl   = sttc.controller,
                 distance;
             distance = evtPos.pageX - sttc.startPos;
@@ -105,23 +105,27 @@ define( function( require, exports, module ){
         },
 
         EsliderUp   : function( event ){
-            var sttc   = this.self,
-                Util   = sttc.Util,
+            var sttc   = this.values,
+                sttcs  = this.self,
+                Util   = sttcs.Util,
                 Ctrl   = sttc.controller;
                 evtPos = this.__getTouchPos( event );
             if( evtPos.pageX - sttc.startPos < 207 && evtPos.pageX - sttc.startPos > 0 ){
                 Util.notify( Ctrl, 'sliderBack' );
             } else {
-                var Event = sttc.Event;
+                var Event = window.iOS.Event;
                 Event.dispatchEvent( 'unlock' );
             }
             sttc.sliding = false;
         },
 
         EunlockComplete : function(){
-            var sttc  = this.self,
-                Event = sttc.Event;
-            Event.dispatchEvent( 'iconIn' );
+            var Event = window.iOS.Event;
+            Event.dispatchEvent( 'unlockComplete' );
+            setTimeout( function(){
+                Event.dispatchEvent( 'iconIn' );
+            }, 1 );
+            
         }
 
     });

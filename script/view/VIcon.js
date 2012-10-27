@@ -21,30 +21,31 @@ define( function( require, exports, module ){
         },
 
         EinitComplete : function( inPos, outPos ){
-            var sttc    = this.self;
+            var sttc    = this.values;
             sttc.inPos  = inPos;
             sttc.outPos = outPos;
             this.__initIconView();
         },
 
         EiconIn : function(){
-            var sttc = this.self,
+            var sttc = this.values,
                 icon = this._getEl()[ 0 ];
-            icon.style.webkitTransform = 'translate3d('+ sttc.inPos.x +'px, '+ sttc.outPos.y +'px, 0)';
+            icon.style.webkitTransform = 'translate3d('+ sttc.inPos.x +'px, '+ sttc.inPos.y +'px, 0)';
         },
 
         EiconOut : function(){
-            var sttc = this.self,
+            var sttc = this.values,
                 icon = this._getEl()[ 0 ];
             icon.style.webkitTransform = 'translate3d('+ sttc.outPos.x +'px, '+ sttc.outPos.y +'px, 0)';
         },
 
         _initInnerDom : function(){
-            var sttc = this.self,
-                htmlData = '<div class="'+ sttc.scaleLayer +'">' +
-                        '<div class="'+ sttc.shakeLayer +'">' +
-                            '<img src="resource/images/icons/icon_'+ sttc._name.substr( 1 ) +'.png" />' +
-                            '<span class="'+ sttc.iconName +'">'+ sttc.cfg.text +'</span>' +
+            var sttcs = this.self,
+                sttc  = this.values,
+                htmlData = '<div class="'+ sttcs.scaleLayer +'">' +
+                        '<div class="'+ sttcs.shakeLayer +'">' +
+                            '<img src="resource/images/icons/icon_'+ sttc.name.substr( 1 ) +'.png" />' +
+                            '<span class="'+ sttcs.iconName +'">'+ sttc.cfg.text +'</span>' +
                         '</div>' +
                     '</div>';
             this._getEl().html( htmlData );
@@ -55,7 +56,7 @@ define( function( require, exports, module ){
          * @return {void}
          */
         __initIconView : function(){
-            var sttc = this.self,
+            var sttc = this.values,
                 cfg  = sttc.cfg;
             if( cfg.current || cfg.dock )
                 this.__doSetIconPos( sttc.outPos );

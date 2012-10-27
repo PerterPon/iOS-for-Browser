@@ -4,12 +4,7 @@ define( function( require, exports, module ){
 
     require( '../BaseManager' );
     Ext.define( 'ControllerManager', {
-        extend : 'BaseManager',
-
-        /*getController : function( name ){
-            return this.get( name );
-        }*/
-
+        extend : 'BaseManager'
     });
 
     var ctrlMgr = new ControllerManager( 'module' ),

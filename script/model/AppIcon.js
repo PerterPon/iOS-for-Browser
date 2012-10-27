@@ -6,21 +6,18 @@ define( function( require, exports, module ){
     Ext.define( 'AppIcon', {
         extend : 'IconContent',
 
-        statics : {
-            Event : window.iOS.Event
-        },
-
         _attachEventListener : function(){
             this.callParent();
-            var sttc  = this.self,
-                Event = sttc.Event;
+            var sttc  = this.values,
+                Event = window.iOS.Event;
             Event.addEvent( 'unlock', this.__unlockHandler, this );
         },
 
         __unlockHandler : function(){
-            var sttc = this.self,
-                ctrl = sttc.controller,
-                Util = sttc.Util;
+            var sttc  = this.values,
+                sttcs = this.self,
+                ctrl  = sttc.controller,
+                Util  = sttcs.Util;
             Util.notify( ctrl, 'unlock' );
         }
 

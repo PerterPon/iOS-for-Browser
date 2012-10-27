@@ -22,34 +22,34 @@ define( function( require, exports, module ){
     return [{
         "class"      : TopBar,
         "clsList"    : [ 'iOS_topBar' ],
-        "_name"      : "topBar",
+        "name"      : "topBar",
         "view"       : VTopBar,
         "controller" : CTopBar,
         "height"     : '20px'
     }, {
         "class"      : BaseIOS,
         "clsList"    : [ "iOS" ],
-        "_name"      : "iOS",
+        "name"      : "iOS",
         "view"       : VIOS,
         "flex"       : "460",
         "subView"    : [{
             "class"      : PopScreen,
             "clsList"    : [ "iOS_popScreen" ],
             "visiable"   : false,
-            "_name"      : "popScreen",
+            "name"      : "popScreen",
             "view"       : VPopScreen,
             "controller" : CPopScreen
         }, {
             "class"      : LockScreen,
             "clsList"    : [ "iOS_lockScreen" ],
-            "_name"      : "lockScreen",
+            "name"      : "lockScreen",
             "view"       : VLockScreen,
             "controller" : CLockScreen
         }, {
             "class"      : IconScreen,
             "clsList"    : [ "iOS_iconScreen" ],
             "visiable"   : false,
-            "_name"      : "iconScreen",
+            "name"      : "iconScreen",
             "view"       : VIconScreen,
             "controller" : CIconScreen,
             "needData"   : true,
@@ -58,7 +58,7 @@ define( function( require, exports, module ){
             "class"      : AppScreen,
             "clsList"    : [ "iOS_appScreen" ],
             "visiable"   : false,
-            "_name"      : "appScreen",
+            "name"      : "appScreen",
             "view"       : VAppScreen,
             "controller" : CAppScreen
         }]

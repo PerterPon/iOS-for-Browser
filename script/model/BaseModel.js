@@ -21,9 +21,9 @@ define( function( require, exports, module ){
             manager : require( './ModelManager' )
         },
 
-        statics : {
-            _name : null,
-            _data : null 
+        values : {
+            name : null,
+            data : null 
         },
 
         constructor : function( cfg ){
@@ -35,15 +35,15 @@ define( function( require, exports, module ){
         },
 
         _initComplete : function(){
-            var sttc = this.self;
+            var sttc = this.values;
             if( !sttc.needData && sttc.renderChild )
                 this._iteratorChild();
         },
 
         _attachEventListener : function(){
             this.callParent();
-            var sttc = this.self,
-                Util = sttc.Util;
+            var sttcs = this.self,
+                Util  = sttcs.Util;
             Util.listen( this, 'dataReady', this._dataReady );
         },
 
@@ -52,19 +52,20 @@ define( function( require, exports, module ){
          * @return {Object}   [获取到的数据]
          */
         _requestData : function(){
-            var sttc = this.self,
-                that = this;
+            var sttc  = this.values,
+                sttcs = this.self,
+                that  = this;
             sockMngr.checkSocket( norFn, errFn );
             function norFn(){
                 sockMngr.on( 'getDataBak', function( data ){
-                    sttc._data = data.data;
-                    sttc.Util.notify( that, 'dataReady' );
+                    sttc.data = data.data;
+                    sttcs.Util.notify( that, 'dataReady' );
                 });
-                sockMngr.emit( 'getData', { "storeName" : sttc._name }); 
+                sockMngr.emit( 'getData', { "storeName" : sttc.name }); 
             }
             function errFn(){
-                sttc._data = that._getDefaultData();
-                sttc.Util.notify( that, 'dataReady' )
+                sttc.data = that._getDefaultData();
+                sttcs.Util.notify( that, 'dataReady' )
             }
         },
 
@@ -89,18 +90,18 @@ define( function( require, exports, module ){
         _iteratorChild : function(){
             this._handleChildCfg();
             var iterator = require( '../Iterator' ),
-                sttc     = this.self;
+                sttc     = this.values;
             iterator.setPreDom( sttc.selector );
-            iterator.itrtrView( sttc._data.data );
+            iterator.itrtrView( sttc.data.data );
         },
 
         _initProgram : function( cfg ){
-            var sttc = this.self,
+            var sttc = this.values,
                 View, Ctrl, viewCfg, ctrlCfg;
             if( sttc.controller ){
                 Ctrl = sttc.controller;
                 ctrlCfg = {
-                    _name : 'C' + sttc._name
+                    name : 'C' + sttc.name
                 };
                 sttc.controller = new Ctrl( ctrlCfg );
             }
@@ -108,7 +109,7 @@ define( function( require, exports, module ){
                 View = sttc.view;
                 viewCfg = {
                     clsList : sttc.clsList,
-                    _name   : 'V' + sttc._name,
+                    name    : 'V' + sttc.name,
                     visiable: sttc.visiable,
                     selector: sttc.selector,
                     controller : sttc.controller,
@@ -126,13 +127,13 @@ define( function( require, exports, module ){
          * @protected
          */
         _initView : function(){
-            var sttc    = this.self;
+            var sttc    = this.values;
             if( !sttc.view )
                 return;
             var view    = sttc.view,
                 viewCfg = {
                     clsList : sttc.clsList,
-                    _name   : 'V' + sttc._name,
+                    name   : 'V' + sttc.name,
                     visiable: sttc.visiable,
                     selector: sttc.selector
                 };
@@ -145,7 +146,7 @@ define( function( require, exports, module ){
          * @protected
          */
         _initController : function(){
-            var sttc = this.self;
+            var sttc = this.values;
             if( !sttc.controller )
                 return;
             var ctrl = sttc.controller;
@@ -157,7 +158,7 @@ define( function( require, exports, module ){
          * @return {}
          */
         _dataReady : function(){
-            if( this.self.renderChild )
+            if( this.values.renderChild )
                 this._iteratorChild();
         },
 
@@ -167,7 +168,7 @@ define( function( require, exports, module ){
          * @public
          */
         getData : function(){
-            return sttc._data;
+            return this.values.data;
         }
 
     });
