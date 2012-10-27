@@ -11,7 +11,8 @@ define( function( require, exports, module ){
                 [ 'unlock' ],
                 [ 'initComplete' ],
                 [ 'iconIn' ],
-                [ 'iconOut' ]
+                [ 'iconOut' ],
+                [ 'iconClick' ]
             ]
         },
 
@@ -37,6 +38,12 @@ define( function( require, exports, module ){
             var sttc  = this.values,
                 sttcs = this.self;
             sttcs.Util.notify( sttc.view, 'iconOut' );
+        },
+
+        EiconClick : function(){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.model, 'iconClick' );
         }
 
     });

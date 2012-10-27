@@ -54,7 +54,7 @@ define( function( require, exports, module ){
         /**
          * [__getTouchPos 获得鼠标或者触摸点信息]
          * @param  {Event} event      [事件对象]
-         * @param  {Bool}  isTouchEnd [touchend实践或者pageX的方式较为特殊]
+         * @param  {Bool}  isTouchEnd [touchend事件获得pageX的方式较为特殊]
          * @return {Object}
          */
         __getTouchPos : function( event, isTouchEnd ){

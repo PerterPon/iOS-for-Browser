@@ -51,6 +51,15 @@ define( function( require, exports, module ){
             this._getEl().html( htmlData );
         },
 
+        _attachDomEvent : function(){
+            var sttc  = this.values,
+                sttcs = this.self,
+                Util  = sttcs.Util; 
+            this._getEl().on( 'click', function(){
+                Util.notify( sttc.controller, 'iconClick' );
+            });
+        },
+
         /**
          * [__initIconView 初始化图标，包括位置等]
          * @return {void}

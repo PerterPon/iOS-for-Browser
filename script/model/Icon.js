@@ -6,6 +6,12 @@ define( function( require, exports, module ){
     Ext.define( 'Icon', {
         extend : 'BaseModel',
 
+        inheritableStatics : {
+            eventList : [
+                [ 'iconClick' ]
+            ]
+        },
+
         values : {
             inPos  : {
                 x  : null,
@@ -15,6 +21,11 @@ define( function( require, exports, module ){
                 x  : null,
                 y  : null
             }
+        },
+
+        EiconClick : function(){
+            var Event = window.iOS.Event;
+            Event.dispatchEvent( 'iconOut' );
         },
 
         _initComplete : function(){
@@ -73,7 +84,7 @@ define( function( require, exports, module ){
                 disY   = ( posY & 2 ) - 1,
                 System = window.iOS.System;
             return {
-                x : ( sttc.inPos.x + 160 * disX ) / 320 * System.width,
+                x : sttc.dock ? sttc.inPos.x : ( sttc.inPos.x + 160 * disX ) / 320 * System.width,
                 y : sttc.dock ? 90 : ( sttc.inPos.y + 140 * disY ) / 480 * System.height
             };
         },

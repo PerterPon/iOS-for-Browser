@@ -10,7 +10,7 @@ define( function( require, exports, module ){
             var sttc     = this.values,
                 data     = sttc.data.data,
                 AppIcon  = require( './AppIcon' ),
-                CAppIcon = require( '../controller/CAppIcon' ),
+                CAppIcon = require( '../controller/CLockScreen' ),
                 VAppIcon = require( '../view/VAppIcon' ),
                 newCfg   = [];
             for( var i  = 0; i < data.length; i++ ){
