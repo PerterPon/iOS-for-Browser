@@ -14,8 +14,15 @@ define( function( require, exports, module ){
             ]
         },
 
-        values : {
-            sliding : false
+        statics : {
+            width : window.iOS.System.width
+        },
+
+        values  : {
+            startPos : null,
+            sliding  : false,
+            lastPos  : null,
+            curIdx   : null
         },
 
         EsliderDown : function( event ){
@@ -33,26 +40,33 @@ define( function( require, exports, module ){
                 evtPos = this.__getTouchPos( event ),
                 Event  = window.iOS.Event,
                 dis    = evtPos.pageX - sttc.startPos;
+            sttc.lastPos    = evtPos.pageX;
+            if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) )
+                return;
             Event.dispatchEvent( 'multiScreenTranslate', [ sttc.curIdx, dis >= 0 ? 'right' : 'left', dis ]);
-            // Util.notify( Ctrl, 'sliderTranslate', [ evtPos.pageX - sttc.startPos, 0 ] );
             delete sttc;
             delete evtPos;
             delete distance;
         },
 
         EsliderUp   : function( event ){
-            // var sttc   = this.values,
-            //     sttcs  = this.self,
-            //     Util   = sttcs.Util,
-            //     Ctrl   = sttc.controller;
-            //     evtPos = this.__getTouchPos( event );
-            // if( evtPos.pageX - sttc.startPos < 207 && evtPos.pageX - sttc.startPos > 0 ){
-            //     Util.notify( Ctrl, 'sliderBack' );
-            // } else {
-            //     var Event = window.iOS.Event;
-            //     Event.dispatchEvent( 'unlock' );
-            // }
+            var sttc   = this.values,
+                sttcs  = this.self,
+                evtPos = this.__getTouchPos( event, true ),
+                ctrl   = sttc.controller,
+                Util   = sttcs.Util,
+                Event  = window.iOS.Event,
+                dis    = evtPos.pageX - sttc.startPos;
+            if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) )
+                return;
+            Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, dis >= 0 ? 'right' : 'left', Math.abs( dis ) ] );
             this.values.sliding = false;
+        },
+
+        _attachEventListener : function(){
+            this.callParent();
+            var Event = window.iOS.Event;
+            Event.addEvent( 'multiScreenAutoTranslateComplete', this.__multiScreenAutoTranslateComplete, this );
         },
 
         _handleChildCfg : function(){
@@ -92,8 +106,20 @@ define( function( require, exports, module ){
         },
 
         __getTouchPos : function( event, isTouchEnd ){
-            return $.support.touch ? isTouchEnd ? event.originalEvent.touches[ 0 ] : event.originalEvent.changedTouches[ 0 ] : event;
+            return $.support.touch ? isTouchEnd ? event.originalEvent.changedTouches[ 0 ] : event.originalEvent.touches[ 0 ] : event;
         },
+
+        __multiScreenAutoTranslateComplete : function( curPos, curIdx ){
+            if( 0 == curPos ){
+                var sttc  = this.values,
+                    sttcs = this.self,
+                    Util  = sttcs.Util,
+                    ctrl  = sttc.controller; 
+                sttc.curIdx = curIdx;
+                Util.notify( ctrl, 'activeDot', [ curIdx ] );
+            }
+                
+        }
     });
 
     return Content;

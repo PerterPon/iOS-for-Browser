@@ -4,7 +4,6 @@ define( function( require, exports, module ){
     return {
         "data" : {
             "screen" : [
-                //当前展示页标识
                 0,
                 [{
                     "name" : "SMS",

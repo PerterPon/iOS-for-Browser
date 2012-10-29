@@ -41,7 +41,7 @@ define( function( require, exports, module ){
         _initInnerDom : function(){
             var sttcs  = this.self,
                 sttc   = this.values,
-                dots   = sttc.cfg.data.data.length,
+                dots   = sttc.cfg.data.data.length - 1,
                 html   = '<div class="'+ sttcs.carouselBox +'">';
             for( var i = 0; i < dots; i++ ){
                 html += sttcs.DotHtml;

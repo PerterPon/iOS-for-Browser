@@ -110,7 +110,7 @@ define( function( require, exports, module ){
                 Util   = sttcs.Util,
                 Ctrl   = sttc.controller;
                 evtPos = this.__getTouchPos( event );
-            if( evtPos.pageX - sttc.startPos < 207 && evtPos.pageX - sttc.startPos > 0 ){
+            if( evtPos.pageX - sttc.startPos < 207 ){
                 Util.notify( Ctrl, 'sliderBack' );
             } else {
                 var Event = window.iOS.Event;

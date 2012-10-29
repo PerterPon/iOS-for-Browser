@@ -8,7 +8,8 @@ define( function( require, exports, module ){
 
         inheritableStatics : {
             eventList : [
-                [ 'translate' ]
+                [ 'translate' ],
+                [ 'autoTranslate' ]
             ]
         },
 
@@ -17,13 +18,28 @@ define( function( require, exports, module ){
         },
 
         values  : {
-            slider : null
+            slider  : null,
+            thisPos : null
         },
 
-        Etranslate : function( x, y, isOri ){
+        Etranslate : function( x, y ){
             var sttc  = this.values,
                 sttcs = this.self;
-            sttc.slider[ 0 ].style.webkitTransform = 'translate3d('+ ( x + sttcs.width * ( isOri == true ? 0 : 1 )) +'px, '+ y +'px, 0)'; 
+            sttc.slider[ 0 ].style.webkitTransform = 'translate3d('+ x +'px, '+ y +'px, 0)'; 
+        },
+
+        EautoTranslate : function( tarPos, animTime ){
+            var sttc   = this.values,
+                slider = sttc.slider[ 0 ],
+                Event  = window.iOS.Event;
+            slider.style.webkitTransitionDuration = animTime + 'ms';
+            slider.style.webkitTransform = 'translate3d('+ tarPos +'px, 0, 0)';
+            slider.addEventListener( 'webkitTransitionEnd', function(){
+                this.style.webkitTransitionDuration = '0';
+                Event.dispatchEvent( 'multiScreenAutoTranslateComplete', [ sttc.thisPos, sttc.cfg.index ] );
+                this.removeEventListener( 'webkitTransitionEnd' );
+            });
+            sttc.thisPos = tarPos;
         },
 
         _initView : function(){

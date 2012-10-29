@@ -1,6 +1,7 @@
 ﻿{
     "data" : {
         "screen" : [
+            0,
             [{
                 "name" : "SMS",
                 "text"  : "短信"
@@ -33,6 +34,19 @@
                 "name" : "map",
                 "text"  : "地图"
             }, {
+                "name" : "youtube",
+                "text"  : "youtube"
+            }, {
+                "name" : "weather",
+                "text"  : "天气"
+            }, {
+                "name" : "stocks",
+                "text"  : "股票"
+            }, {
+                "name" : "notes",
+                "text"  : "备忘录"
+            }],
+            [{
                 "name" : "youtube",
                 "text"  : "youtube"
             }, {
