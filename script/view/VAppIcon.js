@@ -8,27 +8,33 @@ define( function( require, exports, module ){
 
         inheritableStatics : {
             eventList : [
-                [ 'sliderTranslate' ]
+                [ 'translate' ]
             ]
         },
 
-        EsliderTranslate : function( x, y ){
-            var sttc   = this.values;
-            sttc.slider[ 0 ].style.marginLeft = x + 'px'; 
+        statics : {
+            width : window.iOS.System.width
         },
 
-        _attachDomEvent : function(){
+        values  : {
+            slider : null
+        },
+
+        Etranslate : function( x, y, isOri ){
             var sttc  = this.values,
-                sttcs = this.self,
-                ctrl  = sttc.controller,
-                Util  = sttcs.Util;
-            sttc.slider = this._getEl().on( $.support.touchstart, function( event ){
-                Util.notify( ctrl, 'sliderDown', [ event ] );
-            }).on( $.support.touchmove, function( event ){
-                Util.notify( ctrl, 'sliderMove', [ event ] )
-            }).on( $.support.touchstop, function( event ){
-                Util.notify( ctrl, 'sliderUp', [ event ] );
-            });
+                sttcs = this.self;
+            sttc.slider[ 0 ].style.webkitTransform = 'translate3d('+ ( x + sttcs.width * ( isOri == true ? 0 : 1 )) +'px, '+ y +'px, 0)'; 
+        },
+
+        _initView : function(){
+            this.callParent();
+            var sttc       = this.values,
+                sttcs      = this.self,
+                current    = sttc.cfg.current,
+                thisScreen = this._getEl();
+            sttc.slider    = thisScreen;
+            if( !current )
+                thisScreen[ 0 ].style.webkitTransform = 'translate3d('+ sttcs.width +'px, 0, 0)';  
         }
     });
 

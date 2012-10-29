@@ -27,6 +27,8 @@ define( function( require, exports, module ){
             var sttc      = this.values,
                 data      = sttc.data.data,
                 MultiScreen = require( './MultiScreen' ),
+                VMultiScreen= require( '../view/VMultiScreen' ),
+                CMultiScreen= require( '../controller/CMultiScreen' ),
                 AppIcon   = require( './AppIcon' ),
                 VAppIcon  = require( '../view/VAppIcon' ),
                 CAppIcon  = require( '../controller/CAppIcon' ),
@@ -34,20 +36,22 @@ define( function( require, exports, module ){
                 VDockIcon = require( '../view/VDockIcon' ),
                 CDockIcon = require( '../controller/CDockIcon' ),
                 newCfg    = [{
-                    "class"   : MultiScreen,
-                    "name"   : "iconContent",
-                    "clsList" : [ "iOS_multiScreen" ],
-                    "data"   : {
-                        data  : data[ 'screen' ]
+                    "class"    : MultiScreen,
+                    "name"     : "multiScreen",
+                    "clsList"  : [ "iOS_multiScreen" ],
+                    "view"     : VMultiScreen,
+                    "controller" : CMultiScreen,
+                    "data"     : {
+                        data   : data[ 'screen' ]
                     },
                     "renderChild" : true
                 }, {
                     "class"   : DockIcon,
-                    "name"   : "dockIcon",
+                    "name"    : "dockIcon",
                     "clsList" : [ "iOS_iconScreen_dockIcon" ],
                     "view"    : VDockIcon,
                     "controller" : CDockIcon,
-                    "data"   : {
+                    "data"    : {
                         data  : data[ 'dock' ]
                     },
                     "renderChild" : true

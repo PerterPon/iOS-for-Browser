@@ -20,7 +20,7 @@ define( function( require, exports, module ){
                     "view"    : VIcon,
                     "controller" : CIcon,
                     "index"   : i,
-                    "current" : sttc.index == false,
+                    "current" : sttc.current == true,
                     "dock"    : sttcs.dock ? true : false
                 });
             }

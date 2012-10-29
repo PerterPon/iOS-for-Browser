@@ -52,7 +52,7 @@
 /**
  * appIcon
  */
-.iOS_iconScreen_appIcon { width: 100% }
+.iOS_iconScreen_appIcon { width: 100%; height: 100%; position: absolute }
 
 /**
  * dockIcon
@@ -63,8 +63,10 @@
  * appContent
  */
 
-.iOS_multiScreen { -webkit-box-flex: 1; width: 100%; height: 100% }
-
+.iOS_multiScreen { -webkit-box-flex: 1; width: 100%; height: 100%; position: relative }
+    .iOS_multiScreen_carouselBox { position: absolute; bottom: 0; width: 100%; height: 6px; -webkit-box-pack: center; -webkit-box-align: center }
+    .iOS_multiScreen_carouselDot { display: -webkit-box; background-color: rgba( 0, 0, 0, 0.3 ); height: 6px; width: 6px; -webkit-border-radius: 3px; margin-left: 3px }
+    .iOS_multiScreen_carouselCur { background-color: rgba( 255, 255, 255, 1 ) }
 /**
  * popScreen
  */

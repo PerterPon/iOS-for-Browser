@@ -32,7 +32,7 @@ define( function( require, exports, module ){
             var callArgs = Array.prototype.slice.call( arguments, 0 );
             callArgs     = callArgs.concat( args );
             obj = obj || window;
-            return ( $.isFunction( fn ) ? fn : obj[ fn ]).apply( obj, callArgs );
+            return fn.apply( obj, callArgs );
         };
     }
 
