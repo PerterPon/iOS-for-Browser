@@ -48,6 +48,37 @@ define( function( require, exports, module ){
                 }, {
                     "name" : "notes",
                     "text"  : "备忘录"
+                }],
+                [{
+                    "name" : "youtube",
+                    "text"  : "youtube"
+                }, {
+                    "name" : "weather",
+                    "text"  : "天气"
+                }, {
+                    "name" : "stocks",
+                    "text"  : "股票"
+                }, {
+                    "name" : "notes",
+                    "text"  : "备忘录"
+                }, {
+                    "name" : "weather",
+                    "text"  : "天气"
+                }, {
+                    "name" : "stocks",
+                    "text"  : "股票"
+                }, {
+                    "name" : "notes",
+                    "text"  : "备忘录"
+                }, {
+                    "name" : "weather",
+                    "text"  : "天气"
+                }, {
+                    "name" : "stocks",
+                    "text"  : "股票"
+                }, {
+                    "name" : "notes",
+                    "text"  : "备忘录"
                 }]
             ],
             "dock" : [{

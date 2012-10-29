@@ -104,7 +104,7 @@ define( function( require, exports, module ){
             delete distance;
         },
 
-        EsliderUp   : function( event ){
+        EsliderUp : function( event ){
             var sttc   = this.values,
                 sttcs  = this.self,
                 Util   = sttcs.Util,

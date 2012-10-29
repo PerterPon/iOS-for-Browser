@@ -21,6 +21,7 @@ define( function( require, exports, module ){
                     "controller" : CIcon,
                     "index"   : i,
                     "current" : sttc.current == true,
+                    "screenIdx"  : sttc.index, 
                     "dock"    : sttcs.dock ? true : false
                 });
             }

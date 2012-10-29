@@ -40,6 +40,7 @@ define( function( require, exports, module ){
             var Event = window.iOS.Event;
             Event.addEvent( 'iconOut', this.__iconOut, this );
             Event.addEvent( 'iconIn', this.__iconIn, this );
+            Event.addEvent( 'multiScreenAutoTranslateComplete', this.__multiScreenAutoTranslateComplete, this );
         },
 
         /**
@@ -101,8 +102,15 @@ define( function( require, exports, module ){
                 sttcs = this.self;
             if( sttc.current || sttc.dock )
                 sttcs.Util.notify( sttc.controller, 'iconOut' );
+        },
+
+        __multiScreenAutoTranslateComplete : function( curPos, curIdx ){
+            if( curPos )
+                return;
+            var sttc     = this.values;
+            sttc.current = curIdx == sttc.screenIdx;
         }
     });
-    window.iOS.Icon = Icon;
-    // return Icon;
+    
+    return Icon;
 });
