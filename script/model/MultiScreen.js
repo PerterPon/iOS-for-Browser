@@ -41,8 +41,11 @@ define( function( require, exports, module ){
                 Event  = window.iOS.Event,
                 dis    = evtPos.pageX - sttc.startPos;
             sttc.lastPos    = evtPos.pageX;
-            if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) )
-                return;
+            if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ){
+                dis *= 0.5;
+                if( dis >= sttcs.width / 2 - 10 )
+                    return;
+            }
             Event.dispatchEvent( 'multiScreenTranslate', [ sttc.curIdx, dis >= 0 ? 'right' : 'left', dis ]);
             delete sttc;
             delete evtPos;
@@ -57,8 +60,11 @@ define( function( require, exports, module ){
                 Util   = sttcs.Util,
                 Event  = window.iOS.Event,
                 dis    = evtPos.pageX - sttc.startPos;
-            if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) )
-                return;
+            if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ){
+                dis *= 0.5;
+                if( dis >= sttcs.width / 2 - 10 )
+                    dis = sttcs.width / 2 - 10;
+            }
             Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, dis >= 0 ? 'right' : 'left', Math.abs( dis ) ] );
             this.values.sliding = false;
         },
