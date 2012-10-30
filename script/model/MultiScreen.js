@@ -10,19 +10,24 @@ define( function( require, exports, module ){
             eventList : [
                 [ 'sliderDown' ],
                 [ 'sliderMove' ],
-                [ 'sliderUp' ]
+                [ 'sliderUp' ],
+                [ 'swipe' ]
             ]
         },
 
         statics : {
-            width : window.iOS.System.width
+            width : window.iOS.System.width,
+            durationThreshold           : 200,
+            horizontalDistanceThreshold : 20
         },
 
         values  : {
             startPos : null,
             sliding  : false,
             lastPos  : null,
-            curIdx   : null
+            curIdx   : null,
+            notSwipe : false,
+            swipeStartTime : null
         },
 
         EsliderDown : function( event ){
@@ -30,6 +35,7 @@ define( function( require, exports, module ){
                 evtPos = this.__getTouchPos( event ); 
             sttc.startPos = evtPos.pageX;
             sttc.sliding  = true;
+            sttc.swipeStartTime = new Date();
         },
 
         EsliderMove : function( event ){
@@ -39,7 +45,14 @@ define( function( require, exports, module ){
             var sttcs  = this.self,
                 evtPos = this.__getTouchPos( event ),
                 Event  = window.iOS.Event,
-                dis    = evtPos.pageX - sttc.startPos;
+                dis    = evtPos.pageX - sttc.startPos,
+                nowTime;
+            if( !sttc.notSwipe ){
+                nowTime = new Date();
+                if( nowTime.getTime() - sttc.swipeStartTime.getTime() >= sttcs.durationThreshold )
+                    sttc.notSwipe = true;
+                // return;
+            }
             sttc.lastPos    = evtPos.pageX;
             if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ){
                 dis *= 0.5;
@@ -50,6 +63,7 @@ define( function( require, exports, module ){
             delete sttc;
             delete evtPos;
             delete distance;
+            delete nowTime;
         },
 
         EsliderUp   : function( event ){
@@ -59,14 +73,34 @@ define( function( require, exports, module ){
                 ctrl   = sttc.controller,
                 Util   = sttcs.Util,
                 Event  = window.iOS.Event,
-                dis    = evtPos.pageX - sttc.startPos;
-            if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ){
-                dis *= 0.5;
-                if( dis >= sttcs.width / 2 - 10 )
-                    dis = sttcs.width / 2 - 10;
+                dis    = evtPos.pageX - sttc.startPos,
+                absDis = Math.abs( dis ),
+                direction = dis >= 0 ? 'right' : 'left',
+                boundaryScreen = ( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ),
+                nowTime, disTime, distance;
+            if( !sttc.notSwipe ){
+                nowTime = new Date();
+                disTime = nowTime.getTime() - sttc.swipeStartTime.getTime(); 
+                if( disTime < sttcs.durationThreshold && absDis > sttcs.horizontalDistanceThreshold ){
+                    if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ){
+                        this.__doMultiScreenAutoTranslate( boundaryScreen, direction, absDis, true );
+                        return;
+                    }
+                        
+                    Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, direction, sttcs.width, true ] );
+                    sttc.notSwipe       = false;
+                    this.values.sliding = false;
+                    return;
+                }
             }
-            Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, dis >= 0 ? 'right' : 'left', Math.abs( dis ) ] );
-            this.values.sliding = false;
+            this.__doMultiScreenAutoTranslate( boundaryScreen, direction, absDis );
+        },
+
+        Eswipe : function( direction ){
+            var sttc     = this.values,
+                sttcs    = this.self,
+                Event    = window.iOS.Event
+            Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, direction, sttcs.width, true ] );
         },
 
         _attachEventListener : function(){
@@ -125,6 +159,22 @@ define( function( require, exports, module ){
                 Util.notify( ctrl, 'activeDot', [ curIdx ] );
             }
                 
+        },
+
+        __doMultiScreenAutoTranslate : function( boundaryScreen, direction, distance, isSwip ){
+            if( !boundaryScreen && isSwip )
+                return;
+            var sttc  = this.values,
+                sttcs = this.self,
+                Event = window.iOS.Event;
+            if( boundaryScreen ){
+                distance *= 0.5;
+                if( distance >= sttcs.width / 2 - 10 )
+                    distance = sttcs.width / 2 - 10;
+            }
+            Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, direction , distance ] );
+            sttc.notSwipe = false;
+            sttc.sliding  = false;
         }
     });
 

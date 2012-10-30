@@ -55,7 +55,7 @@ define( function( require, exports, module ){
             var sttc  = this.values,
                 sttcs = this.self,
                 Util  = sttcs.Util; 
-            this._getEl().on( 'click', function(){
+            this._getEl().on( 'rangeclick', function(){
                 Util.notify( sttc.controller, 'iconClick' );
             });
         },

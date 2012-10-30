@@ -55,14 +55,18 @@ define( function( require, exports, module ){
             var sttc  = this.values,
                 sttcs = this.self,
                 Util  = sttcs.Util,
-                ctrl  = sttc.controller; 
+                ctrl  = sttc.controller;
             this._getEl().on( $.support.touchstart, function( event ){
                 Util.notify( ctrl, 'sliderDown', [ event ] );
             }).on( $.support.touchmove, function( event ){
                 Util.notify( ctrl, 'sliderMove', [ event ] );
             }).on( $.support.touchstop, function( event ){
                 Util.notify( ctrl, 'sliderUp', [ event ] );
-            });
+            })/*.on( 'swipeleft', function(){
+                Util.notify( ctrl, 'swipe', [ 'left' ] );
+            }).on( 'swiperight', function(){
+                Util.notify( ctrl, 'swipe', [ 'right' ] );
+            });*/
         }
 
     });

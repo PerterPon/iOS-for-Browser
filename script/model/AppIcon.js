@@ -15,8 +15,9 @@ define( function( require, exports, module ){
         },
 
         statics : {
-            width    : window.iOS.System.width,
-            fullTime : 600
+            width     : window.iOS.System.width,
+            fullTime  : 600,
+            swipeTime : 450
         },
 
         _attachEventListener : function(){
@@ -50,7 +51,7 @@ define( function( require, exports, module ){
             }
         },
 
-        __multiScreenAutoTranslate : function( curIdx, direction, distance ){
+        __multiScreenAutoTranslate : function( curIdx, direction, distance, swipe ){
             var sttc  = this.values,
                 sttcs = this.self,
                 Util  = sttcs.Util,
@@ -60,14 +61,17 @@ define( function( require, exports, module ){
                 tarPos, animTime;
             if( ( sttc.index != curIdx ) && ( sttc.index + posFix != curIdx ) )
                 return;
-            if( moveBack ){
+            if( moveBack && !swipe ){
                 animTime    = sttcs.fullTime * distance / sttcs.width;
                 if( curIdx == sttc.index )
                     tarPos  = 0;
                 else
                     tarPos  = sttcs.width * ( direction == 'left' ? 1 : -1 );
             } else {
-                animTime    = sttcs.fullTime * ( sttcs.width - distance ) / sttcs.width;
+                if( swipe )
+                    animTime = sttcs.swipeTime;
+                else
+                    animTime = sttcs.fullTime * ( sttcs.width - distance ) / sttcs.width;
                 if( curIdx == sttc.index )
                     tarPos  = sttcs.width * ( direction == 'left' ? -1 : 1 );
                 else 
