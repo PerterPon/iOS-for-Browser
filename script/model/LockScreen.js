@@ -27,54 +27,6 @@ define( function( require, exports, module ){
             this.__updateTime();
         },
 
-        /**
-         * [__updateTime 更新时间]
-         * @return {void}
-         */
-        __updateTime : function(){
-            var sttc = this.self,
-                that = this,
-                Event= window.iOS.Event;
-            setInterval( function(){
-                var date  = new Date(),
-                    time  = {
-                        year   : date.getFullYear(),
-                        month  : date.getMonth() + 1,
-                        day    : date.getDate(),
-                        weekDay: date.getDay(),
-                        hours  : date.getHours() < 10 ? '0' + date.getHours() : date.getHours(),
-                        minute : date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes(),
-                        second : date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
-                    };
-                Event.dispatchEvent( 'updateTime', [ time ]);
-                date = time = null;
-            }, 10000 );
-        },
-
-        /**
-         * [__getTouchPos 获得鼠标或者触摸点信息]
-         * @param  {Event} event      [事件对象]
-         * @param  {Bool}  isTouchEnd [touchend事件获得pageX的方式较为特殊]
-         * @return {Object}
-         */
-        __getTouchPos : function( event, isTouchEnd ){
-            return $.support.touch ? isTouchEnd ? event.originalEvent.touches[ 0 ] : event.originalEvent.changedTouches[ 0 ] : event;
-        },
-
-        __unlockHandler : function(){
-            var sttc  = this.values,
-                sttcs = this.self, 
-                ctrl  = sttc.controller,
-                Util  = sttcs.Util;
-            Util.notify( ctrl, 'unlock' );
-        },
-
-        _attachEventListener : function(){
-            this.callParent();
-            var Event  = window.iOS.Event;
-            Event.addEvent( 'unlock', this.__unlockHandler, this );
-        },
-
         EsliderDown : function( event ){
             var sttc   = this.values,
                 evtPos = this.__getTouchPos( event ); 
@@ -126,6 +78,65 @@ define( function( require, exports, module ){
                 Event.dispatchEvent( 'iconIn' );
             }, 1 );
             
+        },
+
+        _attachEventListener : function(){
+            this.callParent();
+            var Event  = window.iOS.Event;
+            Event.addEvent( 'unlock', this.__unlockHandler, this );
+            Event.addEvent( 'updateTime', this.__updateTimeHandle, this );
+        },
+
+         /**
+         * [__updateTime 更新时间]
+         * @return {void}
+         */
+        __updateTime : function(){
+            var sttc = this.self,
+                that = this,
+                Event= window.iOS.Event;
+            setInterval( function(){
+                var date  = new Date(),
+                    time  = {
+                        year   : date.getFullYear(),
+                        month  : date.getMonth() + 1,
+                        day    : date.getDate(),
+                        weekDay: date.getDay(),
+                        hours  : date.getHours() < 10 ? '0' + date.getHours() : date.getHours(),
+                        minute : date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes(),
+                        second : date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
+                    };
+                window.iOS.Time = time;
+                Event.dispatchEvent( 'updateTime' );
+                date = time = null;
+            }, 10000 );
+        },
+
+        /**
+         * [__getTouchPos 获得鼠标或者触摸点信息]
+         * @param  {Event} event      [事件对象]
+         * @param  {Bool}  isTouchEnd [touchend事件获得pageX的方式较为特殊]
+         * @return {Object}
+         */
+        __getTouchPos : function( event, isTouchEnd ){
+            return $.support.touch ? isTouchEnd ? event.originalEvent.touches[ 0 ] : event.originalEvent.changedTouches[ 0 ] : event;
+        },
+
+        __unlockHandler : function(){
+            var sttc  = this.values,
+                sttcs = this.self, 
+                ctrl  = sttc.controller,
+                Util  = sttcs.Util;
+            Util.notify( ctrl, 'unlock' );
+        },
+
+        __updateTimeHandle : function(){
+            var sttc  = this.values,
+                sttcs = this.self, 
+                ctrl  = sttc.controller,
+                Util  = sttcs.Util,
+                time  = window.iOS.Time;
+            Util.notify( ctrl, 'updateTime', [ time ] );
         }
 
     });

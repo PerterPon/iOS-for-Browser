@@ -14,7 +14,8 @@ define( function( require, exports, module ){
                 [ 'unlock' ],
                 [ 'sliderTranslate' ],
                 [ 'sliderBack' ],
-                [ 'unlockComplete' ]
+                [ 'unlockComplete' ],
+                [ 'updateTime' ]
             ]
         },
 
@@ -72,6 +73,14 @@ define( function( require, exports, module ){
                 model = sttc.model,
                 Util  = sttcs.Util; 
             Util.notify( model, 'unlockComplete' );
+        },
+
+        EupdateTime : function( time ){
+            var sttc  = this.values,
+                sttcs = this.self,
+                view  = sttc.view,
+                Util  = sttcs.Util;
+            Util.notify( view, 'updateTime', [ time ] );
         }
 
     });

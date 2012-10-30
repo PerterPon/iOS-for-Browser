@@ -6,17 +6,28 @@ define( function( require, exports, module ){
     Ext.define( 'VTopBar', {
         extend : 'BaseView',
 
+        inheritableStatics : {
+            eventList : [
+                [ 'updateTime' ]
+            ]
+        },
+
         statics : {
             barIcon   : 'iOS_topBar_icon',
             signalCls : 'iOS_topBar_signal',
             attCls    : 'iOS_topBar_att',
             wifi      : 'iOS_topBar_wifi',
             lock      : 'iOS_topBar_lock',
+            time      : 'iOS_topBar_time',
             percent   : 'iOS_topBar_percent',
             battery   : 'iOS_topBar_battery',
             leftIcon  : 'iOS_topBar_leftIcon',
             rightIcon : 'iOS_topBar_rightIcon',
             centerIcon: 'iOS_topBar_centerIcon'
+        },
+
+        EupdateTime : function( time ){
+            this.__updateTimeHandler( time );
         },
 
         _initInnerDom : function(){
@@ -35,6 +46,13 @@ define( function( require, exports, module ){
                     '<img src="'+ ( basePath + 'battery.png' ) +'" class="'+ sttcs.battery +' '+ sttcs.barIcon +'" />' +
                 '</div>';
             this._getEl().html( htmlData );
+        },
+
+        __updateTimeHandler : function( time ){
+            var sttcs = this.self,
+                centerIcon  = this._getElByCls( sttcs.centerIcon ),
+                htmlData = '<span class='+ sttcs.time +'>'+ time.hours +':'+ time.minute +'</span>';
+            centerIcon.html( htmlData );
         }
     });
 

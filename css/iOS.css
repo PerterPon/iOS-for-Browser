@@ -18,6 +18,7 @@
     .iOS_topBar_att { margin-left: 3px }
     .iOS_topBar_wifi { margin-left: 8px }
 .iOS_topBar_centerIcon { -webkit-box-flex: 320; -webkit-box-pack: center; height: 100% }
+    .iOS_topBar_time { color: white; font-family: arial; font-size: 14px }
 .iOS_topBar_rightIcon { right: 0; height: 100% }
     .iOS_topBar_percent { line-height: 20px; margin-right: 3px; color: white; font-size: 12px; font-family: arial }
     .iOS_topBar_battery { margin-right: 3px }

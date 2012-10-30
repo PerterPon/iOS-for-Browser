@@ -10,7 +10,8 @@ define( function( require, exports, module ){
             eventList : [
                 [ 'unlock' ],
                 [ 'sliderTranslate' ],
-                [ 'sliderBack' ]
+                [ 'sliderBack' ],
+                [ 'updateTime' ]
             ]
         },
 
@@ -69,9 +70,8 @@ define( function( require, exports, module ){
             });
         },
 
-        _attachEventListener : function(){
-            this.callParent();
-            window.iOS.Event.addEvent( 'updateTime', this.__updateTime, this );
+        EupdateTime : function( time ){
+            this.__updateTime( time );
         },
 
         _initInnerDom : function(){
@@ -97,6 +97,7 @@ define( function( require, exports, module ){
                     hours  : date.getHours() < 10 ? '0' + date.getHours() : date.getHours(),
                     minute : date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()
                 };
+            window.iOS.Time = time;
             this.__updateTime( time );
             sttc.slider    = this._getElByCls( sttcs.slider );
             sttc.sliderImg = this._getElByCls( sttcs.sldrImg ); 
@@ -118,7 +119,7 @@ define( function( require, exports, module ){
         },
 
         __updateTime : function( time ){
-            var sttcs     = this.self,
+            var sttcs    = this.self,
                 lockTime = this._getElByCls( sttcs.lockTime ),
                 lockDate = this._getElByCls( sttcs.lockDateInfo );
             lockTime.text( time.hours + ':' + time.minute );
