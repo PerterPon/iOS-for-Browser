@@ -47,9 +47,11 @@
  */
 .iOS_iconScreen { width: 100%; position: relative; -webkit-box-orient: block-axis }
     .iOS_icon { display: -webkit-inline-box; position: absolute; -webkit-transition-duration: 400ms; -webkit-transition-timing-function: ease-out; -webkit-transition-delay: 100ms }
-    .iOS_icon_shakeLayer { -webkit-transition-duration: 65ms;-webkit-box-orient: block-axis; -webkit-box-align: center }
-    .iOS_icon_scaleLayer { -webkit-transition-duration: 450ms; }
-    .iOS_icon_iconName { -webkit-transform: translate3d( 0, -4px, 0 ); display: -webkit-box; font-family: Tahoma, Geneva, sans-serif ;text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); font-size: 12px ;color: rgba(255, 255, 255, 0.8) }
+    .iOS_icon_scaleLayer { -webkit-transition-duration: 450ms }
+    .iOS_icon_shakeLayer { position: relative; -webkit-transition-duration: 65ms; -webkit-box-orient: block-axis; -webkit-box-align: center }
+        .iOS_icon_scaleLayer img { vertical-align: bottom }
+    .iOS_icon_shadeLayer { position: absolute; left: 0; top: 0; width: 56px; height: 57px; -webkit-border-radius: 10px; background: rgba(0, 0, 0, 0.3); margin-left: 1px; display: none }
+    .iOS_icon_iconName { display: -webkit-box; font-family: Tahoma, Geneva, sans-serif ;text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); font-size: 12px ;color: rgba(255, 255, 255, 0.8) }
 
 /**
  * appIcon

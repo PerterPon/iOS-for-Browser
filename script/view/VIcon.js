@@ -19,7 +19,10 @@ define( function( require, exports, module ){
         statics : {
             scaleLayer : 'iOS_icon_scaleLayer',
             shakeLayer : 'iOS_icon_shakeLayer',
+            shadeLayer : 'iOS_icon_shadeLayer',
+            iconImg    : 'iOS_icon_iconImg',
             iconName   : 'iOS_icon_iconName',
+
             /**
              * [shakeDeg icon抖动时候的角度]
              * @type {Number}
@@ -61,7 +64,9 @@ define( function( require, exports, module ){
                 sttc  = this.values,
                 htmlData = '<div class="'+ sttcs.scaleLayer +'">' +
                         '<div class="'+ sttcs.shakeLayer +'">' +
-                            '<img src="resource/images/icons/icon_'+ sttc.name.substr( 1 ) +'.png" />' +
+                            '<img class="'+ sttcs.iconImg +'" src="resource/images/icons/icon_'+ sttc.name.substr( 1 ) +'.png" />' +
+                            '<div class='+ sttcs.shadeLayer +'>' +
+                            '</div>' +
                             '<span class="'+ sttcs.iconName +'">'+ sttc.cfg.text +'</span>' +
                         '</div>' +
                     '</div>';
@@ -73,11 +78,22 @@ define( function( require, exports, module ){
             var sttc  = this.values,
                 sttcs = this.self,
                 ctrl  = sttc.controller,
-                Util  = sttcs.Util;
+                Util  = sttcs.Util,
+                that  = this;
             this._getEl().on( $.support.touchstart, function( event ){
+                event.stopPropagation();
                 Util.notify( ctrl, 'touchStart', [ event ] );
+                that._getElCacheByCls( sttcs.shadeLayer ).css({
+                    'background' : 'rgba( 0, 0, 0, 0.3 )'
+                }).show();
             }).on( $.support.touchstop, function( event ){
+                event.stopPropagation();
                 Util.notify( ctrl, 'touchEnd', [ event ] );
+            });
+            this._getElCacheByCls( sttcs.shadeLayer ).on( $.support.touchstart, function( event ){
+                
+            }).on( $.support.touchmove, function( event ){
+
             });
         },
 
