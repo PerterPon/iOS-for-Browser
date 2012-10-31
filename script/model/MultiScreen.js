@@ -27,12 +27,15 @@ define( function( require, exports, module ){
             lastPos  : null,
             curIdx   : null,
             notSwipe : false,
-            swipeStartTime : null
+            swipeStartTime : null,
+            translating    : false
         },
 
         EsliderDown : function( event ){
-            var sttc   = this.values,
-                evtPos = this.__getTouchPos( event ); 
+            var sttc   = this.values;
+            if( sttc.translating )
+                return;
+            var evtPos = this._getTouchPos( event );
             sttc.startPos = evtPos.pageX;
             sttc.sliding  = true;
             sttc.swipeStartTime = new Date();
@@ -40,10 +43,10 @@ define( function( require, exports, module ){
 
         EsliderMove : function( event ){
             var sttc   = this.values;
-            if( !sttc.sliding )
+            if( !sttc.sliding || sttc.translating )
                 return;
             var sttcs  = this.self,
-                evtPos = this.__getTouchPos( event ),
+                evtPos = this._getTouchPos( event ),
                 Event  = window.iOS.Event,
                 dis    = evtPos.pageX - sttc.startPos,
                 nowTime;
@@ -67,9 +70,11 @@ define( function( require, exports, module ){
         },
 
         EsliderUp   : function( event ){
-            var sttc   = this.values,
-                sttcs  = this.self,
-                evtPos = this.__getTouchPos( event, true ),
+            var sttc   = this.values;
+            if( sttc.translating )
+                return;
+            var sttcs  = this.self,
+                evtPos = this._getTouchPos( event, true ),
                 ctrl   = sttc.controller,
                 Util   = sttcs.Util,
                 Event  = window.iOS.Event,
@@ -86,8 +91,8 @@ define( function( require, exports, module ){
                         this.__doMultiScreenAutoTranslate( boundaryScreen, direction, absDis, true );
                         return;
                     }
-                        
                     Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, direction, sttcs.width, true ] );
+                    sttc.translating    = true;
                     sttc.notSwipe       = false;
                     this.values.sliding = false;
                     return;
@@ -145,22 +150,32 @@ define( function( require, exports, module ){
             Util.notify( ctrl, 'activeDot', [ sttc.curIdx ] );
         },
 
-        __getTouchPos : function( event, isTouchEnd ){
-            return $.support.touch ? isTouchEnd ? event.originalEvent.changedTouches[ 0 ] : event.originalEvent.touches[ 0 ] : event;
-        },
-
+        /**
+         * [__multiScreenAutoTranslateComplete 屏幕滑动完成后的事件处理函数]
+         * @param  {Number} curPos [当前屏幕的translate值，当为0的时候就表示是当前显示屏幕，激活显示点]
+         * @param  {Number} curIdx [当前屏幕的index值，若translate为0，则index的值会被multiScreen保存]
+         * @return {void}
+         */
         __multiScreenAutoTranslateComplete : function( curPos, curIdx ){
             if( 0 == curPos ){
                 var sttc  = this.values,
                     sttcs = this.self,
                     Util  = sttcs.Util,
-                    ctrl  = sttc.controller; 
+                    ctrl  = sttc.controller;
                 sttc.curIdx = curIdx;
                 Util.notify( ctrl, 'activeDot', [ curIdx ] );
             }
-                
+            this.values.translating = false;
         },
 
+        /**
+         * [__doMultiScreenAutoTranslate 鼠标或手指松开时候的事件处理函数，由此派发事件]
+         * @param  {Boolean}  boundaryScreen [是否为边界屏幕]
+         * @param  {String}   direction      [当前运动的方向]
+         * @param  {Number}   distance       [当前已经运动的距离]
+         * @param  {Boolean}  isSwip         [当前是否是swip事件]
+         * @return {void}
+         */
         __doMultiScreenAutoTranslate : function( boundaryScreen, direction, distance, isSwip ){
             if( !boundaryScreen && isSwip )
                 return;
@@ -173,8 +188,9 @@ define( function( require, exports, module ){
                     distance = sttcs.width / 2 - 10;
             }
             Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, direction , distance ] );
-            sttc.notSwipe = false;
-            sttc.sliding  = false;
+            sttc.notSwipe    = false;
+            sttc.sliding     = false;
+            sttc.translating = true;
         }
     });
 

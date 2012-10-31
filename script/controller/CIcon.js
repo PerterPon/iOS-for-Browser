@@ -12,7 +12,11 @@ define( function( require, exports, module ){
                 [ 'initComplete' ],
                 [ 'iconIn' ],
                 [ 'iconOut' ],
-                [ 'iconClick' ]
+                [ 'iconClick' ],
+                [ 'touchStart' ],
+                [ 'touchEnd' ],
+                [ 'startShake' ],
+                [ 'stopShake' ]
             ]
         },
 
@@ -28,22 +32,40 @@ define( function( require, exports, module ){
             sttcs.Util.notify( sttc.view, 'initComplete', [ inPos, outPos ] );
         },
 
-        EiconIn : function(){
+        EiconIn : function( position ){
             var sttc  = this.values,
                 sttcs = this.self;
-            sttcs.Util.notify( sttc.view, 'iconIn' );
+            sttcs.Util.notify( sttc.view, 'iconIn', [ position ] );
         },
 
-        EiconOut : function(){
+        EiconOut : function( position ){
             var sttc  = this.values,
                 sttcs = this.self;
-            sttcs.Util.notify( sttc.view, 'iconOut' );
+            sttcs.Util.notify( sttc.view, 'iconOut', [ position ] );
         },
 
-        EiconClick : function(){
+        EtouchStart : function( event ){
             var sttc  = this.values,
                 sttcs = this.self;
-            sttcs.Util.notify( sttc.model, 'iconClick' );
+            sttcs.Util.notify( sttc.model, 'touchStart', [ event ] );
+        },
+
+        EtouchEnd : function( event ){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.model, 'touchEnd', [ event ] );
+        },
+
+        EstartShake : function(){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'startShake' );
+        },
+
+        EstopShake : function(){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'stopShake' );
         }
 
     });

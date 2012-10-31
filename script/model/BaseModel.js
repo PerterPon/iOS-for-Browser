@@ -162,6 +162,10 @@ define( function( require, exports, module ){
                 this._iteratorChild();
         },
 
+        _getTouchPos : function( event, isTouchEnd ){
+            return $.support.touch ? isTouchEnd ? event.originalEvent.changedTouches[ 0 ] : event.originalEvent.touches[ 0 ] : event;
+        },
+
         /**
          * [_getData 获取数据]
          * @return  {Object} [取得的数据]

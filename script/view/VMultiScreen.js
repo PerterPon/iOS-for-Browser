@@ -33,7 +33,7 @@ define( function( require, exports, module ){
 
         EactiveDot : function( index ){
             var sttcs  = this.self,
-                dots   = this._getElByCls( sttcs.carouselDot ),
+                dots   = this._getElCacheByCls( sttcs.carouselDot ),
                 curCls = sttcs.carouselCur; 
             dots.removeClass( curCls ).eq( index ).addClass( curCls );
         },
@@ -62,11 +62,7 @@ define( function( require, exports, module ){
                 Util.notify( ctrl, 'sliderMove', [ event ] );
             }).on( $.support.touchstop, function( event ){
                 Util.notify( ctrl, 'sliderUp', [ event ] );
-            })/*.on( 'swipeleft', function(){
-                Util.notify( ctrl, 'swipe', [ 'left' ] );
-            }).on( 'swiperight', function(){
-                Util.notify( ctrl, 'swipe', [ 'right' ] );
-            });*/
+            });
         }
 
     });

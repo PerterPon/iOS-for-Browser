@@ -37,6 +37,13 @@ define( function( require, exports, module ){
             Util.notify( ctrl, 'unlock' );
         },
 
+        /**
+         * [__multiScreenTranslate multiScreen运行时候的处理函数]
+         * @param  {Number} curIdx    [当前运动屏幕的index值]
+         * @param  {String} direction [运动的方向]
+         * @param  {Number} distance  [运动的距离]
+         * @return {void}
+         */
         __multiScreenTranslate : function( curIdx, direction, distance ){
             var sttc  = this.values,
                 sttcs = this.self,
@@ -51,6 +58,14 @@ define( function( require, exports, module ){
             }
         },
 
+        /**
+         * [__multiScreenAutoTranslate 鼠标或手指松开时候的事件处理函数，由此处理事件]
+         * @param  {Boolean}  boundaryScreen [是否为边界屏幕]
+         * @param  {String}   direction      [当前运动的方向]
+         * @param  {Number}   distance       [当前已经运动的距离]
+         * @param  {Boolean}  isSwip         [当前是否是swip事件]
+         * @return {void}
+         */
         __multiScreenAutoTranslate : function( curIdx, direction, distance, swipe ){
             var sttc  = this.values,
                 sttcs = this.self,

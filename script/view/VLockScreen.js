@@ -63,11 +63,12 @@ define( function( require, exports, module ){
             slider.style.webkitTransform = 'translate3d( 0, 0, 0 )';
             sliderImg.style.webkitTransitionDuration = '300ms';
             sliderImg.style.opacity = '1';
-            slider.addEventListener( 'webkitTransitionEnd', function(){
+            slider.addEventListener( 'webkitTransitionEnd', translateCompleHandle );
+            function translateCompleHandle(){
                 slider.style.webkitTransitionDuration = '0ms';
                 sliderImg.style.webkitTransitionDuration = '0ms';
-                slider.removeEventListener( 'webkitTransitionEnd' );
-            });
+                slider.removeEventListener( 'webkitTransitionEnd', translateCompleHandle );
+            }
         },
 
         EupdateTime : function( time ){
@@ -80,7 +81,7 @@ define( function( require, exports, module ){
                 htmlData = '<div class="'+ sttcs.lockDate +' abs">' +
                     '<div class="'+ sttcs.lockTime +'">12:00</div>' +
                     '<div class="'+ sttcs.lockDateInfo +'">12月12日 星期四</div>' +
-                '</div>' + 
+                '</div>' +
                 '<div class="'+ sttcs.lockSlider +' abs">' +
                     '<div class="'+ sttcs.sldrCntinr +'">' +
                         '<div class="'+ sttcs.sldrImg +'"></div>' +

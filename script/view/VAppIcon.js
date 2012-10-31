@@ -34,12 +34,13 @@ define( function( require, exports, module ){
                 Event  = window.iOS.Event;
             slider.style.webkitTransitionDuration = animTime + 'ms';
             slider.style.webkitTransform = 'translate3d('+ tarPos +'px, 0, 0)';
-            slider.addEventListener( 'webkitTransitionEnd', function(){
-                this.style.webkitTransitionDuration = '0';
-                Event.dispatchEvent( 'multiScreenAutoTranslateComplete', [ sttc.thisPos, sttc.cfg.index ] );
-                this.removeEventListener( 'webkitTransitionEnd' );
-            });
+            slider.addEventListener( 'webkitTransitionEnd', translateCompletedHandler );
             sttc.thisPos = tarPos;
+            function translateCompletedHandler(){
+                slider.style.webkitTransitionDuration = '0';
+                Event.dispatchEvent( 'multiScreenAutoTranslateComplete', [ sttc.thisPos, sttc.cfg.index ] );
+                slider.removeEventListener( 'webkitTransitionEnd', translateCompletedHandler );
+            }
         },
 
         _initView : function(){

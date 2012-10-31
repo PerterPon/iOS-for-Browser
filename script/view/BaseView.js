@@ -107,7 +107,7 @@ define( function( require, exports, module ){
          * @protected
          */
         _getElCacheByCls : function( className ){
-            return this._getEl( className );
+            return this._getEl( '.' + className );
         },
 
         /**

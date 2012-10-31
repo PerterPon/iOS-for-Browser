@@ -10,33 +10,50 @@ define( function( require, exports, module ){
             eventList : [
                 [ 'initComplete' ],
                 [ 'iconIn' ],
-                [ 'iconOut' ]
+                [ 'iconOut' ],
+                [ 'startShake' ],
+                [ 'stopShake' ]
             ]
         },
 
         statics : {
             scaleLayer : 'iOS_icon_scaleLayer',
             shakeLayer : 'iOS_icon_shakeLayer',
-            iconName   : 'iOS_icon_iconName'
+            iconName   : 'iOS_icon_iconName',
+            /**
+             * [shakeDeg icon抖动时候的角度]
+             * @type {Number}
+             */
+            shakeDeg   : 2,
+        },
+
+        values : {
+            shakeStartHandleFun : null,
+            shakeEndHandleFun : null
         },
 
         EinitComplete : function( inPos, outPos ){
-            var sttc    = this.values;
-            sttc.inPos  = inPos;
-            sttc.outPos = outPos;
-            this.__initIconView();
+            var sttc = this.values,
+                funs = this.__getShakeStartEndHandleFun();
+            sttc.shakeStartHandle = funs[ 'shakeStart' ];
+            sttc.shakeStopHandle  = funs[ 'shakeStop' ];
+            this.__initIconView( inPos, outPos );
         },
 
-        EiconIn : function(){
-            var sttc = this.values,
-                icon = this._getEl()[ 0 ];
-            icon.style.webkitTransform = 'translate3d('+ sttc.inPos.x +'px, '+ sttc.inPos.y +'px, 0)';
+        EiconIn : function( position ){
+            this.__doSetIconPos( position );
         },
 
-        EiconOut : function(){
-            var sttc = this.values,
-                icon = this._getEl()[ 0 ];
-            icon.style.webkitTransform = 'translate3d('+ sttc.outPos.x +'px, '+ sttc.outPos.y +'px, 0)';
+        EiconOut : function( position ){
+            this.__doSetIconPos( position );
+        },
+
+        EstartShake : function(){
+            this.values.shakeStartHandle();
+        },
+
+        EstopShake : function(){
+            this.values.shakeStopHandle();
         },
 
         _initInnerDom : function(){
@@ -49,14 +66,18 @@ define( function( require, exports, module ){
                         '</div>' +
                     '</div>';
             this._getEl().html( htmlData );
+            sttc.shaker = this._getElByCls( sttcs.shakeLayer );
         },
 
         _attachDomEvent : function(){
             var sttc  = this.values,
                 sttcs = this.self,
-                Util  = sttcs.Util; 
-            this._getEl().on( 'rangeclick', function(){
-                Util.notify( sttc.controller, 'iconClick' );
+                ctrl  = sttc.controller,
+                Util  = sttcs.Util;
+            this._getEl().on( $.support.touchstart, function( event ){
+                Util.notify( ctrl, 'touchStart', [ event ] );
+            }).on( $.support.touchstop, function( event ){
+                Util.notify( ctrl, 'touchEnd', [ event ] );
             });
         },
 
@@ -64,23 +85,60 @@ define( function( require, exports, module ){
          * [__initIconView 初始化图标，包括位置等]
          * @return {void}
          */
-        __initIconView : function(){
+        __initIconView : function( inPos, outPos ){
             var sttc = this.values,
                 cfg  = sttc.cfg;
             if( cfg.current || cfg.dock )
-                this.__doSetIconPos( sttc.outPos );
-            else 
-                this.__doSetIconPos( sttc.inPos );
+                this.__doSetIconPos( outPos );
+            else
+                this.__doSetIconPos( inPos );
         },
 
         /**
-         * [__doSetIconPos 设置图表的位置]
+         * [__doSetIconPos 设置icon的位置]
          * @param  {Object} position [具体的位置信息]
          * @return {void}
          */
         __doSetIconPos : function( position ){
             var icon = this._getEl()[ 0 ];
             icon.style.webkitTransform = 'translate3d('+ position.x +'px, '+ position.y +'px, 0)';
+        },
+
+        /**
+         * [__getShakeStartEndHandleFun 性能考虑，还是把震动这一部分的东西都搬到view层来做了]
+         * @param  {String}  gesture [手势]
+         * @return {Function}
+         */
+        __getShakeStartEndHandleFun : function(){
+            var sttc    = this.values,
+                sttcs   = this.self,
+                shaker  = sttc.shaker[ 0 ],
+                deg     = sttcs.shakeDeg,
+                shaking = false,
+                shakeStart, shakeStop, curDeg;
+            return {
+                'shakeStart' : shakeStartHandle,
+                'shakeStop'  : shakeStopHandle 
+            };
+            function shakeHandle(){
+                curDeg *= -1;
+                shaker.style.webkitTransform = 'rotateZ(' + curDeg + 'deg)';
+            }
+            function shakeStartHandle(){
+                if( shaking )
+                    return;
+                var random = !Math.round(Math.random()) ? -1 : 1;
+                curDeg = deg * random;
+                shaker.style.webkitTransform = 'rotateZ(' + curDeg + 'deg)';
+                shaker.addEventListener( 'webkitTransitionEnd', shakeHandle );
+                shaking = true;
+            }
+
+            function shakeStopHandle(){
+                shaker.removeEventListener( 'webkitTransitionEnd', shakeHandle );
+                shaker.style.webkitTransform = 'rotateZ(0)';
+                shaking = false;
+            }
         }
 
     });

@@ -37,6 +37,7 @@ define( function( require ){
                     evtIns[ i ].apply( null, params );
                 }
             } catch( e ){
+                console.log( e );
                 console.log( eventName + ' - there is no such event added!' );
             }
         },
