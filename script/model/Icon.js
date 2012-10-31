@@ -8,9 +8,11 @@ define( function( require, exports, module ){
 
         inheritableStatics : {
             eventList : [
-                [ 'iconClick' ],
                 [ 'touchStart' ],
-                [ 'touchEnd' ]
+                [ 'touchEnd' ],
+                [ 'dragStart' ],
+                [ 'dragMove' ],
+                [ 'dragEnd' ]
             ]
         },
 
@@ -32,7 +34,10 @@ define( function( require, exports, module ){
             },
             holdStartTime : null,
             touchStartHandleFun : null,
-            touchEndHandleFun   : null
+            touchEndHandleFun   : null,
+            dragStartHandleFun  : null,
+            dragMoveHandleFun   : null,
+            dragEndHandleFun    : null
         },
 
         EtouchStart : function( event ){
@@ -41,6 +46,18 @@ define( function( require, exports, module ){
 
         EtouchEnd : function( event ){
             this.values.touchEndHandleFun( event );
+        },
+
+        EdragStart : function( event ){
+
+        },
+
+        EdragMove : function( event ){
+
+        },
+
+        EdragEnd : function( event ){
+
         },
 
         _initComplete : function(){

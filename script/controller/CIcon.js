@@ -16,7 +16,10 @@ define( function( require, exports, module ){
                 [ 'touchStart' ],
                 [ 'touchEnd' ],
                 [ 'startShake' ],
-                [ 'stopShake' ]
+                [ 'stopShake' ],
+                [ 'dragStart' ],
+                [ 'dragMove' ],
+                [ 'dragEnd' ]
             ]
         },
 
@@ -66,6 +69,24 @@ define( function( require, exports, module ){
             var sttc  = this.values,
                 sttcs = this.self;
             sttcs.Util.notify( sttc.view, 'stopShake' );
+        },
+
+        EdragStart : function( event ){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'dragStart', [ event ] );
+        },
+
+        EdragMove : function( event ){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.model, 'dragMove', [ event ] );
+        },
+
+        EdragEnd : function( event ){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttcs.model. 'dragEnd', [ event ] );
         }
 
     });

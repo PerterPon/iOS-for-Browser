@@ -91,9 +91,11 @@ define( function( require, exports, module ){
                 Util.notify( ctrl, 'touchEnd', [ event ] );
             });
             this._getElCacheByCls( sttcs.shadeLayer ).on( $.support.touchstart, function( event ){
-                
+                Util.notify( ctrl, 'dragStart', [ event ] );
             }).on( $.support.touchmove, function( event ){
-
+                Util.notify( ctrl, 'dragMove', [ event ] );
+            }).on( $.support.touchstop, function(){
+                Util.notify( ctrl, 'dragEnd', [ event ] );
             });
         },
 
