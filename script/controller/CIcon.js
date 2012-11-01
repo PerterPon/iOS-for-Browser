@@ -19,7 +19,15 @@ define( function( require, exports, module ){
                 [ 'stopShake' ],
                 [ 'dragStart' ],
                 [ 'dragMove' ],
-                [ 'dragEnd' ]
+                [ 'dragEnd' ],
+                [ 'changePosition' ],
+                [ 'showShadeLayer' ],
+                [ 'hideShadeLayer' ],
+                [ 'shadeLayerTransparent' ],
+                [ 'shadeLayerBlack' ],
+                [ 'dragStartTranslate' ],
+                [ 'dragEndTranslate' ],
+                [ 'dragAutoTranslateComplete' ]
             ]
         },
 
@@ -74,7 +82,7 @@ define( function( require, exports, module ){
         EdragStart : function( event ){
             var sttc  = this.values,
                 sttcs = this.self;
-            sttcs.Util.notify( sttc.view, 'dragStart', [ event ] );
+            sttcs.Util.notify( sttc.model, 'dragStart', [ event ] );
         },
 
         EdragMove : function( event ){
@@ -86,7 +94,55 @@ define( function( require, exports, module ){
         EdragEnd : function( event ){
             var sttc  = this.values,
                 sttcs = this.self;
-            sttcs.Util.notify( sttcs.model. 'dragEnd', [ event ] );
+            sttcs.Util.notify( sttc.model, 'dragEnd', [ event ] );
+        },
+
+        EchangePosition : function( position ){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'changePosition', [ position ] );
+        },
+
+        EshowShadeLayer : function(){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'showShadeLayer' );
+        },
+
+        EhideShadeLayer : function(){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'hideShadeLayer' );
+        },
+
+        EshadeLayerTransparent : function(){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'shadeLayerTransparent' );
+        },
+
+        EshadeLayerBlack : function(){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'shadeLayerBlack' );
+        },
+
+        EdragStartTranslate : function( scaleMultiple ){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'dragStartTranslate', [ scaleMultiple ] );
+        },
+
+        EdragEndTranslate : function(){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.view, 'dragEndTranslate' );
+        },
+
+        EdragAutoTranslateComplete : function(){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.model, 'dragAutoTranslateComplete' );
         }
 
     });

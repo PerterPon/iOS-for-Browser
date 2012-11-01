@@ -12,7 +12,14 @@ define( function( require, exports, module ){
                 [ 'iconIn' ],
                 [ 'iconOut' ],
                 [ 'startShake' ],
-                [ 'stopShake' ]
+                [ 'stopShake' ],
+                [ 'changePosition' ],
+                [ 'showShadeLayer' ],
+                [ 'hideShadeLayer' ],
+                [ 'shadeLayerTransparent' ],
+                [ 'shadeLayerBlack' ],
+                [ 'dragStartTranslate' ],
+                [ 'dragEndTranslate' ]
             ]
         },
 
@@ -32,7 +39,9 @@ define( function( require, exports, module ){
 
         values : {
             shakeStartHandleFun : null,
-            shakeEndHandleFun : null
+            shakeEndHandleFun   : null,
+            shader              : null,
+            shaker              : null
         },
 
         EinitComplete : function( inPos, outPos ){
@@ -59,6 +68,34 @@ define( function( require, exports, module ){
             this.values.shakeStopHandle();
         },
 
+        EchangePosition : function( position ){
+            this.__doSetIconPos( position );
+        },
+
+        EshowShadeLayer : function(){
+            this.values.shader.show().css( 'background', 'rgba( 0, 0, 0, 0.3 )' );
+        },
+
+        EhideShadeLayer : function(){
+            this.values.shader.hide().css( 'background', 'rgba( 0, 0, 0, 0 )' );
+        },
+
+        EshadeLayerTransparent : function(){
+            this.values.shader.css( 'background', 'rgba( 0, 0, 0, 0 )' );
+        },
+
+        EshadeLayerBlack : function(){
+            this.values.shader.css( 'background', 'rgba( 0, 0, 0, 0.3 )' );
+        },
+
+        EdragStartTranslate : function( scaleMultiple ){
+            this._getElCacheByCls( this.self.scaleLayer )[ 0 ].style.webkitTransform = 'scale3d('+ scaleMultiple +', '+ scaleMultiple +', '+ scaleMultiple +')';
+        },
+
+        EdragEndTranslate : function(){
+            this._getElCacheByCls( this.self.scaleLayer )[ 0 ].style.webkitTransform = 'scale3d( 1, 1, 1 )';
+        },
+
         _initInnerDom : function(){
             var sttcs = this.self,
                 sttc  = this.values,
@@ -72,6 +109,7 @@ define( function( require, exports, module ){
                     '</div>';
             this._getEl().html( htmlData );
             sttc.shaker = this._getElByCls( sttcs.shakeLayer );
+            sttc.shader  = this._getElByCls( sttcs.shadeLayer );
         },
 
         _attachDomEvent : function(){
@@ -79,24 +117,31 @@ define( function( require, exports, module ){
                 sttcs = this.self,
                 ctrl  = sttc.controller,
                 Util  = sttcs.Util,
-                that  = this;
+                that  = this,
+                icon  = this._getEl()[ 0 ];
             this._getEl().on( $.support.touchstart, function( event ){
-                event.stopPropagation();
                 Util.notify( ctrl, 'touchStart', [ event ] );
-                that._getElCacheByCls( sttcs.shadeLayer ).css({
-                    'background' : 'rgba( 0, 0, 0, 0.3 )'
-                }).show();
             }).on( $.support.touchstop, function( event ){
-                event.stopPropagation();
                 Util.notify( ctrl, 'touchEnd', [ event ] );
             });
             this._getElCacheByCls( sttcs.shadeLayer ).on( $.support.touchstart, function( event ){
+                event.stopPropagation();
+                icon.style.webkitTransitionDuration = '0';
+                icon.style.webkitTransitionDelay    = '0';
+                icon.style.zIndex                   = '1';
                 Util.notify( ctrl, 'dragStart', [ event ] );
             }).on( $.support.touchmove, function( event ){
+                event.stopPropagation();
                 Util.notify( ctrl, 'dragMove', [ event ] );
             }).on( $.support.touchstop, function(){
+                event.stopPropagation();
+                //FIXME
+                icon.style.webkitTransitionDuration = '300ms';
+                that._getElCacheByCls( sttcs.shadeLayer ).css( 'background', 'rgba( 0, 0, 0, 0 )' );
                 Util.notify( ctrl, 'dragEnd', [ event ] );
-            });
+                //FIXME
+                icon.style.webkitTransitionDealy    = '100ms';
+            })
         },
 
         /**
@@ -133,6 +178,8 @@ define( function( require, exports, module ){
                 shaker  = sttc.shaker[ 0 ],
                 deg     = sttcs.shakeDeg,
                 shaking = false,
+                that    = this,
+                icon    = this._getEl()[ 0 ],
                 shakeStart, shakeStop, curDeg;
             return {
                 'shakeStart' : shakeStartHandle,
@@ -142,17 +189,25 @@ define( function( require, exports, module ){
                 curDeg *= -1;
                 shaker.style.webkitTransform = 'rotateZ(' + curDeg + 'deg)';
             }
+            function dragAutoTranslateComplete(){
+                Util.notify( ctrl, 'dragAutoTranslateComplete' );
+                //FIXME
+                this.style.webkitTransitionDuration = '450ms';
+                this.style.zIndex = 0;
+            }
             function shakeStartHandle(){
                 if( shaking )
                     return;
+                sttc.shader.show().css( 'background', 'rgba( 0, 0, 0, 0 )' );
                 var random = !Math.round(Math.random()) ? -1 : 1;
+                icon.addEventListener( 'webkitTransitionEnd', dragAutoTranslateComplete );
                 curDeg = deg * random;
                 shaker.style.webkitTransform = 'rotateZ(' + curDeg + 'deg)';
                 shaker.addEventListener( 'webkitTransitionEnd', shakeHandle );
                 shaking = true;
             }
-
             function shakeStopHandle(){
+                icon.removeEventListener( 'webkitTransitionEnd', dragAutoTranslateComplete );
                 shaker.removeEventListener( 'webkitTransitionEnd', shakeHandle );
                 shaker.style.webkitTransform = 'rotateZ(0)';
                 shaking = false;

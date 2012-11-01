@@ -124,7 +124,7 @@ define( function( require, exports, module ){
                 lockTime = this._getElByCls( sttcs.lockTime ),
                 lockDate = this._getElByCls( sttcs.lockDateInfo );
             lockTime.text( time.hours + ':' + time.minute );
-            lockDate.text( time.month + '月' + time.day + ' ' + '星期' + sttcs.week[ time.weekDay ] );
+            lockDate.text( time.month + '月' + time.day + '日 ' + '星期' + sttcs.week[ time.weekDay ] );
         },
 
         __doSetSliderPos : function( x, y ){
