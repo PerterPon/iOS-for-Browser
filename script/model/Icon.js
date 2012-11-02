@@ -22,7 +22,7 @@ define( function( require, exports, module ){
             //当按下x方向或者y方向超过此距离，或者按住的时间超过sliderTimeThreshold，就不会触发单击事件。
             verSliderThreshold : 5,
             horSliderThreshold : 5,
-            sliderTimeThreshold: 100,
+            sliderTimeThreshold: 200,
             durationThreshold  : 750,
             /**
              * [scaleMultiple 当拖动icon时，icon的放大倍数]
@@ -107,10 +107,10 @@ define( function( require, exports, module ){
         _attachEventListener : function(){
             this.callParent();
             var Event = window.iOS.Event;
-            Event.addEvent( 'iconOut', this.__iconOut, this );
             Event.addEvent( 'iconIn', this.__iconIn, this );
-            Event.addEvent( 'startShake', this.__startShakeHandle, this );
+            Event.addEvent( 'iconOut', this.__iconOut, this );
             Event.addEvent( 'stopShake', this.__stopShakeHandle, this );
+            Event.addEvent( 'startShake', this.__startShakeHandle, this );
             Event.addEvent( 'changeIconPosition', this.__changeIconPosition, this );
             Event.addEvent( 'multiScreenAutoTranslateComplete', this.__multiScreenAutoTranslateComplete, this );
         },
@@ -197,12 +197,13 @@ define( function( require, exports, module ){
                 sttcs = this.self,
                 Util  = sttcs.Util,
                 ctrl  = sttc.controller;
+            Util.notify( ctrl, 'hideShadeLayer' );
             Util.notify( ctrl, 'stopShake' );
         },
 
-        __changeIconPosition : function( curIdx, operation ){
+        __changeIconPosition : function( curIdx, operation, isOriIconDock ){
             var sttc = this.values;
-            if( sttc.index <= curIdx || sttc.dock || !sttc.current )
+            if( sttc.index <= curIdx || sttc.dock || !sttc.current || isOriIconDock )
                 return;
             operation == 'out' ? sttc.index-- : sttc.index++;
             this.__calPosition();
@@ -218,7 +219,7 @@ define( function( require, exports, module ){
                 sttc    = this.values,
                 Util    = this.self.Util,
                 ctrl    = sttc.controller,
-                isTouchMove    = false,
+                isTouchMove  = false,
                 tapThreshold = {
                     x : 10,
                     y : 10
@@ -238,9 +239,9 @@ define( function( require, exports, module ){
                     x : evtPos.pageX,
                     y : evtPos.pageY
                 };
-                startTime  = ( new Date() ).getTime();
+                startTime  = event.timeStamp;
                 tapTimeOut = setTimeout( function(){
-                    if( !holding || ( new Date() ).getTime() - startTime < sttcs.durationThreshold )
+                    if( !holding )
                         return;
                     sttc.shaking = true;
                     Event.dispatchEvent( 'startShake' );
@@ -248,10 +249,10 @@ define( function( require, exports, module ){
                 }, sttcs.durationThreshold );
                 if( !sttc.shaking )
                     document.body.addEventListener( $.support.touchstop, bodyTouchStop );
-                function bodyTouchStop(){
-                    var nowTime = new Date();
+                function bodyTouchStop( event ){
+                    var nowTime = event.timeStamp;
                     document.body.removeEventListener( $.support.touchstop, bodyTouchStop );
-                    if( nowTime.getTime() - startTime > sttcs.sliderTimeThreshold ){
+                    if( nowTime - startTime < sttcs.sliderTimeThreshold ){
                         setTimeout( function(){
                             if( !sttc.shaking )
                                 Util.notify( ctrl, 'hideShadeLayer' );
@@ -275,13 +276,13 @@ define( function( require, exports, module ){
             }
 
             function touchEnd( event ){
-                var nowTime = new Date(),
+                var nowTime = event.timeStamp,
                     evtPos  = that._getTouchPos( event, true ),
                     nowPos  = {
                         x : evtPos.pageX,
                         y : evtPos.pageY
                     },
-                    timeDis = nowTime.getTime() - startTime,
+                    timeDis = nowTime  - startTime,
                     horDis  = nowPos.x - nowPos.x,
                     verDis  = nowPos.y - nowPos.y;
                 holding     = false;    
@@ -339,7 +340,7 @@ define( function( require, exports, module ){
                     y : sttc.inPos.y + dis.y
                 } ] );
                 if( ( dis.x > sttcs.iconOutDisThreshold || dis.y > sttcs.iconInDisThreshold ) && curPosIn ){
-                    Event.dispatchEvent( 'changeIconPosition', [ sttc.index, 'out' ] );
+                    Event.dispatchEvent( 'changeIconPosition', [ sttc.index, 'out', sttc.dock ] );
                     curPosIn = false;
                 }
             }

@@ -4,7 +4,22 @@ define( function( require, exports, module ){
 
     require( './BaseController' );
     Ext.define( 'CAppScreen', {
-        extend : 'BaseController'
+        extend : 'BaseController',
+
+        inheritableStatics : {
+            eventList : [
+                [ 'openApp' ],
+                [ 'closeApp' ]
+            ]
+        },
+
+        EopenApp : function(){
+            this.self.Util.notify( this.values.view, 'openApp' );
+        },
+
+        EcloseApp : function(){
+            this.self.Util.notify( this.values.view, 'closeApp' );
+        }
 
     });
 

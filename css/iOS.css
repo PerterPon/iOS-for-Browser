@@ -71,6 +71,12 @@
     .iOS_multiScreen_carouselBox { position: absolute; bottom: 0; width: 100%; height: 6px; -webkit-box-pack: center; -webkit-box-align: center }
     .iOS_multiScreen_carouselDot { display: -webkit-box; background-color: rgba( 0, 0, 0, 0.3 ); height: 6px; width: 6px; -webkit-border-radius: 3px; margin-left: 3px }
     .iOS_multiScreen_carouselCur { background-color: rgba( 255, 255, 255, 1 ) }
+
+/**
+ * appScreen
+ */
+.iOS_appScreen { -webkit-transition-duration: 400ms; -webkit-transition-delay: 100ms; -webkit-transition-timing-function: ease-out; position: absolute; left: 0; width: 100%; height: 100%; -webkit-transform: scale3d( 0, 0, 0 ); background: white }
+
 /**
  * popScreen
  */

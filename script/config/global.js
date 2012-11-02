@@ -8,48 +8,51 @@ define( function( require, exports, module ){
         IconScreen  = require( '../model/IconScreen' ),
         AppScreen   = require( '../model/AppScreen' ),
         PopScreen   = require( '../model/PopScreen' ),
+        Home        = require( '../model/Home' ),
         VIOS        = require( '../view/VIOS' ),
         VTopBar     = require( '../view/VTopBar' ),
         VIconScreen = require( '../view/VIconScreen' ),
         VLockScreen = require( '../view/VLockScreen' ),
         VAppScreen  = require( '../view/VAppScreen' ),
         VPopScreen  = require( '../view/VPopScreen' ),
+        VHome       = require( '../view/VHome' ),
         CTopBar     = require( '../controller/CTopBar' ),
         CLockScreen = require( '../controller/CLockScreen' ),
         CAppScreen  = require( '../controller/CAppScreen' ),
         CPopScreen  = require( '../controller/CPopScreen' ),
-        CIconScreen = require( '../controller/CIconScreen' );
+        CIconScreen = require( '../controller/CIconScreen' ),
+        CHome       = require( '../controller/CHome' );
     return [{
         "class"      : TopBar,
         "clsList"    : [ 'iOS_topBar' ],
-        "name"      : "topBar",
+        "name"       : "topBar",
         "view"       : VTopBar,
         "controller" : CTopBar,
         "height"     : '20px'
     }, {
         "class"      : BaseIOS,
         "clsList"    : [ "iOS" ],
-        "name"      : "iOS",
+        "name"       : "iOS",
         "view"       : VIOS,
         "flex"       : "460",
         "subView"    : [{
             "class"      : PopScreen,
             "clsList"    : [ "iOS_popScreen" ],
             "visiable"   : false,
-            "name"      : "popScreen",
+            "name"       : "popScreen",
             "view"       : VPopScreen,
             "controller" : CPopScreen
         }, {
             "class"      : LockScreen,
             "clsList"    : [ "iOS_lockScreen" ],
-            "name"      : "lockScreen",
+            "name"       : "lockScreen",
             "view"       : VLockScreen,
             "controller" : CLockScreen
         }, {
             "class"      : IconScreen,
             "clsList"    : [ "iOS_iconScreen" ],
             "visiable"   : false,
-            "name"      : "iconScreen",
+            "name"       : "iconScreen",
             "view"       : VIconScreen,
             "controller" : CIconScreen,
             "needData"   : true,
@@ -57,10 +60,16 @@ define( function( require, exports, module ){
         }, {
             "class"      : AppScreen,
             "clsList"    : [ "iOS_appScreen" ],
-            "visiable"   : false,
-            "name"      : "appScreen",
+            // "visiable"   : false,
+            "name"       : "appScreen",
             "view"       : VAppScreen,
             "controller" : CAppScreen
         }]
+    }, {
+        "class"      : Home,
+        "clsList"    : [ 'iOS_home_button' ],
+        "name"       : 'home',
+        "view"       : VHome,
+        "controller" : CHome    
     }];
 });

@@ -4,8 +4,8 @@ define( function( require, exports, module ){
 
     require( './BaseView' );
     Ext.define( 'VPopScreen', {
-        extend : 'BaseView',
-        
+        extend : 'BaseView'
+
     });
 
     return VPopScreen;

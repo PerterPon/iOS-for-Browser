@@ -99,7 +99,7 @@ define( function( require, exports, module ){
             var scaler = this._getElCacheByCls( this.self.scaleLayer )[ 0 ];
             scaler.style.webkitTransform = 'scale3d( 1, 1, 1 )';
             //FIXME
-            scaler.style.opacity = '0';
+            scaler.style.opacity = '1';
         },
 
         _initInnerDom : function(){
@@ -148,9 +148,9 @@ define( function( require, exports, module ){
                 that._getElCacheByCls( sttcs.shadeLayer ).css( 'background', 'rgba( 0, 0, 0, 0 )' );
                 Util.notify( ctrl, 'dragEnd', [ event ] );
                 //FIXME
-                icon.style.webkitTransitionDealy    = '100ms';
+                icon.style.webkitTransitionDelay    = '100ms';
             });
-            this._getElByCls( sttc.scaleLayer )[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ){
+            this._getElByCls( sttcs.scaleLayer )[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ){
                 event.stopPropagation();
             });
         },
@@ -203,7 +203,7 @@ define( function( require, exports, module ){
             }
             function dragAutoTranslateComplete( event ){
                 event.stopPropagation();
-                sttcs.Util.notify( ctrl, 'dragAutoTranslateComplete' );
+                sttcs.Util.notify( sttc.controller, 'dragAutoTranslateComplete' );
                 //FIXME
                 this.style.webkitTransitionDuration = '450ms';
                 this.style.zIndex = 0;

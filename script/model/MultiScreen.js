@@ -38,7 +38,7 @@ define( function( require, exports, module ){
             var evtPos = this._getTouchPos( event );
             sttc.startPos = evtPos.pageX;
             sttc.sliding  = true;
-            sttc.swipeStartTime = new Date();
+            sttc.swipeStartTime = event.timeStamp;
         },
 
         EsliderMove : function( event ){
@@ -51,8 +51,8 @@ define( function( require, exports, module ){
                 dis    = evtPos.pageX - sttc.startPos,
                 nowTime;
             if( !sttc.notSwipe ){
-                nowTime = new Date();
-                if( nowTime.getTime() - sttc.swipeStartTime.getTime() >= sttcs.durationThreshold )
+                nowTime = event.timeStamp;
+                if( nowTime - sttc.swipeStartTime >= sttcs.durationThreshold )
                     sttc.notSwipe = true;
                 // return;
             }
@@ -84,8 +84,8 @@ define( function( require, exports, module ){
                 boundaryScreen = ( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ),
                 nowTime, disTime, distance;
             if( !sttc.notSwipe ){
-                nowTime = new Date();
-                disTime = nowTime.getTime() - sttc.swipeStartTime.getTime(); 
+                nowTime = event.timeStamp;
+                disTime = nowTime - sttc.swipeStartTime; 
                 if( disTime < sttcs.durationThreshold && absDis > sttcs.horizontalDistanceThreshold ){
                     if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ){
                         this.__doMultiScreenAutoTranslate( boundaryScreen, direction, absDis, true );
