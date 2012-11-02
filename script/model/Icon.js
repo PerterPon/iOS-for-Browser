@@ -9,6 +9,7 @@ define( function( require, exports, module ){
         inheritableStatics : {
             eventList : [
                 [ 'touchStart' ],
+                [ 'touchMove' ],
                 [ 'touchEnd' ],
                 [ 'dragStart' ],
                 [ 'dragMove' ],
@@ -49,8 +50,10 @@ define( function( require, exports, module ){
                 x  : null,
                 y  : null
             },
+            tapTimeOut    : null,
             shaking       : false,
             touchStartHandleFun : null,
+            touchMoveHandleFun  : null,
             touchEndHandleFun   : null,
             dragStartHandleFun  : null,
             dragMoveHandleFun   : null,
@@ -60,6 +63,10 @@ define( function( require, exports, module ){
 
         EtouchStart : function( event ){
             this.values.touchStartHandleFun( event );
+        },
+
+        EtouchMove : function( event ){
+            this.values.touchMoveHandleFun( event );
         },
 
         EtouchEnd : function( event ){
@@ -89,6 +96,7 @@ define( function( require, exports, module ){
                 dragFucs = this.__getDragStartEndFun();
             this.__calPosition();
             sttc.touchStartHandleFun = fucs[ 'touchStart' ];
+            sttc.touchMoveHandleFun  = fucs[ 'touchMove' ];
             sttc.touchEndHandleFun   = fucs[ 'touchEnd' ];
             sttc.dragStartHandleFun  = dragFucs[ 'dragStart' ];
             sttc.dragMoveHandleFun   = dragFucs[ 'dragMove' ];
@@ -194,7 +202,7 @@ define( function( require, exports, module ){
 
         __changeIconPosition : function( curIdx, operation ){
             var sttc = this.values;
-            if( sttc.index <= curIdx || sttc.dock )
+            if( sttc.index <= curIdx || sttc.dock || !sttc.current )
                 return;
             operation == 'out' ? sttc.index-- : sttc.index++;
             this.__calPosition();
@@ -210,9 +218,15 @@ define( function( require, exports, module ){
                 sttc    = this.values,
                 Util    = this.self.Util,
                 ctrl    = sttc.controller,
+                isTouchMove    = false,
+                tapThreshold = {
+                    x : 10,
+                    y : 10
+                },
                 tapTimeOut;
             return {
                 'touchStart' : touchStart,
+                'touchMove'  : touchMove,
                 'touchEnd'   : touchEnd
             };
 
@@ -225,7 +239,7 @@ define( function( require, exports, module ){
                     y : evtPos.pageY
                 };
                 startTime  = ( new Date() ).getTime();
-                setTimeout( function(){
+                tapTimeOut = setTimeout( function(){
                     if( !holding || ( new Date() ).getTime() - startTime < sttcs.durationThreshold )
                         return;
                     sttc.shaking = true;
@@ -246,6 +260,20 @@ define( function( require, exports, module ){
                 }
             }
 
+            function touchMove( event ){
+                if( isTouchMove )
+                    return;
+                var evtPos = that._getTouchPos( event ),
+                    disPos = {
+                        x : Math.abs( evtPos.pageX - startPos.x ),
+                        y : Math.abs( evtPos.pageY - startPos.y )
+                    };
+                if( disPos.x > tapThreshold.x || disPos > tapThreshold.y ){
+                    clearTimeout( tapTimeOut );
+                    isTouchMove = true;
+                }
+            }
+
             function touchEnd( event ){
                 var nowTime = new Date(),
                     evtPos  = that._getTouchPos( event, true ),
@@ -258,10 +286,6 @@ define( function( require, exports, module ){
                     verDis  = nowPos.y - nowPos.y;
                 holding     = false;    
                 if( horDis <= sttcs.horSliderThreshold && verDis <= sttcs.verSliderThreshold && timeDis <= sttcs.sliderTimeThreshold ){
-                    // setTimeout( function(){
-                    //     if( sttc.shaking )
-                    //     Util.notify( ctrl, 'hideShadeLayer' );   
-                    // }, 500 );
                     Event.dispatchEvent( 'iconOut' ); 
                     return;
                 }

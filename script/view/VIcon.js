@@ -121,6 +121,8 @@ define( function( require, exports, module ){
                 icon  = this._getEl()[ 0 ];
             this._getEl().on( $.support.touchstart, function( event ){
                 Util.notify( ctrl, 'touchStart', [ event ] );
+            }).on( $.support.touchmove, function( event ){
+                Util.notify( ctrl, 'touchMove', [ event ] );
             }).on( $.support.touchstop, function( event ){
                 Util.notify( ctrl, 'touchEnd', [ event ] );
             });
@@ -185,12 +187,14 @@ define( function( require, exports, module ){
                 'shakeStart' : shakeStartHandle,
                 'shakeStop'  : shakeStopHandle 
             };
-            function shakeHandle(){
+            function shakeHandle( event ){
+                event.stopPropagation();
                 curDeg *= -1;
                 shaker.style.webkitTransform = 'rotateZ(' + curDeg + 'deg)';
             }
-            function dragAutoTranslateComplete(){
-                Util.notify( ctrl, 'dragAutoTranslateComplete' );
+            function dragAutoTranslateComplete( event ){
+                event.stopPropagation();
+                sttcs.Util.notify( ctrl, 'dragAutoTranslateComplete' );
                 //FIXME
                 this.style.webkitTransitionDuration = '450ms';
                 this.style.zIndex = 0;

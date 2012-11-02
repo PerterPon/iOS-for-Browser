@@ -14,6 +14,7 @@ define( function( require, exports, module ){
                 [ 'iconOut' ],
                 [ 'iconClick' ],
                 [ 'touchStart' ],
+                [ 'touchMove' ],
                 [ 'touchEnd' ],
                 [ 'startShake' ],
                 [ 'stopShake' ],
@@ -59,6 +60,12 @@ define( function( require, exports, module ){
             var sttc  = this.values,
                 sttcs = this.self;
             sttcs.Util.notify( sttc.model, 'touchStart', [ event ] );
+        },
+
+        EtouchMove : function( event ){
+            var sttc  = this.values,
+                sttcs = this.self;
+            sttcs.Util.notify( sttc.model, 'touchMove', [ event ] );
         },
 
         EtouchEnd : function( event ){
