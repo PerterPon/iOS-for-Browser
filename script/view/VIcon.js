@@ -89,11 +89,17 @@ define( function( require, exports, module ){
         },
 
         EdragStartTranslate : function( scaleMultiple ){
-            this._getElCacheByCls( this.self.scaleLayer )[ 0 ].style.webkitTransform = 'scale3d('+ scaleMultiple +', '+ scaleMultiple +', '+ scaleMultiple +')';
+            var scaler = this._getElCacheByCls( this.self.scaleLayer )[ 0 ];
+            scaler.style.webkitTransform = 'scale3d('+ scaleMultiple +', '+ scaleMultiple +', '+ scaleMultiple +')';
+            //FIXME
+            scaler.style.opacity = '0.5';
         },
 
         EdragEndTranslate : function(){
-            this._getElCacheByCls( this.self.scaleLayer )[ 0 ].style.webkitTransform = 'scale3d( 1, 1, 1 )';
+            var scaler = this._getElCacheByCls( this.self.scaleLayer )[ 0 ];
+            scaler.style.webkitTransform = 'scale3d( 1, 1, 1 )';
+            //FIXME
+            scaler.style.opacity = '0';
         },
 
         _initInnerDom : function(){
@@ -143,7 +149,10 @@ define( function( require, exports, module ){
                 Util.notify( ctrl, 'dragEnd', [ event ] );
                 //FIXME
                 icon.style.webkitTransitionDealy    = '100ms';
-            })
+            });
+            this._getElByCls( sttc.scaleLayer )[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ){
+                event.stopPropagation();
+            });
         },
 
         /**

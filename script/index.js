@@ -18,8 +18,7 @@ define( function( require, exports, module ){
         }
         setTimeout( function(){
             removeBootLogo();
-        }, 500 );
+        }, 2000 );
     }
-
 
 });
