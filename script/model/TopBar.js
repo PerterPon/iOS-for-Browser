@@ -16,6 +16,8 @@ define( function( require, exports, module ){
             this.callParent();
             var Event = window.iOS.Event;
             Event.addEvent( 'unlock', this.__unlockHandle, this );
+            Event.addEvent( 'openApp', this.__openAppHandle, this );
+            Event.addEvent( 'closeApp', this.__closeAppHandle, this );
         },
 
         _clearValues : function(){
@@ -35,6 +37,14 @@ define( function( require, exports, module ){
                 sttc.status.unlock = true;
             }
             Util.notify( ctrl, 'updateTime', [ time ] );
+        },
+
+        __openAppHandle : function( hideTopBar ){
+            hideTopBar && this.self.Util.notify( this.values.controller, 'hideTopbar' );
+        },
+
+        __closeAppHandle : function(){
+            this.self.Util.notify( this.values.controller, 'showTopbar' );
         }
     });
 

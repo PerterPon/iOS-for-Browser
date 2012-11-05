@@ -72,7 +72,7 @@ define( function( require ){
                 cls    = '';
                 id     = 'ios-' + sttc.curIdx;
                 for( var j = 0; j < ( cfg.clsList || [] ).length; j++ ){
-                    cls += cfg.clsList[ j ] + ' ';
+                    !cfg.clsList[ j ] || ( cls += cfg.clsList[ j ] + ' ' );
                 }
                 html    = document.createElement( 'div' );
                 html.id = id;

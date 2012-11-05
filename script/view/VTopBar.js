@@ -8,7 +8,9 @@ define( function( require, exports, module ){
 
         inheritableStatics : {
             eventList : [
-                [ 'updateTime' ]
+                [ 'updateTime' ],
+                [ 'hideTopbar' ],
+                [ 'showTopbar' ]
             ]
         },
 
@@ -29,6 +31,14 @@ define( function( require, exports, module ){
         EupdateTime : function( time ){
             this.__updateTimeHandler( time );
         },
+
+        EhideTopbar : function(){
+            this._getEl().css( 'marginTop', '-20px' );
+        },
+
+        EshowTopbar : function(){
+            this._getEl().css( 'marginTop', '0' );
+        },  
 
         _initInnerDom : function(){
             var sttcs     = this.self,

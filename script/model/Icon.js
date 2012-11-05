@@ -247,15 +247,13 @@ define( function( require, exports, module ){
                     Event.dispatchEvent( 'startShake' );
                     Util.notify( ctrl, 'shadeLayerTransparent' );
                 }, sttcs.durationThreshold );
-                if( !sttc.shaking )
-                    document.body.addEventListener( $.support.touchstop, bodyTouchStop );
+                !sttc.shaking && document.body.addEventListener( $.support.touchstop, bodyTouchStop );
                 function bodyTouchStop( event ){
                     var nowTime = event.timeStamp;
                     document.body.removeEventListener( $.support.touchstop, bodyTouchStop );
                     if( nowTime - startTime < sttcs.sliderTimeThreshold ){
                         setTimeout( function(){
-                            if( !sttc.shaking )
-                                Util.notify( ctrl, 'hideShadeLayer' );
+                            !sttc.shaking && Util.notify( ctrl, 'hideShadeLayer' );
                         }, 500 );
                     }
                 }
@@ -288,6 +286,7 @@ define( function( require, exports, module ){
                 holding     = false;    
                 if( horDis <= sttcs.horSliderThreshold && verDis <= sttcs.verSliderThreshold && timeDis <= sttcs.sliderTimeThreshold ){
                     Event.dispatchEvent( 'iconOut' ); 
+                    Event.dispatchEvent( 'openApp', [ true ] );
                     return;
                 }
             }

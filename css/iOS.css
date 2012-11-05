@@ -12,7 +12,7 @@
  * topBar
  * 为保证topBar的高度，在CSS中写死为20px
  */
-.iOS_topBar { width: 100%; position: relative; z-index: 2; background-color: rgba( 0, 0, 0, 0.6 ) }
+.iOS_topBar { width: 100%; position: relative; z-index: 2; background-color: rgba( 0, 0, 0, 0.6 ); -webkit-transition-duration: 400ms; -webkit-transition-delay: 100ms }
 .iOS_topBar_leftIcon { left: 0; height: 100% }
     .iOS_topBar_signal { margin-left: 5px }
     .iOS_topBar_att { margin-left: 3px }

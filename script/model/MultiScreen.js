@@ -127,7 +127,7 @@ define( function( require, exports, module ){
                 newCfg.push({
                     "class"    : AppIcon,
                     "name"     : "appIcon_" + i,
-                    "clsList"  : [ "iOS_iconScreen_appIcon", "iOS_iconScreen_appIcon_" + i, false == i ? "iOS_iconScreen_current" : "" ],
+                    "clsList"  : [ "iOS_iconScreen_appIcon", "iOS_iconScreen_appIcon_" + i, false == i && "iOS_iconScreen_current" ],
                     "controller"  : CAppIcon,
                     "view"     : VAppIcon,
                     "renderChild" : true,

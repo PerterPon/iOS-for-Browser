@@ -24,6 +24,7 @@ define( function( require, exports, module ){
                 Event.dispatchEvent( 'stopShake' );
             }
             else {
+                Event.dispatchEvent( 'closeApp' );
                 Event.dispatchEvent( 'iconIn' );
             }
         },

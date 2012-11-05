@@ -8,7 +8,9 @@ define( function( require, exports, module ){
 
         inheritableStatics : {
             eventList : [
-                [ 'updateTime' ]
+                [ 'updateTime' ],
+                [ 'hideTopbar' ],
+                [ 'showTopbar' ]
             ]
         },
 
@@ -18,6 +20,14 @@ define( function( require, exports, module ){
                 Util  = sttcs.Util,
                 view  = sttc.view;
             Util.notify( view, 'updateTime', [ time ] );
+        },
+
+        EhideTopbar : function(){
+            this.self.Util.notify( this.values.view, 'hideTopbar' );
+        },
+
+        EshowTopbar : function(){
+            this.self.Util.notify( this.values.view, 'showTopbar' );
         }
 
     });
