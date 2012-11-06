@@ -44,7 +44,7 @@ define( function( require, exports, module ){
         },
 
         __closeAppHandle : function(){
-            this.self.Util.notify( this.values.controller, 'showTopbar' );
+            this.self.Util.notify( this.values.controller, 'rollBackTopbar' );
         }
     });
 

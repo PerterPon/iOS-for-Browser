@@ -9,6 +9,7 @@ define( function( require, exports, module ){
         AppScreen   = require( '../model/AppScreen' ),
         PopScreen   = require( '../model/PopScreen' ),
         Home        = require( '../model/Home' ),
+        AssistiveScreen = require( '../model/AssistiveScreen' ),
         VIOS        = require( '../view/VIOS' ),
         VTopBar     = require( '../view/VTopBar' ),
         VIconScreen = require( '../view/VIconScreen' ),
@@ -16,12 +17,14 @@ define( function( require, exports, module ){
         VAppScreen  = require( '../view/VAppScreen' ),
         VPopScreen  = require( '../view/VPopScreen' ),
         VHome       = require( '../view/VHome' ),
+        VAssistiveScreen = require( '../view/VAssistiveScreen' ),
         CTopBar     = require( '../controller/CTopBar' ),
         CLockScreen = require( '../controller/CLockScreen' ),
         CAppScreen  = require( '../controller/CAppScreen' ),
         CPopScreen  = require( '../controller/CPopScreen' ),
         CIconScreen = require( '../controller/CIconScreen' ),
-        CHome       = require( '../controller/CHome' );
+        CHome       = require( '../controller/CHome' ),
+        CAssistiveScreen = require( '../controller/CAssistiveScreen' );
     return [{
         "class"      : TopBar,
         "clsList"    : [ 'iOS_topBar' ],
@@ -60,16 +63,22 @@ define( function( require, exports, module ){
         }, {
             "class"      : AppScreen,
             "clsList"    : [ "iOS_appScreen" ],
-            // "visiable"   : false,
             "name"       : "appScreen",
             "view"       : VAppScreen,
             "controller" : CAppScreen
+        }, {
+            "class"      : AssistiveScreen,
+            "clsList"    : [ 'iOS_assisScreen' ],
+            "name"       : "assisScreen",
+            "visiable"   : false,
+            "view"       : VAssistiveScreen,
+            "controller" : CAssistiveScreen
         }]
     }, {
         "class"      : Home,
         "clsList"    : [ 'iOS_home_button' ],
         "name"       : 'home',
         "view"       : VHome,
-        "controller" : CHome    
+        "controller" : CHome
     }];
 });

@@ -10,7 +10,8 @@ define( function( require, exports, module ){
             eventList : [
                 [ 'updateTime' ],
                 [ 'hideTopbar' ],
-                [ 'showTopbar' ]
+                [ 'topBarBlack' ],
+                [ 'rollBackTopbar' ]
             ]
         },
 
@@ -25,7 +26,16 @@ define( function( require, exports, module ){
             battery   : 'iOS_topBar_battery',
             leftIcon  : 'iOS_topBar_leftIcon',
             rightIcon : 'iOS_topBar_rightIcon',
-            centerIcon: 'iOS_topBar_centerIcon'
+            centerIcon: 'iOS_topBar_centerIcon',
+            topBarInitinfo : {
+                'color'     : 'rgba( 0, 0, 0, 0.3 )',
+                'marginTop' : '0'
+            }
+        },
+
+        values : {
+            topBarHeight : null,
+            topBarColor  : null
         },
 
         EupdateTime : function( time ){
@@ -33,12 +43,16 @@ define( function( require, exports, module ){
         },
 
         EhideTopbar : function(){
-            this._getEl().css( 'marginTop', '-20px' );
+            this._getEl().css( 'marginTop', '-'+ this.values.topBarHeight +'px' );
         },
 
-        EshowTopbar : function(){
-            this._getEl().css( 'marginTop', '0' );
-        },  
+        ErollBackTopbar : function(){
+            this._getEl().css( this.self.topBarInitinfo );
+        },
+
+        EtopBarBlack : function(){
+            this._getEl().css( 'background', 'rgba( 255, 255, 255, 1 )' );
+        },
 
         _initInnerDom : function(){
             var sttcs     = this.self,
@@ -56,12 +70,13 @@ define( function( require, exports, module ){
                     '<img src="'+ ( basePath + 'battery.png' ) +'" class="'+ sttcs.battery +' '+ sttcs.barIcon +'" />' +
                 '</div>';
             this._getEl().html( htmlData );
+            this.values.topBarHeight = this._getEl().height();
         },
 
         __updateTimeHandler : function( time ){
-            var sttcs = this.self,
-                centerIcon  = this._getElByCls( sttcs.centerIcon ),
-                htmlData = '<span class='+ sttcs.time +'>'+ time.hours +':'+ time.minute +'</span>';
+            var sttcs      = this.self,
+                centerIcon = this._getElByCls( sttcs.centerIcon ),
+                htmlData   = '<span class='+ sttcs.time +'>'+ time.hours +':'+ time.minute +'</span>';
             centerIcon.html( htmlData );
         }
     });

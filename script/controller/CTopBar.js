@@ -10,7 +10,8 @@ define( function( require, exports, module ){
             eventList : [
                 [ 'updateTime' ],
                 [ 'hideTopbar' ],
-                [ 'showTopbar' ]
+                [ 'topBarBlack' ],
+                [ 'rollBackTopbar' ]
             ]
         },
 
@@ -26,8 +27,12 @@ define( function( require, exports, module ){
             this.self.Util.notify( this.values.view, 'hideTopbar' );
         },
 
-        EshowTopbar : function(){
-            this.self.Util.notify( this.values.view, 'showTopbar' );
+        ErollBackTopbar : function(){
+            this.self.Util.notify( this.values.view, 'rollBackTopbar' );
+        },
+
+        EtopBarBlack : function(){
+            this.self.Util.notify( this.values.view, 'topBarBlack' );
         }
 
     });
