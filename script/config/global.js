@@ -66,19 +66,13 @@ define( function( require, exports, module ){
             "name"       : "appScreen",
             "view"       : VAppScreen,
             "controller" : CAppScreen
-        }, {
-            "class"      : AssistiveScreen,
-            "clsList"    : [ 'iOS_assisScreen' ],
-            "name"       : "assisScreen",
-            "visiable"   : false,
-            "view"       : VAssistiveScreen,
-            "controller" : CAssistiveScreen
         }]
     }, {
-        "class"      : Home,
-        "clsList"    : [ 'iOS_home_button' ],
-        "name"       : 'home',
-        "view"       : VHome,
-        "controller" : CHome
+        "class"      : AssistiveScreen,
+        "clsList"    : [ 'iOS_assistiveScreen' ],
+        "name"       : "assistiveScreen",
+        "visiable"   : false,
+        "view"       : VAssistiveScreen,
+        "controller" : CAssistiveScreen
     }];
 });

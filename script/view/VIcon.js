@@ -114,8 +114,13 @@ define( function( require, exports, module ){
                         '</div>' +
                     '</div>';
             this._getEl().html( htmlData );
+        },
+
+        _afterRender : function(){
+            var sttc    = this.values,
+                sttcs   = this.self;
             sttc.shaker = this._getElByCls( sttcs.shakeLayer );
-            sttc.shader  = this._getElByCls( sttcs.shadeLayer );
+            sttc.shader = this._getElByCls( sttcs.shadeLayer );
         },
 
         _attachDomEvent : function(){
