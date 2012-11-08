@@ -134,10 +134,10 @@ define( function( require, exports, module ){
          */
         __getInPosition : function( index ){
             var posX   = index % 4,
+                System = window.iOS.System,
                 posY   = Math.floor( index / 4 ),
-                disX   = 17 * ( posX + 1 ) + 58 * posX + 3 * Math.floor( posX.toString( 2 ) / 10 ),
-                disY   = posY * 82 + ( posY & 2 ) * 4 + 10,
-                System = window.iOS.System;
+                disX   = 17 * ( posX + 1 ) + 58 / 320 * System.width * posX + 3 * Math.floor( posX.toString( 2 ) / 10 ),
+                disY   = posY * 82 / 480 * System.height + ( posY & 2 ) * 4 + 10;
             return {
                 x : disX / 320 * System.width,
                 y : disY / 480 * System.height

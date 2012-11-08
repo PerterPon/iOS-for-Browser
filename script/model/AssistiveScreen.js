@@ -17,7 +17,10 @@ define( function( require, exports, module ){
 
         statics : {
             assistivePointWidth  : 55,
-            assistivePointHeight : 55
+            assistivePointHeight : 55,
+            verSliderThreshold   : 5,
+            horSliderThreshold   : 5,
+            sliderTimeThreshold  : 200,
         },
 
         values : {
@@ -74,7 +77,7 @@ define( function( require, exports, module ){
                     x : 0,
                     y : 0
                 },
-                startPos;
+                startPos, startTime;
             return {
                 touchStart : touchStart,
                 touchMove  : touchMove,
@@ -88,7 +91,8 @@ define( function( require, exports, module ){
                     x : evtPos.pageX,
                     y : evtPos.pageY
                 };
-                // Util.notify( ctrl, 'disableTransparent' );
+                startTime  = event.timeStamp;
+                Util.notify( ctrl, 'disableTransparent' );
                 dragging   = true;
             }
 
@@ -107,17 +111,28 @@ define( function( require, exports, module ){
                 if( sttc.pointTranslating )
                     return;
                 var evtPos = that._getTouchPos( event, true ),
+                    disPos = {
+                        x : evtPos.pageX - startPos.x,
+                        y : evtPos.pageY - startPos.y
+                    },
                     nowPos = {
-                        x : evtPos.pageX - startPos.x + curPos.x,
-                        y : evtPos.pageY - startPos.y + curPos.y
+                        x : disPos.x + curPos.x,
+                        y : disPos.y + curPos.y
                     },
                     tarPos = {
                         x : null,
                         y : nowPos.y > 0 ? nowPos.y > boundary ? boundary : nowPos.y : 0
-                    };
-                tarPos.x   = ( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ) && ( width - sttcs.assistivePointWidth ) || 0;
-                curPos     = tarPos;
-                Util.notify( ctrl, 'assistivePointAutoTranslate', [ tarPos ] );
+                    },
+                    nowTime= event.timeStamp;
+                if( Math.abs( disPos.x ) < sttcs.horSliderThreshold || Math.abs( disPos.y ) < sttcs.verSliderThreshold 
+                    || nowTime - startTime < sttcs.sliderTimeThreshold ){
+                    Util.notify( ctrl, 'showAssistiveOptions' );
+                } else {
+                    tarPos.x   = ( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ) && ( width - sttcs.assistivePointWidth ) || 0;
+                    curPos     = tarPos;
+                    Util.notify( ctrl, 'enableTransparent' );
+                    Util.notify( ctrl, 'assistivePointAutoTranslate', [ tarPos ] );
+                }
                 sttc.pointTranslating = true;
                 dragging   = false;
             }

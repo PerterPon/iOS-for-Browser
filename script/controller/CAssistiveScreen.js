@@ -14,7 +14,11 @@ define( function( require, exports, module ){
                 [ 'touchstop' ],
                 [ 'translate' ],
                 [ 'assistivePointAutoTranslate' ],
-                [ 'assistivePointAutoTranslateComplete' ]
+                [ 'assistivePointAutoTranslateComplete' ],
+                [ 'showAssistiveOptions' ],
+                [ 'hideAssistiveOptions' ],
+                [ 'enableTransparent' ],
+                [ 'disableTransparent' ]
             ]
         },
 
@@ -44,6 +48,14 @@ define( function( require, exports, module ){
 
         EassistivePointAutoTranslateComplete : function(){
             this.self.Util.notify( this.values.model, 'assistivePointAutoTranslateComplete' );
+        },
+
+        EshowAssistiveOptions : function(){
+            this.self.Util.notify( this.values.view, 'showAssistiveOptions' );
+        },
+
+        EhideAssistiveOptions : function(){
+
         }
 
     });

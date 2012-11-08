@@ -73,6 +73,13 @@ define( function( require, exports, module ){
         "name"       : "assistiveScreen",
         "visiable"   : false,
         "view"       : VAssistiveScreen,
-        "controller" : CAssistiveScreen
+        "controller" : CAssistiveScreen,
+        "subView"    : [{
+            "class"      : Home,
+            "clsList"    : [ "iOS_homeButton" ],
+            "name"       : "homeButton",
+            "controller" : CHome,
+            "view"       : VHome
+        }]
     }];
 });
