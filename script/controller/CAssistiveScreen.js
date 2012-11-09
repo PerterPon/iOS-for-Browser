@@ -56,6 +56,14 @@ define( function( require, exports, module ){
 
         EhideAssistiveOptions : function(){
 
+        },
+
+        EdisableTransparent : function(){
+            this.self.Util.notify( this.values.view, 'disableTransparent' );
+        },
+
+        EenableTransparent : function(){
+            this.self.Util.notify( this.values.view, 'enableTransparent' );
         }
 
     });

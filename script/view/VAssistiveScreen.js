@@ -10,7 +10,9 @@ define( function( require, exports, module ){
             eventList : [
                 [ 'showAssistivePoint' ],
                 [ 'translate' ],
-                [ 'assistivePointAutoTranslate' ]
+                [ 'assistivePointAutoTranslate' ],
+                [ 'disableTransparent' ],
+                [ 'enableTransparent' ]
             ]
         },
 
@@ -42,6 +44,14 @@ define( function( require, exports, module ){
                 this.removeEventListener( 'webkitTransitionEnd', translateEndFunc );
                 sttcs.Util.notify( sttc.controller, 'assistivePointAutoTranslateComplete' );
             }
+        },
+
+        EdisableTransparent : function(){
+            this._getEl().css( 'opacity', '1' );
+        },
+
+        EenableTransparent : function(){
+            this._getEl().css( 'opacity', '0.5' );
         },
 
         _attachDomEvent : function(){
