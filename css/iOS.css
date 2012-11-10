@@ -85,4 +85,5 @@
 /**
  * assistiveScreen
  */
-.iOS_assistiveScreen { top: 0px; left: 0; position: absolute; width: 55px; z-index: 99; height: 55px; background: black; opacity: 0.5; border-radius: 5px }
+.iOS_assistiveScreen { background: url( ../resource/images/assistive/assistivePoint.png ) rgba( 0, 0, 0, 0.4 ) no-repeat center center; opacity: 0.5; top: 0px; left: 0; position: absolute; width: 55px; z-index: 99; height: 55px; -webkit-border-radius: 10px }
+    .iOS_assistive_area { width: 270px; height: 270px; -webkit-transform-origin: 27px 27px; -webkit-border-radius: 15px; background-color: rgba( 0, 0, 0, 0.7 ); -webkit-transition-duration: 200ms; -webkit-transition-delay: 100ms; -webkit-transition-timing-function: ease-out }

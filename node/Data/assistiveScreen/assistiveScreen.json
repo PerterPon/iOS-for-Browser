@@ -1,0 +1,17 @@
+﻿{
+    "data" : {
+        "icon" : [{
+            "name" : "home",
+            "text" : "Home"
+        }, {
+            "name" : "favorites",
+            "text" : "Favorites"
+        }, {
+            "name" : "gestures",
+            "text" : "Gestures"
+        }, {
+            "name" : "device",
+            "text" : "Device"
+        }]
+    }
+}

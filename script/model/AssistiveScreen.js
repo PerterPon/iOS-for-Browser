@@ -21,6 +21,8 @@ define( function( require, exports, module ){
             verSliderThreshold   : 5,
             horSliderThreshold   : 5,
             sliderTimeThreshold  : 200,
+            assistiveWidth       : 270,
+            assistiveHeight      : 270
         },
 
         values : {
@@ -57,6 +59,76 @@ define( function( require, exports, module ){
             sttc.touchStartHandleFunc = touchFuncs[ 'touchStart' ];
             sttc.touchMoveHandleFunc  = touchFuncs[ 'touchMove' ];
             sttc.touchStopHandleFunc  = touchFuncs[ 'touchStop' ];
+        },
+
+        _getDefaultData : function(){
+            return require( '../../resource/defaultData/assistiveScreen/assistiveScreen' );
+        },
+
+        _handleChildCfg : function(){
+            /*var sttc      = this.values,
+                data      = sttc.data.data,
+                MultiScreen = require( './MultiScreen' ),
+                VMultiScreen= require( '../view/VMultiScreen' ),
+                CMultiScreen= require( '../controller/CMultiScreen' ),
+                AppIcon   = require( './AppIcon' ),
+                VAppIcon  = require( '../view/VAppIcon' ),
+                CAppIcon  = require( '../controller/CAppIcon' ),
+                DockIcon  = require( './DockIcon' ),
+                VDockIcon = require( '../view/VDockIcon' ),
+                CDockIcon = require( '../controller/CDockIcon' ),
+                newCfg    = [{
+                    "class"    : MultiScreen,
+                    "name"     : "multiScreen",
+                    "clsList"  : [ "iOS_multiScreen" ],
+                    "view"     : VMultiScreen,
+                    "controller" : CMultiScreen,
+                    "data"     : {
+                        data   : data[ 'screen' ]
+                    },
+                    "renderChild" : true
+                }, {
+                    "class"   : DockIcon,
+                    "name"    : "dockIcon",
+                    "clsList" : [ "iOS_iconScreen_dockIcon" ],
+                    "view"    : VDockIcon,
+                    "controller" : CDockIcon,
+                    "data"    : {
+                        data  : data[ 'dock' ]
+                    },
+                    "renderChild" : true
+                }];
+            sttc.data.data = newCfg;*/
+            //FIXME:目前只考虑了只有4个icon的情况，其他数量都还没有添加。
+            var sttc   = this.values,
+                sttcs  = this.self,
+                data   = sttc.data.data.icon,
+                perDis = sttcs.assistiveWidth,
+                iconDis= ( perDis - 58 ) / 2;
+            data[ 0 ][ 'position' ] = {
+                x : perDis + iconDis,
+                y : iconDis
+            };
+            data[ 1 ][ 'position' ] = {
+                x : iconDis,
+                y : perDis + iconDis
+            };
+            data[ 2 ][ 'position' ] = {
+                x : perDis * 2 + iconDis,
+                y : perDis * 1 + iconDis
+            };
+            data[ 3 ][ 'position' ] = {
+                x : perDis * 1 + iconDis,
+                y : perDis * 2 + iconDis
+            };
+            sttc.data.data = newCfg;
+        },
+
+        _dataReady : function(){
+            var sttc = this.values,
+                ctrl = sttc.controller,
+                renderData = sttc.data.data;
+            this.self.Util.notify( ctrl, 'renderChild', [ renderData ] );
         },
 
         __unlockHandle : function(){

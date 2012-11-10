@@ -18,7 +18,8 @@ define( function( require, exports, module ){
                 [ 'showAssistiveOptions' ],
                 [ 'hideAssistiveOptions' ],
                 [ 'enableTransparent' ],
-                [ 'disableTransparent' ]
+                [ 'disableTransparent' ],
+                [ 'renderChild' ]
             ]
         },
 
@@ -64,6 +65,10 @@ define( function( require, exports, module ){
 
         EenableTransparent : function(){
             this.self.Util.notify( this.values.view, 'enableTransparent' );
+        },
+
+        ErenderChild : function( renderData ){
+            this.self.Util.notify( this.values.view, 'renderChild', [ renderData ] );
         }
 
     });

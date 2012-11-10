@@ -1,4 +1,5 @@
 ﻿{
     "lockScreen" : "Data/lockScreen/lockScreen.json",
-    "iconScreen" : "Data/iconScreen/iconScreen.json"
+    "iconScreen" : "Data/iconScreen/iconScreen.json",
+    "assistiveScreen" : "Data/assistiveScreen/assistiveScreen.json"
 }

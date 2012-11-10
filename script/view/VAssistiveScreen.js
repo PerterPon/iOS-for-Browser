@@ -12,12 +12,22 @@ define( function( require, exports, module ){
                 [ 'translate' ],
                 [ 'assistivePointAutoTranslate' ],
                 [ 'disableTransparent' ],
-                [ 'enableTransparent' ]
+                [ 'enableTransparent' ],
+                [ 'renderChild' ]
             ]
         },
 
         values : {
             assistivePoint : null
+        },
+
+        statics : {
+            assistiveArea     : 'iOS_assistive_area',
+            assistiveIcon     : 'iOS_assistive_icon',
+            assistiveHome     : 'iOS_assistive_home',
+            assistiveFavorites: 'iOS_assistive_favorites',
+            assistiveGestures : 'iOS_assistive_gestures',
+            assistiveDevice   : 'iOS_assistive_device'
         },
 
         EshowAssistivePoint : function(){
@@ -54,6 +64,34 @@ define( function( require, exports, module ){
             this._getEl().css( 'opacity', '0.5' );
         },
 
+        ErenderChild : function( renderData ){
+            var sttc  = this.values,
+                sttcs = this.self,
+                html  = "<div class="+ sttcs.assistiveArea + ">"+
+                    "<div class="+ sttcs.assistiveHome +"></div>"+
+                    "<div class="+ sttcs.assistiveFavorites +"></div>"+
+                    "<div class="+ sttcs.assistiveGestures +"></div>"+
+                    "<div class="+ sttcs.assistiveDevice +"></div>"+
+                "</div>",
+                icons;
+            this._getEl().html( html );
+            icons = this._getElByCls( sttcs.assistiveIcon );
+            html = "<div class="+ sttcs.assistiveArea + ">";
+            for( var i = 0, data, pos; i < icons.length; i++ ){
+                data   = renderData[ i ];
+                pos    = data[ 'position' ];
+                html  += "<div class="+ sttcs.assistiveHome +" style=-webkit-transform:translate3d("+ pos.x +"px,"+ pos.y +"px, 0)>"+
+                    "<img src=./resource/images/assistive/"+ data[ 'name' ] +".png />"+
+                    "<span>"+ data[ 'text' ] +"</span>"
+                "</div>";
+            }
+        },
+
+        _initInnerDom : function(){
+            var html  = "<div class="+ this.self.assistiveArea + "></div>";
+            this._getEl().html( html );
+        },
+
         _attachDomEvent : function(){
             var sttcs = this.values,
                 sttc  = this.self,
@@ -65,6 +103,9 @@ define( function( require, exports, module ){
                 Util.notify( ctrl, 'touchmove', [ event ] );
             }).on( $.support.touchstop, function( event ){
                 Util.notify( ctrl, 'touchstop', [ event ] );
+            });
+            this._getElCacheByCls( sttc.assistiveArea )[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ){
+                event.stopPropagation();
             });
         },
 
