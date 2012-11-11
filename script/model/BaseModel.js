@@ -57,7 +57,7 @@ define( function( require, exports, module ){
                 that  = this;
             sockMngr.checkSocket( norFn, errFn );
             function norFn(){
-                sockMngr.on( 'getDataBak', function( data ){
+                sockMngr.on( sttc.name + 'GetDataBak', function( data ){
                     sttc.data = data.data;
                     sttcs.Util.notify( that, 'dataReady' );
                 });

@@ -3,8 +3,9 @@
 define( function( require, exports, module ){
     "use strick";
 
-    var eventTree = {},
-        socket    = null;
+    var eventTree    = {},
+        requestQueue = [],
+        socket       = null;
 
     /**
      * [on 在socket连接上绑定事件]
@@ -66,10 +67,10 @@ define( function( require, exports, module ){
         if( socket.readyState == 2 || socket.readyState == 3 )
             errFn();
         else if( socket.readyState == 1 )
-            norFn;
+            norFn();
         else {
-            socket.onopen  = norFn;
-            socket.onclose = errFn; 
+            socket.addEventListener( 'open',  norFn );
+            socket.addEventListener( 'close', errFn );
         }
     }
 

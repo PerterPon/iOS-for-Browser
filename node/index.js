@@ -28,7 +28,7 @@ scktMngr.on( 'getData', function( data ){
         throw 'store name can not be empty!';
     else 
         result = doGetData( name );
-    scktMngr.emit( 'getDataBak', result );
+    scktMngr.emit( name + 'GetDataBak', result );
 });
 
 scktMngr.on( 'saveData', function( data ){
