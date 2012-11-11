@@ -51,8 +51,8 @@ define( function( require, exports, module ){
             this.self.Util.notify( this.values.model, 'assistivePointAutoTranslateComplete' );
         },
 
-        EshowAssistiveOptions : function(){
-            this.self.Util.notify( this.values.view, 'showAssistiveOptions' );
+        EshowAssistiveOptions : function( position ){
+            this.self.Util.notify( this.values.view, 'showAssistiveOptions', [ position ] );
         },
 
         EhideAssistiveOptions : function(){

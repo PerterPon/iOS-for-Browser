@@ -71,7 +71,7 @@ define( function( require, exports, module ){
         "class"      : AssistiveScreen,
         "clsList"    : [ 'iOS_assistiveScreen' ],
         "name"       : "assistiveScreen",
-        "visiable"   : false,
+        "visiable"   : true,
         "view"       : VAssistiveScreen,
         "controller" : CAssistiveScreen,
         "needData"   : true

@@ -65,69 +65,11 @@ define( function( require, exports, module ){
             return require( '../../resource/defaultData/assistiveScreen/assistiveScreen' );
         },
 
-        _handleChildCfg : function(){
-            /*var sttc      = this.values,
-                data      = sttc.data.data,
-                MultiScreen = require( './MultiScreen' ),
-                VMultiScreen= require( '../view/VMultiScreen' ),
-                CMultiScreen= require( '../controller/CMultiScreen' ),
-                AppIcon   = require( './AppIcon' ),
-                VAppIcon  = require( '../view/VAppIcon' ),
-                CAppIcon  = require( '../controller/CAppIcon' ),
-                DockIcon  = require( './DockIcon' ),
-                VDockIcon = require( '../view/VDockIcon' ),
-                CDockIcon = require( '../controller/CDockIcon' ),
-                newCfg    = [{
-                    "class"    : MultiScreen,
-                    "name"     : "multiScreen",
-                    "clsList"  : [ "iOS_multiScreen" ],
-                    "view"     : VMultiScreen,
-                    "controller" : CMultiScreen,
-                    "data"     : {
-                        data   : data[ 'screen' ]
-                    },
-                    "renderChild" : true
-                }, {
-                    "class"   : DockIcon,
-                    "name"    : "dockIcon",
-                    "clsList" : [ "iOS_iconScreen_dockIcon" ],
-                    "view"    : VDockIcon,
-                    "controller" : CDockIcon,
-                    "data"    : {
-                        data  : data[ 'dock' ]
-                    },
-                    "renderChild" : true
-                }];
-            sttc.data.data = newCfg;*/
-            //FIXME:目前只考虑了只有4个icon的情况，其他数量都还没有添加。
-            var sttc   = this.values,
-                sttcs  = this.self,
-                data   = sttc.data.data.icon,
-                perDis = sttcs.assistiveWidth,
-                iconDis= ( perDis - 58 ) / 2;
-            data[ 0 ][ 'position' ] = {
-                x : perDis + iconDis,
-                y : iconDis
-            };
-            data[ 1 ][ 'position' ] = {
-                x : iconDis,
-                y : perDis + iconDis
-            };
-            data[ 2 ][ 'position' ] = {
-                x : perDis * 2 + iconDis,
-                y : perDis * 1 + iconDis
-            };
-            data[ 3 ][ 'position' ] = {
-                x : perDis * 1 + iconDis,
-                y : perDis * 2 + iconDis
-            };
-            sttc.data.data = newCfg;
-        },
-
         _dataReady : function(){
             var sttc = this.values,
                 ctrl = sttc.controller,
                 renderData = sttc.data.data;
+            this.__getAssistiveIconPotions();
             this.self.Util.notify( ctrl, 'renderChild', [ renderData ] );
         },
 
@@ -145,6 +87,8 @@ define( function( require, exports, module ){
                 height   = window.iOS.System.height,
                 width    = window.iOS.System.width,
                 boundary = height - sttcs.assistivePointWidth,
+                areaTop  = ( height - sttcs.assistiveHeight ) / 2,
+                areaLeft = ( width  - sttcs.assistiveWidth ) / 2,
                 curPos   = {
                     x : 0,
                     y : 0
@@ -198,7 +142,7 @@ define( function( require, exports, module ){
                     nowTime= event.timeStamp;
                 if( Math.abs( disPos.x ) < sttcs.horSliderThreshold || Math.abs( disPos.y ) < sttcs.verSliderThreshold 
                     || nowTime - startTime < sttcs.sliderTimeThreshold ){
-                    Util.notify( ctrl, 'showAssistiveOptions' );
+                    Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop } ] );
                 } else {
                     tarPos.x   = ( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ) && ( width - sttcs.assistivePointWidth ) || 0;
                     curPos     = tarPos;
@@ -208,7 +152,34 @@ define( function( require, exports, module ){
                 sttc.pointTranslating = true;
                 dragging   = false;
             }
-        }
+        },
+
+        __getAssistiveIconPotions : function(){
+            //FIXME:目前只考虑了只有4个icon的情况，其他数量都还没有添加。
+            var sttc   = this.values,
+                sttcs  = this.self,
+                data   = sttc.data.data.icon,
+                perDis = sttcs.assistiveWidth / 3,
+                iconDis= ( perDis - 58 ) / 2,
+                verDis = ( perDis - 73 ) / 2
+            data[ 0 ][ 'position' ] = {
+                x : perDis + iconDis,
+                y : iconDis
+            };
+            data[ 1 ][ 'position' ] = {
+                x : iconDis,
+                y : perDis + verDis
+            };
+            data[ 2 ][ 'position' ] = {
+                x : perDis * 2 + iconDis,
+                y : perDis * 1 + verDis
+            };
+            data[ 3 ][ 'position' ] = {
+                x : perDis * 1 + iconDis,
+                y : perDis * 2 + verDis
+            };
+            // sttc.data.data = newCfg;
+        },
     });
 
     return AssistiveScreen;
