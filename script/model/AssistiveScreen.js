@@ -93,6 +93,7 @@ define( function( require, exports, module ){
                     x : 0,
                     y : 0
                 },
+                curDirection = 'left',
                 startPos, startTime;
             return {
                 touchStart : touchStart,
@@ -140,11 +141,18 @@ define( function( require, exports, module ){
                         y : nowPos.y > 0 ? nowPos.y > boundary ? boundary : nowPos.y : 0
                     },
                     nowTime= event.timeStamp;
-                if( Math.abs( disPos.x ) < sttcs.horSliderThreshold || Math.abs( disPos.y ) < sttcs.verSliderThreshold 
-                    || nowTime - startTime < sttcs.sliderTimeThreshold ){
-                    Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop } ] );
+                if( Math.abs( disPos.x ) <= sttcs.horSliderThreshold || Math.abs( disPos.y ) <= sttcs.verSliderThreshold 
+                    || nowTime - startTime <= sttcs.sliderTimeThreshold ){
+                    Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft - ( curDirection == 'right' ? curPos.x : 0 ), y : areaTop - curPos.y } ] );
                 } else {
-                    tarPos.x   = ( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ) && ( width - sttcs.assistivePointWidth ) || 0;
+                    if( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ){
+                        curDirection = 'right';
+                        tarPos.x     = width - sttcs.assistivePointWidth;
+                    } else {
+                        curDirection = 'left';
+                        tarPos.x     = 0;
+                    }
+                    // tarPos.x   = ( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ) && ( width - sttcs.assistivePointWidth ) || 0;
                     curPos     = tarPos;
                     Util.notify( ctrl, 'enableTransparent' );
                     Util.notify( ctrl, 'assistivePointAutoTranslate', [ tarPos ] );

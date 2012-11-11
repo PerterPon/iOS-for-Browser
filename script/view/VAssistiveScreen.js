@@ -59,11 +59,11 @@ define( function( require, exports, module ){
         },
 
         EdisableTransparent : function(){
-            this._getEl().css( 'opacity', '1' );
+            this._getElCacheByCls( this.self.assistiveIcon ).css( 'opacity', '1' );
         },
 
         EenableTransparent : function(){
-            this._getEl().css( 'opacity', '0.5' );
+            this._getElCacheByCls( this.self.assistiveIcon ).css( 'opacity', '0.5' );
         },
 
         ErenderChild : function( renderData ){
@@ -109,7 +109,8 @@ define( function( require, exports, module ){
 
         _initInnerDom : function(){
             var sttcs = this.self,
-                html  = "<div class="+ sttcs.assistiveArea +">"+
+                html  = "<div class="+ sttcs.assistiveIcon +"></div>"+
+                "<div class="+ sttcs.assistiveArea +">"+
                     "<div class="+ sttcs.assistiveTransArea +"></div>"+
                 "</div>";
             this._getEl().html( html );
@@ -120,7 +121,7 @@ define( function( require, exports, module ){
                 sttc  = this.self,
                 Util  = sttc.Util,
                 ctrl  = sttcs.controller;
-            this._getEl().on( $.support.touchstart, function( event ){
+            this._getElCacheByCls( sttc.assistiveIcon ).on( $.support.touchstart, function( event ){
                 Util.notify( ctrl, 'touchstart', [ event ] );
             }).on( $.support.touchmove, function( event ){
                 Util.notify( ctrl, 'touchmove', [ event ] );
@@ -134,7 +135,7 @@ define( function( require, exports, module ){
 
         _afterRender : function(){
             var sttc = this.values;
-            sttc.assistivePoint = this._getEl()[ 0 ];
+            sttc.assistivePoint = this._getElCacheByCls( this.self.assistiveIcon )[ 0 ];
         }
 
     });

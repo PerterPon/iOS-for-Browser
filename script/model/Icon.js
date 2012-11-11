@@ -136,11 +136,13 @@ define( function( require, exports, module ){
             var posX   = index % 4,
                 System = window.iOS.System,
                 posY   = Math.floor( index / 4 ),
-                disX   = 17 * ( posX + 1 ) + 58 / 320 * System.width * posX + 3 * Math.floor( posX.toString( 2 ) / 10 ),
-                disY   = posY * 82 / 480 * System.height + ( posY & 2 ) * 4 + 10;
+                widthTimes  = System.width / 320,
+                heightTimes = System.height / 480,
+                disX   = 17 * widthTimes * ( posX + 1 ) + 58 * widthTimes * posX + 3 * Math.floor( posX.toString( 2 ) / 10 ) * widthTimes,
+                disY   = posY * 82 * heightTimes + ( posY & 2 ) * 4 * heightTimes + 10 * heightTimes;
             return {
-                x : disX / 320 * System.width,
-                y : disY / 480 * System.height
+                x : disX,
+                y : disY
             };
         },
 
