@@ -11,7 +11,8 @@ define( function( require, exports, module ){
                 [ 'touchstart' ],
                 [ 'touchmove' ],
                 [ 'touchstop' ],
-                [ 'assistivePointAutoTranslateComplete' ]
+                [ 'assistivePointAutoTranslateComplete' ],
+                [ 'assistiveOptionsClick' ]
             ]
         },
 
@@ -29,6 +30,7 @@ define( function( require, exports, module ){
             touchStartHandleFunc : null,
             touchMoveHandleFunc  : null,
             touchStopHandleFunc  : null,
+            assistiveOptionsClickFunc : null,
             pointTranslating     : false
         },
 
@@ -48,6 +50,10 @@ define( function( require, exports, module ){
             this.values.pointTranslating = false;
         },
 
+        EassistiveOptionsClick : function( event, assistiveNode ){
+            this.values.assistiveOptionsClickFunc( event, assistiveNode );
+        },
+
         _attachEventListener : function(){
             this.callParent();
             window.iOS.Event.addEvent( 'unlock', this.__unlockHandle, this );
@@ -59,6 +65,7 @@ define( function( require, exports, module ){
             sttc.touchStartHandleFunc = touchFuncs[ 'touchStart' ];
             sttc.touchMoveHandleFunc  = touchFuncs[ 'touchMove' ];
             sttc.touchStopHandleFunc  = touchFuncs[ 'touchStop' ];
+            sttc.assistiveOptionsClickFunc = touchFuncs[ 'assistiveOptionsClick' ];
         },
 
         _getDefaultData : function(){
@@ -98,7 +105,8 @@ define( function( require, exports, module ){
             return {
                 touchStart : touchStart,
                 touchMove  : touchMove,
-                touchStop  : touchStop
+                touchStop  : touchStop,
+                assistiveOptionsClick : assistiveOptionsClick
             };
             function touchStart( event ){
                 if( sttc.pointTranslating )
@@ -143,7 +151,20 @@ define( function( require, exports, module ){
                     nowTime= event.timeStamp;
                 if( Math.abs( disPos.x ) <= sttcs.horSliderThreshold || Math.abs( disPos.y ) <= sttcs.verSliderThreshold 
                     || nowTime - startTime <= sttcs.sliderTimeThreshold ){
-                    Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft - ( curDirection == 'right' ? curPos.x : 0 ), y : areaTop - curPos.y } ] );
+                    var assistivePointPos = {},
+                        assistiveAreaPos  = {
+                            x : curPos.x - sttcs.assistivePointWidth / 2,
+                            y : curPos.y - sttcs.assistivePointHeight / 2
+                        }
+                    if( curPos.y <= areaTop ){
+                        assistivePointPos.y = sttcs.assistivePointHeight / 2;
+                    } else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) ){
+                        assistivePointPos.y = sttcs.assistiveHeight + sttcs.assistivePointHeight / 2;
+                    } else {
+                        assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
+                    }
+                    assistivePointPos.x   =  sttcs.assistivePointWidth / 2 + ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
+                    Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, assistiveAreaPos, assistivePointPos ] );
                 } else {
                     if( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ){
                         curDirection = 'right';
@@ -156,9 +177,28 @@ define( function( require, exports, module ){
                     curPos     = tarPos;
                     Util.notify( ctrl, 'enableTransparent' );
                     Util.notify( ctrl, 'assistivePointAutoTranslate', [ tarPos ] );
+                    sttc.pointTranslating = true;
+                    dragging   = false;
                 }
-                sttc.pointTranslating = true;
-                dragging   = false;
+                
+            }
+
+            /*function showAssistiveOptions(){
+                var assistivePointPos = {
+                    x : curPos.x + sttcs.assistivePointWidth / 2,
+                    y : curPos.y + sttcs.ass
+                };
+                Util.notify( ctlr, 'showAssistiveOptions', [  ] );
+            }*/
+
+            function assistiveOptionsClick( event, assistiveNode ){
+                var target  = event.target,
+                contain = target.compareDocumentPosition( assistiveNode );
+                /*
+                 * contain == 8 表示assistiveNode包含target节点。
+                 */
+                if( contain && contain != 8 )
+                    sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ curPos ] );
             }
         },
 
@@ -187,7 +227,7 @@ define( function( require, exports, module ){
                 y : perDis * 2 + verDis
             };
             // sttc.data.data = newCfg;
-        },
+        }
     });
 
     return AssistiveScreen;

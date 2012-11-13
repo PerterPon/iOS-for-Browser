@@ -14,7 +14,8 @@ define( function( require, exports, module ){
                 [ 'disableTransparent' ],
                 [ 'enableTransparent' ],
                 [ 'renderChild' ],
-                [ 'showAssistiveOptions' ]
+                [ 'showAssistiveOptions' ],
+                [ 'hideAssistiveOptions' ]
             ]
         },
 
@@ -80,13 +81,25 @@ define( function( require, exports, module ){
                     "<span>"+ data[ 'text' ] +"</span>"+
                 "</div>";
             }
-            this._getElByCls( sttcs.assistiveTransArea ).html( html );
+            this._getElByCls( sttcs.assistiveArea ).html( html );
         },
 
-        EshowAssistiveOptions : function( position ){
-            var that = this;
+        EshowAssistiveOptions : function( position, assistiveAreaPos, assistivePos ){
+            var that  = this,
+                sttcs = this.self,
+                assistiveArea = this._getElCacheByCls( sttcs.assistiveArea );
             //FIXME:初步明白问题出在哪里了，可能主要还是因为之前的translate3d导致模糊，加上scale，于是模糊就加倍了，这里translate先采用left和top代替。
-            this._getElCacheByCls( this.self.assistiveArea ).css('webkitTransform', 'matrix(1, 0, 0, 1, 0, 0)');/*.
+            assistiveArea.css({
+                'left'            : position.x + 'px',
+                'top'             : position.y + 'px',
+                'webkitTransformOrigin' : assistivePos.x +'px '+ assistivePos.y +'px'
+            });
+            setTimeout( function(){
+                assistiveArea.css({
+                    'webkitTransform' : 'matrix(1, 0, 0, 1, 0, 0)'
+                });
+            }, 1 );
+            /*.
                 on( 'webkitTransitionEnd', function( event ){
                     event.stopPropagation();
                     $( this ).off( 'webkitTransitionEnd' ).find( 'img, span' ).css( 'webkitTransform', 'scale3d(1, 1, 1)' );
@@ -94,24 +107,28 @@ define( function( require, exports, module ){
             /*setTimeout( function(){
                 that._getElCacheByCls( that.self.assistiveArea ).find( 'img' ).css( 'webkitTransform', 'scale3d(1, 1, 1)' );
             }, 1 );*/
-            this._getElCacheByCls( this.self.assistiveTransArea ).css({
+            /*this._getElCacheByCls( sttcs.assistiveArea ).css({
                 left : position.x + 'px',
                 top  : position.y + 'px'
-            });
+            });*/
+            
+            function areaTransitionEnd( event ){
+                this.removeEventListener( 'webkitTransitionEnd', areaTransitionEnd );
+                event.stopPropagation();
+                document.body.addEventListener( 'click', that.self.Util.bind( that.__bodyClickHandle, that ) );
+            }
+            this._getElCacheByCls( sttcs.assistiveArea )[ 0 ].addEventListener( 'webkitTransitionEnd', areaTransitionEnd );
         },
 
         EhideAssistiveOptions : function(){
-            this._getElCacheByCls( this.self.assistiveArea )[ 0 ].
-                style.webkitTransform = 'scale3d( 0, 0, 0 )';
-            this._getElCacheByCls( this.self.assistiveTransArea )[ 0 ].
-                style.webkitTransform = 'translate3d(0 , 0, 0)';
+            document.body.removeEventListener( 'click', this.__bodyClickHandle, this );
+            this._getElCacheByCls( this.self.assistiveArea )[ 0 ].style.webkitTransform = 'scale3d( 0, 0, 0 )';
         },
 
         _initInnerDom : function(){
             var sttcs = this.self,
                 html  = "<div class="+ sttcs.assistiveIcon +"></div>"+
                 "<div class="+ sttcs.assistiveArea +">"+
-                    "<div class="+ sttcs.assistiveTransArea +"></div>"+
                 "</div>";
             this._getEl().html( html );
         },
@@ -136,6 +153,11 @@ define( function( require, exports, module ){
         _afterRender : function(){
             var sttc = this.values;
             sttc.assistivePoint = this._getElCacheByCls( this.self.assistiveIcon )[ 0 ];
+        },
+
+        __bodyClickHandle : function( event ){
+            var sttcs = this.self;
+            sttcs.Util.notify( this.values.controller, 'assistiveOptionsClick', [ event, this._getElCacheByCls( sttcs.assistiveArea )[ 0 ] ] );
         }
 
     });
