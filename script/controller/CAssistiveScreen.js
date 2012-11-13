@@ -57,7 +57,7 @@ define( function( require, exports, module ){
         },
 
         EhideAssistiveOptions : function(){
-            this.self.Util.notify( this.values.view, 'hideAssistiveOptions' );
+            this.self.Util.notify( this.values.view, 'hideAssistiveOptions');
         },
 
         EdisableTransparent : function(){

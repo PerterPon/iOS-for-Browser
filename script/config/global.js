@@ -74,6 +74,13 @@ define( function( require, exports, module ){
         "visiable"   : true,
         "view"       : VAssistiveScreen,
         "controller" : CAssistiveScreen,
-        "needData"   : true
+        "needData"   : true,
+        "subView"    : [{
+            "class"  : Home,
+            "name"   : 'home',
+            "clsList": 'iOS_home',
+            "controller" : CHome,
+            "view"       : VHome
+        }]
     }];
 });

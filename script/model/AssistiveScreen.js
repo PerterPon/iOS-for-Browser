@@ -101,7 +101,7 @@ define( function( require, exports, module ){
                     y : 0
                 },
                 curDirection = 'left',
-                startPos, startTime;
+                startPos, startTime, assistiveAreaPos;
             return {
                 touchStart : touchStart,
                 touchMove  : touchMove,
@@ -151,11 +151,13 @@ define( function( require, exports, module ){
                     nowTime= event.timeStamp;
                 if( Math.abs( disPos.x ) <= sttcs.horSliderThreshold || Math.abs( disPos.y ) <= sttcs.verSliderThreshold 
                     || nowTime - startTime <= sttcs.sliderTimeThreshold ){
-                    var assistivePointPos = {},
-                        assistiveAreaPos  = {
-                            x : curPos.x - sttcs.assistivePointWidth / 2,
-                            y : curPos.y - sttcs.assistivePointHeight / 2
-                        }
+                    var assistivePointPos = {};
+                    //FIXME
+                    assistiveAreaPos  = {
+                        x : curPos.x - curDirection == 'right' ? sttcs.assistiveWidth : 0,
+                        y : curPos.y - curDirection == 'right' ? sttcs.assistiveHeight : 0
+                    }
+                    
                     if( curPos.y <= areaTop ){
                         assistivePointPos.y = sttcs.assistivePointHeight / 2;
                     } else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) ){
@@ -163,7 +165,7 @@ define( function( require, exports, module ){
                     } else {
                         assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
                     }
-                    assistivePointPos.x   =  sttcs.assistivePointWidth / 2 + ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
+                    assistivePointPos.x     =  ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
                     Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, assistiveAreaPos, assistivePointPos ] );
                 } else {
                     if( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ){
@@ -198,7 +200,7 @@ define( function( require, exports, module ){
                  * contain == 8 表示assistiveNode包含target节点。
                  */
                 if( contain && contain != 8 )
-                    sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ curPos ] );
+                    sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ assistiveAreaPos ] );
             }
         },
 

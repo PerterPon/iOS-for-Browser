@@ -11,9 +11,12 @@ define( function( require, exports, module ){
             var homeBtn = document.getElementById( 'iOS_homeButton' ),
                 sttc    = this.values,
                 sttcs   = this.self;
-            homeBtn.addEventListener( 'click', function( event ){
-                sttcs.Util.notify( sttc.controller, 'homeButtonClick' );
+            $( function(){
+                $( '#iOS_homeButton, .iOS_assistive_home' ).live( 'click', function(){
+                    sttcs.Util.notify( sttc.controller, 'homeButtonClick' );
+                });
             });
+            
         }
 
     });

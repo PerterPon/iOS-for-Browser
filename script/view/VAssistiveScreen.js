@@ -92,10 +92,14 @@ define( function( require, exports, module ){
             assistiveArea.css({
                 'left'            : position.x + 'px',
                 'top'             : position.y + 'px',
-                'webkitTransformOrigin' : assistivePos.x +'px '+ assistivePos.y +'px'
+                'webkitTransformOrigin'    : assistivePos.x +'px '+ assistivePos.y +'px',
+                'webkitTransform'          : 'scale3d( 1, 1, 1)'
+            }).css({
+                'webkitTransform' : 'scale3d( 0, 0, 0 )'
             });
             setTimeout( function(){
                 assistiveArea.css({
+                    'webkitTransitionDuration' : '200ms',
                     'webkitTransform' : 'matrix(1, 0, 0, 1, 0, 0)'
                 });
             }, 1 );
@@ -115,14 +119,23 @@ define( function( require, exports, module ){
             function areaTransitionEnd( event ){
                 this.removeEventListener( 'webkitTransitionEnd', areaTransitionEnd );
                 event.stopPropagation();
-                document.body.addEventListener( 'click', that.self.Util.bind( that.__bodyClickHandle, that ) );
+                document.body.addEventListener( 'click', that.__bodyClickHandle );
             }
             this._getElCacheByCls( sttcs.assistiveArea )[ 0 ].addEventListener( 'webkitTransitionEnd', areaTransitionEnd );
         },
 
         EhideAssistiveOptions : function(){
-            document.body.removeEventListener( 'click', this.__bodyClickHandle, this );
-            this._getElCacheByCls( this.self.assistiveArea )[ 0 ].style.webkitTransform = 'scale3d( 0, 0, 0 )';
+            var assistiveArea = this._getElCacheByCls( this.self.assistiveArea );
+            document.body.removeEventListener( 'click', this.__bodyClickHandle );
+            assistiveArea.css({
+                'webkitTransform' : 'scale3d( 0, 0, 0 )'
+            });
+            assistiveArea[ 0 ].addEventListener( 'webkitTransitionEnd', areaTransitionEnd );
+            function areaTransitionEnd( event ){
+                event.stopPropagation();
+                this.removeEventListener( 'webkitTransitionEnd', areaTransitionEnd );
+                this.style.webkitTransitionDuration = '0';
+            }
         },
 
         _initInnerDom : function(){
@@ -148,6 +161,7 @@ define( function( require, exports, module ){
             this._getElCacheByCls( sttc.assistiveArea )[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ){
                 event.stopPropagation();
             });
+            this.__bodyClickHandle = Util.bind( this.__bodyClickHandle, this );
         },
 
         _afterRender : function(){
