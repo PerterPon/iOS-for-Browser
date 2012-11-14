@@ -72,6 +72,10 @@ define( function( require, exports, module ){
             return require( '../../resource/defaultData/assistiveScreen/assistiveScreen' );
         },
 
+        /**
+         * [_dataReady 数据获取完成回调函数，会在此通知view绘制assistive上的cion]
+         * @return {void}
+         */
         _dataReady : function(){
             var sttc = this.values,
                 ctrl = sttc.controller,
@@ -175,24 +179,20 @@ define( function( require, exports, module ){
                         curDirection = 'left';
                         tarPos.x     = 0;
                     }
-                    // tarPos.x   = ( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ) && ( width - sttcs.assistivePointWidth ) || 0;
                     curPos     = tarPos;
                     Util.notify( ctrl, 'enableTransparent' );
                     Util.notify( ctrl, 'assistivePointAutoTranslate', [ tarPos ] );
                     sttc.pointTranslating = true;
                     dragging   = false;
                 }
-                
             }
 
-            /*function showAssistiveOptions(){
-                var assistivePointPos = {
-                    x : curPos.x + sttcs.assistivePointWidth / 2,
-                    y : curPos.y + sttcs.ass
-                };
-                Util.notify( ctlr, 'showAssistiveOptions', [  ] );
-            }*/
-
+            /**
+             * [assistiveOptionsClick 当展现了assistive的时候，body上的单击时间]
+             * @param  {MouseEvent} event         [事件对象]
+             * @param  {DocumentDom} assistiveNode [assistive区域节点]
+             * @return {void}
+             */
             function assistiveOptionsClick( event, assistiveNode ){
                 var target  = event.target,
                 contain = target.compareDocumentPosition( assistiveNode );
@@ -204,6 +204,10 @@ define( function( require, exports, module ){
             }
         },
 
+        /**
+         * [__getAssistiveIconPotions 获取assistive的Icon的位置信息，根据不同的数量呈现不同的形式]
+         * @return {void} 
+         */
         __getAssistiveIconPotions : function(){
             //FIXME:目前只考虑了只有4个icon的情况，其他数量都还没有添加。
             var sttc   = this.values,
@@ -228,7 +232,6 @@ define( function( require, exports, module ){
                 x : perDis * 1 + iconDis,
                 y : perDis * 2 + verDis
             };
-            // sttc.data.data = newCfg;
         }
     });
 

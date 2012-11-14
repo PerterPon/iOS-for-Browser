@@ -242,6 +242,7 @@ define( function( require, exports, module ){
                     y : evtPos.pageY
                 };
                 startTime  = event.timeStamp;
+                //添加抖动定时器，不满足抖动条件的时候会被清除掉，一直不被清除则到时间后会触发抖动。
                 tapTimeOut = setTimeout( function(){
                     if( !holding )
                         return;
@@ -249,12 +250,14 @@ define( function( require, exports, module ){
                     Event.dispatchEvent( 'startShake' );
                     Util.notify( ctrl, 'shadeLayerTransparent' );
                 }, sttcs.durationThreshold );
+                //若当前状态不是抖动，则会给body添加touchStop事件。
                 !sttc.shaking && document.body.addEventListener( $.support.touchstop, bodyTouchStop );
                 function bodyTouchStop( event ){
                     var nowTime = event.timeStamp;
-                    document.body.removeEventListener( $.support.touchstop, bodyTouchStop );
+                    this.removeEventListener( $.support.touchstop, bodyTouchStop );
                     if( nowTime - startTime < sttcs.sliderTimeThreshold ){
                         setTimeout( function(){
+                            //使当前icon的遮蔽层消失。
                             !sttc.shaking && Util.notify( ctrl, 'hideShadeLayer' );
                         }, 500 );
                     }
@@ -270,6 +273,7 @@ define( function( require, exports, module ){
                         y : Math.abs( evtPos.pageY - startPos.y )
                     };
                 if( disPos.x > tapThreshold.x || disPos > tapThreshold.y ){
+                    //若X轴或者Y轴的移动距离超过阀值，则不会被判定为抖动，清除抖动定时器。
                     clearTimeout( tapTimeOut );
                     isTouchMove = true;
                 }
@@ -286,8 +290,9 @@ define( function( require, exports, module ){
                     horDis  = nowPos.x - nowPos.x,
                     verDis  = nowPos.y - nowPos.y;
                 holding     = false;    
+                //如果X轴和Y轴的移动距离都没有超过阀值，并且按下的时间也没有超过阀值，则会派发openApp事件，同时派发iconOut事件。
                 if( horDis <= sttcs.horSliderThreshold && verDis <= sttcs.verSliderThreshold && timeDis <= sttcs.sliderTimeThreshold ){
-                    Event.dispatchEvent( 'iconOut' ); 
+                    Event.dispatchEvent( 'iconOut' );
                     Event.dispatchEvent( 'openApp', [ true ] );
                     return;
                 }

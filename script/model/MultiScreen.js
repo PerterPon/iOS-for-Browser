@@ -53,12 +53,14 @@ define( function( require, exports, module ){
             if( !sttc.notSwipe ){
                 nowTime = event.timeStamp;
                 if( nowTime - sttc.swipeStartTime >= sttcs.durationThreshold )
+                    //如果按下时间或者按下移动的距离超过阀值，那么就不是swip，后续move不再监听swip。
                     sttc.notSwipe = true;
                 // return;
             }
             sttc.lastPos    = evtPos.pageX;
             if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ){
                 dis *= 0.5;
+                //边界屏幕判定
                 if( dis >= sttcs.width / 2 - 10 )
                     return;
             }
@@ -88,9 +90,11 @@ define( function( require, exports, module ){
                 disTime = nowTime - sttc.swipeStartTime; 
                 if( disTime < sttcs.durationThreshold && absDis > sttcs.horizontalDistanceThreshold ){
                     if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ){
+                        //满足条件，触发swip事件
                         this.__doMultiScreenAutoTranslate( boundaryScreen, direction, absDis, true );
                         return;
                     }
+                    //触发了swip事件，但是当前为边界屏幕判定。
                     Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, direction, sttcs.width, true ] );
                     sttc.translating    = true;
                     sttc.notSwipe       = false;
@@ -98,6 +102,7 @@ define( function( require, exports, module ){
                     return;
                 }
             }
+            //触发普通的translate，根据移动的距离进行相应的translate。
             this.__doMultiScreenAutoTranslate( boundaryScreen, direction, absDis );
         },
 

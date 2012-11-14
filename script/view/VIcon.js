@@ -135,6 +135,7 @@ define( function( require, exports, module ){
             }).on( $.support.touchmove, function( event ){
                 Util.notify( ctrl, 'touchMove', [ event ] );
             }).on( $.support.touchstop, function( event ){
+                // event.stopPropagation
                 Util.notify( ctrl, 'touchEnd', [ event ] );
             });
             this._getElCacheByCls( sttcs.shadeLayer ).on( $.support.touchstart, function( event ){

@@ -36,11 +36,18 @@ define( function( require ){
             stocks     : './resource/images/icons/icon_stocks.png',
             weather    : './resource/images/icons/icon_weather.png',
             youtube    : './resource/images/icons/icon_youtube.png',
+        },
+        assistive : {
+            home       : './resource/images/assistive/home.png',
+            icon       : './resource/images/assistive/icon.png',
+            device     : './resource/images/assistive/device.png',
+            gesture    : './resource/images/assistive/gestures.png',
+            favorites  : './resource/images/assistive/favorites.png'
         }
     };
 
-    cacheImg( imgs );
-    function cacheImg( info ){
+    // cacheImg( imgs );
+    (function cacheImg( info ){
         var img, subInfo;
         for( var i in info ){
             subInfo = info[ i ];
@@ -55,5 +62,5 @@ define( function( require ){
                 }
             }
         }
-    }
+    })( imgs );
 });
