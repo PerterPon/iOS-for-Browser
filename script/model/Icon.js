@@ -20,10 +20,6 @@ define( function( require, exports, module ){
         },
 
         statics : {
-            //当按下x方向或者y方向超过此距离，或者按住的时间超过sliderTimeThreshold，就不会触发单击事件。
-            verSliderThreshold : 5,
-            horSliderThreshold : 5,
-            sliderTimeThreshold: 200,
             durationThreshold  : 750,
             /**
              * [scaleMultiple 当拖动icon时，icon的放大倍数]
@@ -31,7 +27,7 @@ define( function( require, exports, module ){
              */
             scaleMultiple      : 1.2,
             /**
-             * [iconOutDisThreshold 当icon的x方向或者y方向被拖动此数值的距离之后，就会触发changeIconPosition事件]
+             * [iconOutDisThreshold 抖动状态下，当icon的x方向或者y方向被拖动此数值的距离之后，就会触发changeIconPosition事件]
              * @type {Number}
              */
             iconOutDisThreshold: 40,

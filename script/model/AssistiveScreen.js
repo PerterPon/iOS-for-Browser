@@ -20,9 +20,6 @@ define( function( require, exports, module ){
         statics : {
             assistivePointWidth  : 55,
             assistivePointHeight : 55,
-            verSliderThreshold   : 5,
-            horSliderThreshold   : 5,
-            sliderTimeThreshold  : 200,
             assistiveWidth       : 270,
             assistiveHeight      : 270
         },

@@ -6,16 +6,24 @@ define( function( require, exports, model ){
     Ext.define( "Swip", {
         extend : BaseEvent,
 
-        touchStart : function(){
+        _swip : function(){},
+
+        _touchInfo : {
+            startPos : {
+                x : null
+            }
+        },
+
+        touchStart : function( event ){
 
         },
 
-        touchMove : function(){
+        touchMove : function( event ){
 
         },
 
-        touchStop : function(){
-            
+        touchStop : function( event ){
+
         }
     });
 });
