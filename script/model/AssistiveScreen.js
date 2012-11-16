@@ -176,13 +176,12 @@ define( function( require, exports, module ){
                     x : curPos.x - curDirection == 'right' ? sttcs.assistiveWidth : 0,
                     y : curPos.y - curDirection == 'right' ? sttcs.assistiveHeight : 0
                 }
-                if( curPos.y <= areaTop ){
+                if( curPos.y <= areaTop )
                     assistivePointPos.y = sttcs.assistivePointHeight / 2;
-                } else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) ){
+                else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) )
                     assistivePointPos.y = sttcs.assistiveHeight + sttcs.assistivePointHeight / 2;
-                } else {
+                else
                     assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
-                }
                 assistivePointPos.x     = ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
                 Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, assistiveAreaPos, assistivePointPos ] );
             }
@@ -199,8 +198,7 @@ define( function( require, exports, module ){
                 /*
                  * contain == 8 表示assistiveNode包含target节点。
                  */
-                if( contain && contain != 8 )
-                    sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ assistiveAreaPos ] );
+                contain && contain != 8 && sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ assistiveAreaPos ] );
             }
         },
 

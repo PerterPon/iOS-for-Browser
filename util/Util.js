@@ -27,7 +27,7 @@ define( function( require, exports, module ){
      * @return {Function}
      */
     function bind( fn, obj, args ){
-        return function() {
+        return function(){
             args         = args || [];
             var callArgs = Array.prototype.slice.call( arguments, 0 );
             callArgs     = callArgs.concat( args );

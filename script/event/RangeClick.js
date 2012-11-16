@@ -22,6 +22,11 @@ define( function( require, exports, model ){
         //触发rangeClick时所执行的函数
         _rangeClick          : function(){},
 
+        //range标识，若在移动中有一项条件不满足range事件，则此值会变为true，并且执行_rangeMove函数。
+        _rangeMoved          : false,
+
+        _rangeMove           : function(){},
+
         _touchInfo : {
             startTime : null,
             startPos  : {
@@ -48,6 +53,10 @@ define( function( require, exports, model ){
                     x : evtPos.pageX - touchInfo.startPos.x,
                     y : evtPos.pageY - touchInfo.startPos.y
                 };
+            if( !this._rangeMoved && ( disPos.x > this._horSliderThreshold || disPos.y > this._verSliderThreshold ) ){
+                this._rangeMove( disPos );
+                this._rangeMoved = true;
+            }
             this._touchMove( event, disPos );
         },
 
@@ -60,7 +69,7 @@ define( function( require, exports, model ){
                 x : evtPos.pageX - touchInfo.startPos.x,
                 y : evtPos.pageY - touchInfo.startPos.y
             };
-            Math.abs( disPos.x ) <= this._verSliderThreshold && Math.abs( disPos.y ) <= this._horSliderThreshold 
+            this._rangeMoved && Math.abs( disPos.x ) <= this._verSliderThreshold && Math.abs( disPos.y ) <= this._horSliderThreshold 
                 && disTime <= this._sliderTimeThreshold && this._rangeClick( event ) || this._touchStop( event, disPos );
         }
     });

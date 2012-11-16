@@ -3,6 +3,7 @@ define( function( require, exports, module ){
     "use strick";
 
     require( './BaseModel' );
+    var RangeClick = require( '../event/RangeClick' );
     Ext.define( 'Icon', {
         extend : 'BaseModel',
 
@@ -58,19 +59,20 @@ define( function( require, exports, module ){
             dragStartHandleFun  : null,
             dragMoveHandleFun   : null,
             dragEndHandleFun    : null,
-            dragAutoTranslating : false
+            dragAutoTranslating : false,
+            rangeClickInstance  : null
         },
 
         EtouchStart : function( event ){
-            this.values.touchStartHandleFun( event );
+            this.values.rangeClickInstance.touchStart( event );
         },
 
         EtouchMove : function( event ){
-            this.values.touchMoveHandleFun( event );
+            this.values.rangeClickInstance.touchMove( event );
         },
 
         EtouchEnd : function( event ){
-            this.values.touchEndHandleFun( event );
+            this.values.rangeClickInstance.touchStop( event );
         },
 
         EdragStart : function( event ){
@@ -97,10 +99,11 @@ define( function( require, exports, module ){
             this.__calPosition();
             sttc.touchStartHandleFun = fucs[ 'touchStart' ];
             sttc.touchMoveHandleFun  = fucs[ 'touchMove' ];
-            sttc.touchEndHandleFun   = fucs[ 'touchEnd' ];
+            sttc.touchEndHandleFun   = fucs[ 'touchStop' ];
             sttc.dragStartHandleFun  = dragFucs[ 'dragStart' ];
             sttc.dragMoveHandleFun   = dragFucs[ 'dragMove' ];
-            sttc.dragEndHandleFun    = dragFucs[ 'dragEnd' ];
+            sttc.dragStopHandleFun   = dragFucs[ 'dragEnd' ];
+            sttc.rangeClickInstance  = new RangeClick( fucs );
             sttcs.Util.notify( sttc.controller, 'initComplete', [ sttc.inPos, sttc.outPos ] );
         },
 
@@ -213,7 +216,7 @@ define( function( require, exports, module ){
         },
 
         __getTouchStartEndFun : function(){
-            var startTime, handleFun, startPos,
+            var startTime, handleFun,
                 sttcs   = this.self,
                 holding = false,
                 Event   = window.iOS.Event,
@@ -230,25 +233,23 @@ define( function( require, exports, module ){
             return {
                 'touchStart' : touchStart,
                 'touchMove'  : touchMove,
-                'touchEnd'   : touchEnd
+                'touchStop'  : touchStop,
+                'rangeClick' : rangeClick,
+                'rangeMove'  : rangeMove
             };
 
             function touchStart( event ){
                 var evtPos = that._getTouchPos( event );
                 Util.notify( ctrl, 'showShadeLayer' );
                 holding    = true;
-                startPos   = {
-                    x : evtPos.pageX,
-                    y : evtPos.pageY
-                };
                 startTime  = event.timeStamp;
                 //添加抖动定时器，不满足抖动条件的时候会被清除掉，一直不被清除则到时间后会触发抖动。
                 tapTimeOut = setTimeout( function(){
                     if( !holding )
                         return;
                     sttc.shaking = true;
-                    Event.dispatchEvent( 'startShake' );
                     Util.notify( ctrl, 'shadeLayerTransparent' );
+                    Event.dispatchEvent( 'startShake' );
                 }, sttcs.durationThreshold );
                 //若当前状态不是抖动，则会给body添加touchStop事件。
                 !sttc.shaking && document.body.addEventListener( $.support.touchstop, bodyTouchStop );
@@ -264,14 +265,11 @@ define( function( require, exports, module ){
                 }
             }
 
-            function touchMove( event ){
+            function touchMove( event, disPos ){
                 if( isTouchMove )
                     return;
-                var evtPos = that._getTouchPos( event ),
-                    disPos = {
-                        x : Math.abs( evtPos.pageX - startPos.x ),
-                        y : Math.abs( evtPos.pageY - startPos.y )
-                    };
+                disPos.x   = Math.abs( disPos.x );
+                disPos.y   = Math.abs( disPos.y );
                 if( disPos.x > tapThreshold.x || disPos > tapThreshold.y ){
                     //若X轴或者Y轴的移动距离超过阀值，则不会被判定为抖动，清除抖动定时器。
                     clearTimeout( tapTimeOut );
@@ -279,23 +277,17 @@ define( function( require, exports, module ){
                 }
             }
 
-            function touchEnd( event ){
-                var nowTime = event.timeStamp,
-                    evtPos  = that._getTouchPos( event, true ),
-                    nowPos  = {
-                        x : evtPos.pageX,
-                        y : evtPos.pageY
-                    },
-                    timeDis = nowTime  - startTime,
-                    horDis  = nowPos.x - nowPos.x,
-                    verDis  = nowPos.y - nowPos.y;
+            function touchStop( event, disPos ){
                 holding     = false;
-                //如果X轴和Y轴的移动距离都没有超过阀值，并且按下的时间也没有超过阀值，则会派发openApp事件，同时派发iconOut事件。
-                if( horDis <= sttcs.horSliderThreshold && verDis <= sttcs.verSliderThreshold && timeDis <= sttcs.sliderTimeThreshold ){
-                    Event.dispatchEvent( 'iconOut' );
-                    Event.dispatchEvent( 'openApp', [ true ] );
-                    return;
-                }
+            }
+
+            function rangeMove(){
+                Util.notify( ctrl, 'shadeLayerTransparent' );
+            }
+
+            function rangeClick( event ){
+                Event.dispatchEvent( 'iconOut' );
+                Event.dispatchEvent( 'openApp', [ true ] );
             }
         },
 
