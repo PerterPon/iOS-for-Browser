@@ -43,9 +43,7 @@ define( function( require, exports, module ){
         _initView : function(){
             var sttc    = this.values;
             sttc.elPool = {};
-            if( sttc.visiable === false ){
-                this._getEl().hide();
-            }
+            ( sttc.visiable === false ) && this._getEl().hide();
         },
 
         /**
@@ -102,7 +100,7 @@ define( function( require, exports, module ){
 
         /**
          * [_getElCacheByCls 根据class名称获取当前view下的节点]
-         * @param   {string} class [根据class名称从当当前view下获取节点]
+         * @param   {string} class [根据class名称从当前view下获取节点]
          * @return  {jQuery}       [匹配的jQuery对象]
          * @protected
          */

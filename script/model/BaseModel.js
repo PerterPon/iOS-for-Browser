@@ -23,21 +23,19 @@ define( function( require, exports, module ){
 
         values : {
             name : null,
-            data : null 
+            data : null
         },
 
         constructor : function( cfg ){
             this.callParent([ cfg ]);
-            if( cfg.needData )
-                this._requestData();
+            cfg.needData && this._requestData();
             this._initProgram( cfg );
             this._initComplete();
         },
 
         _initComplete : function(){
             var sttc = this.values;
-            if( !sttc.needData && sttc.renderChild )
-                this._iteratorChild();
+            !sttc.needData && sttc.renderChild && this._iteratorChild();
         },
 
         _attachEventListener : function(){
@@ -117,8 +115,7 @@ define( function( require, exports, module ){
                 };
                 sttc.view = new View( viewCfg );
             }
-            if( sttc.controller )
-                sttc.controller.setMV( this, sttc.view );
+            sttc.controller && sttc.controller.setMV( this, sttc.view );    
         },
 
         /**
@@ -158,8 +155,7 @@ define( function( require, exports, module ){
          * @return {}
          */
         _dataReady : function(){
-            if( this.values.renderChild )
-                this._iteratorChild();
+            this.values.renderChild && this._iteratorChild();
         },
 
         _getTouchPos : function( event, isTouchEnd ){

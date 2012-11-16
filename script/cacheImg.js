@@ -46,7 +46,6 @@ define( function( require ){
         }
     };
 
-    // cacheImg( imgs );
     (function cacheImg( info ){
         var img, subInfo;
         for( var i in info ){

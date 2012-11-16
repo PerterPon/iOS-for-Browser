@@ -12,8 +12,7 @@ define( function( require, exports, module ){
                 [ 'sliderDown' ],
                 [ 'sliderMove' ],
                 [ 'sliderUp' ],
-                [ 'translate' ],
-                [ 'swipe' ]
+                [ 'translate' ]
             ]
         },
 
@@ -55,14 +54,6 @@ define( function( require, exports, module ){
                 Util  = sttcs.Util,
                 view  = sttc.view;
             Util.notify( view, 'translate', [ x, y ] );
-        },
-
-        Eswipe : function( direction ){
-            var sttc  = this.values,
-                sttcs = this.self,
-                model = sttc.model,
-                Util  = sttcs.Util;
-            Util.notify( model, 'swipe', [ direction ] );
         }
 
     });

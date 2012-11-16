@@ -5,7 +5,6 @@ define( function( require, exports, module ){
     require( './BaseModel' );
     Ext.define( 'PopScreen', {
         extend : 'BaseModel'
-
     });
 
     return PopScreen;

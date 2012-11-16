@@ -10,8 +10,7 @@ define( function( require, exports, module ){
             eventList : [
                 [ 'sliderDown' ],
                 [ 'sliderMove' ],
-                [ 'sliderUp' ],
-                [ 'swipe' ]
+                [ 'sliderUp' ]
             ]
         },
 
@@ -104,13 +103,6 @@ define( function( require, exports, module ){
             }
             //触发普通的translate，根据移动的距离进行相应的translate。
             this.__doMultiScreenAutoTranslate( boundaryScreen, direction, absDis );
-        },
-
-        Eswipe : function( direction ){
-            var sttc     = this.values,
-                sttcs    = this.self,
-                Event    = window.iOS.Event
-            Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, direction, sttcs.width, true ] );
         },
 
         _attachEventListener : function(){

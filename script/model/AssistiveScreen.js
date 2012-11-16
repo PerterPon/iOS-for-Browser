@@ -3,6 +3,7 @@ define( function( require, exports, module ){
     "use strick";
 
     require( './BaseModel' );
+    var RangeClick = require( '../event/RangeClick' );
     Ext.define( 'AssistiveScreen', {
         extend : 'BaseModel',
 
@@ -31,19 +32,20 @@ define( function( require, exports, module ){
             touchMoveHandleFunc  : null,
             touchStopHandleFunc  : null,
             assistiveOptionsClickFunc : null,
-            pointTranslating     : false
+            pointTranslating     : false,
+            rangeClickInstance   : null
         },
 
         Etouchstart : function( event ){
-            this.values.touchStartHandleFunc( event );
+            this.values.rangeClickInstance.touchStart( event );
         },
 
         Etouchmove : function( event ){
-            this.values.touchMoveHandleFunc( event );
+            this.values.rangeClickInstance.touchMove( event );
         },
 
         Etouchstop : function( event ){
-            this.values.touchStopHandleFunc( event );
+            this.values.rangeClickInstance.touchStop( event );
         },
 
         EassistivePointAutoTranslateComplete : function(){
@@ -66,6 +68,7 @@ define( function( require, exports, module ){
             sttc.touchMoveHandleFunc  = touchFuncs[ 'touchMove' ];
             sttc.touchStopHandleFunc  = touchFuncs[ 'touchStop' ];
             sttc.assistiveOptionsClickFunc = touchFuncs[ 'assistiveOptionsClick' ];
+            sttc.rangeClickInstance   = new RangeClick( touchFuncs );
         },
 
         _getDefaultData : function(){
@@ -110,40 +113,40 @@ define( function( require, exports, module ){
                 touchStart : touchStart,
                 touchMove  : touchMove,
                 touchStop  : touchStop,
+                rangeClick : rangeClick,
                 assistiveOptionsClick : assistiveOptionsClick
             };
             function touchStart( event ){
                 if( sttc.pointTranslating )
                     return;
-                var evtPos = that._getTouchPos( event );
-                startPos   = {
-                    x : evtPos.pageX,
-                    y : evtPos.pageY
-                };
-                startTime  = event.timeStamp;
                 Util.notify( ctrl, 'disableTransparent' );
                 dragging   = true;
             }
 
-            function touchMove( event ){
+            /**
+             * [touchStop touchMove事件处理函数]
+             * @param  {MouseEvent} event  [touchMove事件对象]
+             * @param  {Object} disPos     [此时相较于touchStart的位移]
+             * @return {void}
+             */
+            function touchMove( event, disPos ){
                 if( !dragging || sttc.pointTranslating )
                     return;
-                var evtPos = that._getTouchPos( event ),
-                    posDis = {
-                        x : evtPos.pageX - startPos.x + curPos.x,
-                        y : evtPos.pageY - startPos.y + curPos.y
-                    };
-                Util.notify( ctrl, 'translate', [ posDis ] );
+                disPos.x += curPos.x;
+                disPos.y += curPos.y;
+                Util.notify( ctrl, 'translate', [ disPos ] );
             }
 
-            function touchStop( event ){
+            /**
+             * [touchStop touchEnd事件处理函数]
+             * @param  {MouseEvent} event  [touchEnd事件对象]
+             * @param  {Object} disPos     [此时相较于touchStart的位移]
+             * @return {void}
+             */
+            function touchStop( event, disPos ){
                 if( sttc.pointTranslating )
                     return;
                 var evtPos = that._getTouchPos( event, true ),
-                    disPos = {
-                        x : evtPos.pageX - startPos.x,
-                        y : evtPos.pageY - startPos.y
-                    },
                     nowPos = {
                         x : disPos.x + curPos.x,
                         y : disPos.y + curPos.y
@@ -151,40 +154,37 @@ define( function( require, exports, module ){
                     tarPos = {
                         x : null,
                         y : nowPos.y > 0 ? nowPos.y > boundary ? boundary : nowPos.y : 0
-                    },
-                    nowTime= event.timeStamp;
-                if( Math.abs( disPos.x ) <= sttcs.horSliderThreshold || Math.abs( disPos.y ) <= sttcs.verSliderThreshold 
-                    || nowTime - startTime <= sttcs.sliderTimeThreshold ){
-                    var assistivePointPos = {};
-                    //FIXME
-                    assistiveAreaPos  = {
-                        x : curPos.x - curDirection == 'right' ? sttcs.assistiveWidth : 0,
-                        y : curPos.y - curDirection == 'right' ? sttcs.assistiveHeight : 0
-                    }
-                    
-                    if( curPos.y <= areaTop ){
-                        assistivePointPos.y = sttcs.assistivePointHeight / 2;
-                    } else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) ){
-                        assistivePointPos.y = sttcs.assistiveHeight + sttcs.assistivePointHeight / 2;
-                    } else {
-                        assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
-                    }
-                    assistivePointPos.x     =  ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
-                    Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, assistiveAreaPos, assistivePointPos ] );
+                    };
+                if( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ){
+                    curDirection = 'right';
+                    tarPos.x     = width - sttcs.assistivePointWidth;
                 } else {
-                    if( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ){
-                        curDirection = 'right';
-                        tarPos.x     = width - sttcs.assistivePointWidth;
-                    } else {
-                        curDirection = 'left';
-                        tarPos.x     = 0;
-                    }
-                    curPos     = tarPos;
-                    Util.notify( ctrl, 'enableTransparent' );
-                    Util.notify( ctrl, 'assistivePointAutoTranslate', [ tarPos ] );
-                    sttc.pointTranslating = true;
-                    dragging   = false;
+                    curDirection = 'left';
+                    tarPos.x     = 0;
                 }
+                curPos     = tarPos;
+                Util.notify( ctrl, 'enableTransparent' );
+                Util.notify( ctrl, 'assistivePointAutoTranslate', [ tarPos ] );
+                sttc.pointTranslating = true;
+                dragging   = false;
+            }
+
+            function rangeClick(){
+                var assistivePointPos = {};
+                //FIXME
+                assistiveAreaPos  = {
+                    x : curPos.x - curDirection == 'right' ? sttcs.assistiveWidth : 0,
+                    y : curPos.y - curDirection == 'right' ? sttcs.assistiveHeight : 0
+                }
+                if( curPos.y <= areaTop ){
+                    assistivePointPos.y = sttcs.assistivePointHeight / 2;
+                } else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) ){
+                    assistivePointPos.y = sttcs.assistiveHeight + sttcs.assistivePointHeight / 2;
+                } else {
+                    assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
+                }
+                assistivePointPos.x     = ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
+                Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, assistiveAreaPos, assistivePointPos ] );
             }
 
             /**

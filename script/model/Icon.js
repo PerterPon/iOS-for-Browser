@@ -289,7 +289,7 @@ define( function( require, exports, module ){
                     timeDis = nowTime  - startTime,
                     horDis  = nowPos.x - nowPos.x,
                     verDis  = nowPos.y - nowPos.y;
-                holding     = false;    
+                holding     = false;
                 //如果X轴和Y轴的移动距离都没有超过阀值，并且按下的时间也没有超过阀值，则会派发openApp事件，同时派发iconOut事件。
                 if( horDis <= sttcs.horSliderThreshold && verDis <= sttcs.verSliderThreshold && timeDis <= sttcs.sliderTimeThreshold ){
                     Event.dispatchEvent( 'iconOut' );

@@ -50,8 +50,7 @@ define( function( require, exports, module ){
                 current    = sttc.cfg.current,
                 thisScreen = this._getEl();
             sttc.slider    = thisScreen;
-            if( !current )
-                thisScreen[ 0 ].style.webkitTransform = 'translate3d('+ sttcs.width +'px, 0, 0)';  
+            !current && ( thisScreen[ 0 ].style.webkitTransform = 'translate3d('+ sttcs.width +'px, 0, 0)' );  
         }
     });
 
