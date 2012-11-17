@@ -23,7 +23,7 @@ define( function( require, exports, model ){
 
         _touchInfo : {
             startTime : null,
-            startPos : {
+            startPos  : {
                 x : null,
                 y : null
             }
