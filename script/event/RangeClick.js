@@ -20,12 +20,16 @@ define( function( require, exports, model ){
         _sliderTimeThreshold : 200,
 
         //触发rangeClick时所执行的函数
-        _rangeClick          : function(){},
+        _rangeClick          : function(){
+            return true;
+        },
 
         //range标识，若在移动中有一项条件不满足range事件，则此值会变为true，并且执行_rangeMove函数。
         _rangeMoved          : false,
 
         _rangeMove           : function(){},
+
+        _touching            : false,
 
         _touchInfo : {
             startTime : null,
@@ -36,24 +40,18 @@ define( function( require, exports, model ){
         },
 
         touchStart : function( event ){
-            var touchInfo = this._touchInfo, 
-                evtPos    = this._getTouchPos( event );
-            touchInfo.startTime = event.timeStamp;
-            touchInfo.startPos  = {
-                x : evtPos.pageX,
-                y : evtPos.pageY
-            };
+            this.callParent( [ event ] );
             this._touchStart( event );
             this._rangeMoved    = false;
+            this._touching      = true;
         },
 
         touchMove : function( event ){
+            if( !this._touching )
+                return;
             var touchInfo = this._touchInfo,
-                evtPos    = this._getTouchPos( event ),
-                disPos    = {
-                    x : evtPos.pageX - touchInfo.startPos.x,
-                    y : evtPos.pageY - touchInfo.startPos.y
-                };
+                disInfo   = this._getDisInfo( event ),
+                disPos    = disInfo.disPos
             if( !this._rangeMoved && ( Math.abs( disPos.x ) > this._horSliderThreshold || Math.abs( disPos.y ) > this._verSliderThreshold ) ){
                 this._rangeMove( disPos );
                 this._rangeMoved = true;
@@ -62,17 +60,12 @@ define( function( require, exports, model ){
         },
 
         touchStop : function( event ){
-            var touchInfo = this._touchInfo,
-                evtPos = this._getTouchPos( event, true ),
-                that   = this,
-                disTime, disPos;
-            disTime    = event.timeStamp - touchInfo.startTime;
-            disPos     = {
-                x : evtPos.pageX - touchInfo.startPos.x,
-                y : evtPos.pageY - touchInfo.startPos.y
-            };
-            !this._rangeMoved && Math.abs( disPos.x ) <= that._verSliderThreshold && Math.abs( disPos.x ) <= that._verSliderThreshold && Math.abs( disPos.y ) <= that._horSliderThreshold
-                && disTime <= that._sliderTimeThreshold && that._rangeClick( event ) || that._touchStop( event, disPos );
+            var disInfo   = this._getDisInfo( event, true ) 
+                disTime   = disInfo.disTime,
+                disPos    = disInfo.disPos;
+            !this._rangeMoved && Math.abs( disPos.x ) <= this._verSliderThreshold && Math.abs( disPos.y ) <= this._horSliderThreshold
+                && disTime <= this._sliderTimeThreshold && this._rangeClick( event ) || this._touchStop( event, disPos );
+            this._touching  = false;
         }
     });
 

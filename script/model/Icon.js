@@ -49,9 +49,9 @@ define( function( require, exports, module ){
             },
             tapTimeOut    : null,
             shaking       : false,
-            touchStartHandleFun : null,
-            touchMoveHandleFun  : null,
-            touchEndHandleFun   : null,
+            // touchStartHandleFun : null,
+            // touchMoveHandleFun  : null,
+            // touchEndHandleFun   : null,
             dragStartHandleFun  : null,
             dragMoveHandleFun   : null,
             dragEndHandleFun    : null,
@@ -93,9 +93,9 @@ define( function( require, exports, module ){
                 fucs     = this.__getTouchStartEndFun(),
                 dragFucs = this.__getDragStartEndFun();
             this.__calPosition();
-            sttc.touchStartHandleFun = fucs[ 'touchStart' ];
-            sttc.touchMoveHandleFun  = fucs[ 'touchMove' ];
-            sttc.touchEndHandleFun   = fucs[ 'touchStop' ];
+            // sttc.touchStartHandleFun = fucs[ 'touchStart' ];
+            // sttc.touchMoveHandleFun  = fucs[ 'touchMove' ];
+            // sttc.touchEndHandleFun   = fucs[ 'touchStop' ];
             sttc.dragStartHandleFun  = dragFucs[ 'dragStart' ];
             sttc.dragMoveHandleFun   = dragFucs[ 'dragMove' ];
             sttc.dragEndHandleFun    = dragFucs[ 'dragEnd' ];
@@ -275,6 +275,7 @@ define( function( require, exports, module ){
                 setTimeout( function(){
                     Util.notify( ctrl, 'hideShadeLayer' );
                 }, 500 );
+                return true;
             }
         },
 

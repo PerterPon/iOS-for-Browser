@@ -2,6 +2,7 @@
 define( function( require, exports, module ){
     "use strick";
 
+    var Swip = require( '../event/Swip' );
     require( './BaseModel' );
     Ext.define( 'Content', {
         extend : 'BaseModel',
@@ -15,9 +16,7 @@ define( function( require, exports, module ){
         },
 
         statics : {
-            width : window.iOS.System.width,
-            durationThreshold           : 200,
-            horizontalDistanceThreshold : 20
+            width : window.iOS.System.width
         },
 
         values  : {
@@ -27,82 +26,20 @@ define( function( require, exports, module ){
             curIdx   : null,
             notSwipe : false,
             swipeStartTime : null,
-            translating    : false
+            translating    : false,
+            touchInstance  : null
         },
 
         EsliderDown : function( event ){
-            var sttc   = this.values;
-            if( sttc.translating )
-                return;
-            var evtPos = this._getTouchPos( event );
-            sttc.startPos = evtPos.pageX;
-            sttc.sliding  = true;
-            sttc.swipeStartTime = event.timeStamp;
+            this.values.touchInstance.touchStart( event );
         },
 
         EsliderMove : function( event ){
-            var sttc   = this.values;
-            if( !sttc.sliding || sttc.translating )
-                return;
-            var sttcs  = this.self,
-                evtPos = this._getTouchPos( event ),
-                Event  = window.iOS.Event,
-                dis    = evtPos.pageX - sttc.startPos,
-                nowTime;
-            if( !sttc.notSwipe ){
-                nowTime = event.timeStamp;
-                if( nowTime - sttc.swipeStartTime >= sttcs.durationThreshold )
-                    //如果按下时间或者按下移动的距离超过阀值，那么就不是swip，后续move不再监听swip。
-                    sttc.notSwipe = true;
-                // return;
-            }
-            sttc.lastPos    = evtPos.pageX;
-            if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ){
-                dis *= 0.5;
-                //边界屏幕判定
-                if( dis >= sttcs.width / 2 - 10 )
-                    return;
-            }
-            Event.dispatchEvent( 'multiScreenTranslate', [ sttc.curIdx, dis >= 0 ? 'right' : 'left', dis ]);
-            delete sttc;
-            delete evtPos;
-            delete distance;
-            delete nowTime;
+            this.values.touchInstance.touchMove( event );
         },
 
         EsliderUp   : function( event ){
-            var sttc   = this.values;
-            if( sttc.translating )
-                return;
-            var sttcs  = this.self,
-                evtPos = this._getTouchPos( event, true ),
-                ctrl   = sttc.controller,
-                Util   = sttcs.Util,
-                Event  = window.iOS.Event,
-                dis    = evtPos.pageX - sttc.startPos,
-                absDis = Math.abs( dis ),
-                direction = dis >= 0 ? 'right' : 'left',
-                boundaryScreen = ( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ),
-                nowTime, disTime, distance;
-            if( !sttc.notSwipe ){
-                nowTime = event.timeStamp;
-                disTime = nowTime - sttc.swipeStartTime; 
-                if( disTime < sttcs.durationThreshold && absDis > sttcs.horizontalDistanceThreshold ){
-                    if( ( !sttc.curIdx && dis > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && dis < 0 ) ){
-                        //满足条件，触发swip事件
-                        this.__doMultiScreenAutoTranslate( boundaryScreen, direction, absDis, true );
-                        return;
-                    }
-                    //触发了swip事件，但是当前为边界屏幕判定。
-                    Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, direction, sttcs.width, true ] );
-                    sttc.translating    = true;
-                    sttc.notSwipe       = false;
-                    this.values.sliding = false;
-                    return;
-                }
-            }
-            //触发普通的translate，根据移动的距离进行相应的translate。
-            this.__doMultiScreenAutoTranslate( boundaryScreen, direction, absDis );
+            this.values.touchInstance.touchStop( event );
         },
 
         _attachEventListener : function(){
@@ -143,8 +80,10 @@ define( function( require, exports, module ){
             var sttc  = this.values,
                 sttcs = this.self,
                 Util  = sttcs.Util,
-                ctrl  = sttc.controller;
+                ctrl  = sttc.controller,
+                touchFuncs = this.__getTouchStartStopFunc();
             Util.notify( ctrl, 'activeDot', [ sttc.curIdx ] );
+            sttc.touchInstance = new Swip( touchFuncs );
         },
 
         /**
@@ -188,6 +127,70 @@ define( function( require, exports, module ){
             sttc.notSwipe    = false;
             sttc.sliding     = false;
             sttc.translating = true;
+        },
+
+        __getTouchStartStopFunc : function(){
+            var sttc  = this.values,
+                sttcs = this.self,
+                that  = this,
+                Event = window.iOS.Event;
+            return {
+                touchStart  : touchStart,
+                touchMove   : touchMove,
+                touchStop   : touchStop,
+                swip        : swip
+            };
+
+            function touchStart( event ){
+                if( sttc.translating )
+                    return;
+            }
+
+            function touchMove( event, disInfo ){
+                var disX    = disInfo.disPos.x,
+                    disTime = disInfo.disTime;
+                if( !sttc.notSwipe ){
+                    if( disTime >= sttcs.durationThreshold )
+                        //如果按下时间或者按下移动的距离超过阀值，那么就不是swip，后续move不再监听swip。
+                        sttc.notSwipe = true;
+                }
+                if( boundaryScreen( disX ) ){
+                    disX *= 0.5;
+                    //边界屏幕判定
+                    if( disX >= sttcs.width / 2 - 10 )
+                        return;
+                }
+                Event.dispatchEvent( 'multiScreenTranslate', [ sttc.curIdx, disX >= 0 ? 'right' : 'left', disX ]);
+            }
+
+            function touchStop( event, disInfo ){
+                var disX      = disInfo.disPos.x,
+                    disTime   = disInfo.disTime,
+                    absDisX   = Math.abs( disX ),
+                    direction = disX >= 0 ? 'right' : 'left';
+                that.__doMultiScreenAutoTranslate( boundaryScreen( disX ), direction, absDisX );
+            }
+
+            function swip( event, disInfo ){
+                var disX      = disInfo.disPos.x,
+                    absDisX   = Math.abs( disX ),
+                    direction = disX >= 0 ? 'right' : 'left';
+                if( boundaryScreen( disX ) ){
+                    //触发了swip事件，但是当前为边界屏幕判定。
+                    that.__doMultiScreenAutoTranslate( boundaryScreen( disX ), direction, absDisX, true );
+                    return true;
+                }
+                //满足条件，触发swip事件
+                Event.dispatchEvent( 'multiScreenAutoTranslate', [ sttc.curIdx, direction, sttcs.width, true ] );
+                sttc.translating    = true;
+                sttc.notSwipe       = false;
+                sttc.sliding        = false;
+                return true;
+            }
+
+            function boundaryScreen( disX ){
+                return ( !sttc.curIdx && disX > 0 ) || ( sttc.curIdx == sttc.data.data.length - 1 && disX < 0 );
+            }
         }
     });
 

@@ -13,11 +13,34 @@ define( function( require, exports, model ){
         //弹起时所执行的函数
         _touchStop           : function(){},
 
+        _touchInfo           : {
+            startPos : {
+                x : null,
+                y : null
+            },
+            startTime : null
+        },
+
         constructor : function( cfg ){
             for( var i in cfg ){
                 ( ( '_' + i ) in this ) && ( this[ '_' + i ] = cfg[ i ] );
             }
         },
+
+        touchStart : function( event ){
+            var evtPos      = this._getTouchPos( event );
+            this._touchInfo = {
+                startPos : {
+                    x : evtPos.pageX,
+                    y : evtPos.pageY
+                },
+                startTime : event.timeStamp
+            }
+        },
+
+        touchMove : function( event ){},
+
+        touchStop : function( event ){},
 
         /**
          * [_getTouchPos 根据具体的环境，获取pageX的父对象]
@@ -27,7 +50,20 @@ define( function( require, exports, model ){
          */
         _getTouchPos : function( event, isTouchEnd ){
             return $.support.touch ? isTouchEnd ? event.originalEvent.changedTouches[ 0 ] : event.originalEvent.touches[ 0 ] : event;
+        },
+
+        _getDisInfo : function( event, isTouchEnd ){
+            var touchInfo = this._touchInfo,
+                evtPos    = this._getTouchPos( event, isTouchEnd );
+            return {
+                disPos : {
+                    x : evtPos.pageX - touchInfo.startPos.x,
+                    y : evtPos.pageY - touchInfo.startPos.y
+                },
+                disTime : event.timeStamp - touchInfo.startTime
+            };
         }
+
     });
     return BaseEvent;
 });
