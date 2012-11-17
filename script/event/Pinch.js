@@ -18,4 +18,6 @@ define( function( require, exports, model ){
 
         }
     });
+
+    return Pinch;
 });
