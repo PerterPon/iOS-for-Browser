@@ -147,6 +147,8 @@ define( function( require, exports, module ){
             }
 
             function touchMove( event, disInfo ){
+                if( sttc.translating )
+                    return;
                 var disX    = disInfo.disPos.x,
                     disTime = disInfo.disTime;
                 if( !sttc.notSwipe ){
@@ -164,6 +166,8 @@ define( function( require, exports, module ){
             }
 
             function touchStop( event, disInfo ){
+                if( sttc.translating )
+                    return;
                 var disX      = disInfo.disPos.x,
                     disTime   = disInfo.disTime,
                     absDisX   = Math.abs( disX ),
@@ -172,6 +176,8 @@ define( function( require, exports, module ){
             }
 
             function swip( event, disInfo ){
+                if( sttc.translating )
+                    return;
                 var disX      = disInfo.disPos.x,
                     absDisX   = Math.abs( disX ),
                     direction = disX >= 0 ? 'right' : 'left';
