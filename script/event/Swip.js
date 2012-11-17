@@ -1,4 +1,4 @@
-﻿
+
 define( function( require, exports, model ){
     "use strick";
 
@@ -10,7 +10,8 @@ define( function( require, exports, model ){
 
         _touchInfo : {
             startPos : {
-                x : null
+                x : null,
+                y
             }
         },
 

@@ -44,6 +44,7 @@ define( function( require, exports, model ){
                 y : evtPos.pageY
             };
             this._touchStart( event );
+            this._rangeMoved    = false;
         },
 
         touchMove : function( event ){
@@ -53,7 +54,7 @@ define( function( require, exports, model ){
                     x : evtPos.pageX - touchInfo.startPos.x,
                     y : evtPos.pageY - touchInfo.startPos.y
                 };
-            if( !this._rangeMoved && ( disPos.x > this._horSliderThreshold || disPos.y > this._verSliderThreshold ) ){
+            if( !this._rangeMoved && ( Math.abs( disPos.x ) > this._horSliderThreshold || Math.abs( disPos.y ) > this._verSliderThreshold ) ){
                 this._rangeMove( disPos );
                 this._rangeMoved = true;
             }
@@ -63,14 +64,15 @@ define( function( require, exports, model ){
         touchStop : function( event ){
             var touchInfo = this._touchInfo,
                 evtPos = this._getTouchPos( event, true ),
+                that   = this,
                 disTime, disPos;
             disTime    = event.timeStamp - touchInfo.startTime;
             disPos     = {
                 x : evtPos.pageX - touchInfo.startPos.x,
                 y : evtPos.pageY - touchInfo.startPos.y
             };
-            this._rangeMoved && Math.abs( disPos.x ) <= this._verSliderThreshold && Math.abs( disPos.y ) <= this._horSliderThreshold 
-                && disTime <= this._sliderTimeThreshold && this._rangeClick( event ) || this._touchStop( event, disPos );
+            !this._rangeMoved && Math.abs( disPos.x ) <= that._verSliderThreshold && Math.abs( disPos.x ) <= that._verSliderThreshold && Math.abs( disPos.y ) <= that._horSliderThreshold
+                && disTime <= that._sliderTimeThreshold && that._rangeClick( event ) || that._touchStop( event, disPos );
         }
     });
 

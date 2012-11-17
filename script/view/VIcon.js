@@ -211,7 +211,7 @@ define( function( require, exports, module ){
                 event.stopPropagation();
                 sttcs.Util.notify( sttc.controller, 'dragAutoTranslateComplete' );
                 //FIXME
-                this.style.webkitTransitionDuration = '450ms';
+                this.style.webkitTransitionDuration = '400ms';
                 this.style.zIndex = 0;
             }
             function shakeStartHandle(){

@@ -98,7 +98,7 @@ define( function( require, exports, module ){
             sttc.touchEndHandleFun   = fucs[ 'touchStop' ];
             sttc.dragStartHandleFun  = dragFucs[ 'dragStart' ];
             sttc.dragMoveHandleFun   = dragFucs[ 'dragMove' ];
-            sttc.dragStopHandleFun   = dragFucs[ 'dragEnd' ];
+            sttc.dragEndHandleFun    = dragFucs[ 'dragEnd' ];
             sttc.rangeClickInstance  = new RangeClick( fucs );
             sttcs.Util.notify( sttc.controller, 'initComplete', [ sttc.inPos, sttc.outPos ] );
         },
@@ -238,6 +238,7 @@ define( function( require, exports, module ){
                 var evtPos = that._getTouchPos( event );
                 Util.notify( ctrl, 'showShadeLayer' );
                 holding    = true;
+                isTouchMove= false;
                 startTime  = event.timeStamp;
                 //添加抖动定时器，不满足抖动条件的时候会被清除掉，一直不被清除则到时间后会触发抖动。
                 tapTimeOut = setTimeout( function(){
@@ -247,43 +248,33 @@ define( function( require, exports, module ){
                     Util.notify( ctrl, 'shadeLayerTransparent' );
                     Event.dispatchEvent( 'startShake' );
                 }, sttcs.durationThreshold );
-                //若当前状态不是抖动，则会给body添加touchStop事件。
-                !sttc.shaking && document.body.addEventListener( $.support.touchstop, bodyTouchStop );
-                function bodyTouchStop( event ){
-                    var nowTime = event.timeStamp;
-                    this.removeEventListener( $.support.touchstop, bodyTouchStop );
-                    if( nowTime - startTime < sttcs.sliderTimeThreshold ){
-                        setTimeout( function(){
-                            //使当前icon的遮蔽层消失。
-                            !sttc.shaking && Util.notify( ctrl, 'hideShadeLayer' );
-                        }, 500 );
-                    }
-                }
             }
 
-            function touchMove( event, disPos ){
-                if( isTouchMove )
-                    return;
-                disPos.x   = Math.abs( disPos.x );
-                disPos.y   = Math.abs( disPos.y );
-                if( disPos.x > tapThreshold.x || disPos > tapThreshold.y ){
-                    //若X轴或者Y轴的移动距离超过阀值，则不会被判定为抖动，清除抖动定时器。
-                    clearTimeout( tapTimeOut );
-                    isTouchMove = true;
-                }
-            }
+            function touchMove( event, disPos ){}
 
             function touchStop( event, disPos ){
+                sttc.shaking ? event.stopPropagation() : !isTouchMove && rangeClick( event );
                 holding     = false;
             }
 
             function rangeMove(){
                 Util.notify( ctrl, 'shadeLayerTransparent' );
+                Util.notify( ctrl, 'hideShadeLayer' );
+                //判定为touchMove，清除抖动定时器。
+                clearTimeout( tapTimeOut );
+                isTouchMove = true;
             }
 
             function rangeClick( event ){
                 Event.dispatchEvent( 'iconOut' );
                 Event.dispatchEvent( 'openApp', [ true ] );
+                //判定为单击事件，清除抖动定时器。
+                clearTimeout( tapTimeOut );
+                holding = false;
+                //FIXME:为了更可靠，需要换成回调执行。
+                setTimeout( function(){
+                    Util.notify( ctrl, 'hideShadeLayer' );
+                }, 500 );
             }
         },
 

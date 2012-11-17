@@ -1,7 +1,7 @@
 ﻿{
     "data" : {
         "screen" : [
-            2,
+            1,
             [{
                 "name" : "SMS",
                 "text"  : "短信"
