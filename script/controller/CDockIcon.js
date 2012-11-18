@@ -7,6 +7,18 @@ define( function( require, exports, module ){
         extend : 'BaseController',
 
         inheritableStatics : {
+            eventList : [
+                [ 'showBorder' ],
+                [ 'hideBorder' ]
+            ]
+        },
+
+        EshowBorder : function(){
+            this.self.Util.notify( this.values.view, 'showBorder' );
+        },
+
+        EhideBorder : function(){
+            this.self.Util.notify( this.values.view, 'hideBorder' );
         }
 
     });
