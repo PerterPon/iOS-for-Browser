@@ -172,6 +172,11 @@ define( function( require, exports, module ){
                     disTime   = disInfo.disTime,
                     absDisX   = Math.abs( disX ),
                     direction = disX >= 0 ? 'right' : 'left';
+                if( disX == 0 ){
+                    sttc.notSwipe    = false;
+                    sttc.sliding     = false;
+                    return;
+                }
                 that.__doMultiScreenAutoTranslate( boundaryScreen( disX ), direction, absDisX );
             }
 

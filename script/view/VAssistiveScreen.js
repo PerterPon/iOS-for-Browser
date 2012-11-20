@@ -152,10 +152,13 @@ define( function( require, exports, module ){
                 Util  = sttc.Util,
                 ctrl  = sttcs.controller;
             this._getElCacheByCls( sttc.assistiveIcon ).on( $.support.touchstart, function( event ){
+                event.stopPropagation();
                 Util.notify( ctrl, 'touchstart', [ event ] );
             }).on( $.support.touchmove, function( event ){
+                event.stopPropagation();
                 Util.notify( ctrl, 'touchmove', [ event ] );
             }).on( $.support.touchstop, function( event ){
+                event.stopPropagation();
                 Util.notify( ctrl, 'touchstop', [ event ] );
             });
             this._getElCacheByCls( sttc.assistiveArea )[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ){
