@@ -43,39 +43,67 @@ define( function( require, exports, model ){
              */
             selectedItem : null,
             /**
+             * [dragInstance 拖动效果的实例对象]
+             * @type {Object}
+             */
+            dragInstance : null,
+            /**
              * [clickedCallaback 单击Item时候的回调函数]
              * @return {void}
              */
             clickedCallback : function(){ return true; }
         },
 
-        _registerSelf : function(){}，
-
+        /**
+         * [_registerSelf 重载]
+         * @return {void}
+         */
+        _registerSelf : function(){},
 
         _attachEventListener : function(){
             var sttc  = this.values,
                 sttcs = this.self,
                 rangeClick = sttc.rangeClick = new RangeClick({
                     rangeClick : _itemClickHandle
-                });
+                }),
+                dragCfg = {
+                    direction  : 'vertical',
+                    bounces    : 'vertical'
+                };
             $( '.' + sttcs.listItemCls ).live( $.support.touchstart, rangeClick.touchStart)
             .live( $.support.touchmove, rangeClick.touchMove )
             .live( $.support.touchend, rangeClick.touchEnd );
+            sttc.dragInstance = $.scrollView( sttc.listBox, dragCfg );
         },
 
         _init : function(){
             var sttc    = this.values,
-                sttcs   = this.self,
-                listBox =  sttcs.listBox;
-            listBox = $( '<div class="'+ sttcs.listBoxCls +' '+ sttc.listBoxCls +'"></div>' );
+                sttcs   = this.self;
+            sttcs.listBox = $( '<div class="'+ sttcs.listBoxCls +' '+ sttc.listBoxCls +'"></div>' );
         },
 
+        /**
+         * [_itemClickHandle 列表项单击事件处理函数]
+         * @param  {MouseEvenet} event [事件对象]
+         * @return {void}
+         */
         _itemClickHandle : function( event ){
             var sttc  = this.values,
-                sttcs = this.self;
+                sttcs = this.self,
+                selectedItem  = sttc.selectedItem;
+            selectedItem && selectedItem.removeClass( sttcs.listItemSelectedCls );
+            sttc.selectedItem = $( event.currentTarget );
+        },
+
+        /**
+         * [rollBack2InitStatus 回滚到最初始的状态]
+         * @return {Boolean}
+         */
+        rollBack2InitStatus : function(){
+            var sttc  = this.values,
+                sttcs = this.self,
                 selectedItem = sttc.selectedItem;
             selectedItem && selectedItem.removeClass( sttcs.listItemSelectedCls );
-            selectedItem = $( event.currentTarget );
         }
 
     });
