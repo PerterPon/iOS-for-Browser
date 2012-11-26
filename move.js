@@ -1,7 +1,7 @@
 ﻿
 var fs   = require( 'fs' ),
     path = require( 'path' ),
-    tarPath = 'D:/PHPNow/htdocs/iOS-for-Browser-iphone';
+    tarPath = 'F:/PHPNow/PHPnow-1.5.6/htdocs/iOS-for-Browser-iphone';
 
 removeFolder( tarPath );
 copyFile( __dirname, tarPath );
