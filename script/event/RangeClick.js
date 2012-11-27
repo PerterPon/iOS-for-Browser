@@ -47,8 +47,9 @@ define( function( require, exports, model ){
         },
 
         touchMove : function( event ){
-            if( !this._touching )
+            if( !this._touching ){
                 return;
+            }
             var touchInfo = this._touchInfo,
                 disInfo   = this._getDisInfo( event ),
                 disPos    = disInfo.disPos

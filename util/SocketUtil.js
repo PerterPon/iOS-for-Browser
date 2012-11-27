@@ -46,14 +46,17 @@ define( function( require, exports, module ){
         function mssgHandler( bffrData ){
             var sockData = JSON.parse( bffrData.data || bffrData ),
                 eventName= sockData.eventName;
-            if( !eventTree[ eventName ])
-                throw '-eventName: ' + eventName + ' has not register!';
+            if( !eventTree[ eventName ]){
+                throw '-eventName: ' + eventName + ' has not register!';                
+            }
             eventTree[ eventName ]( sockData );
         }
-        if( socket.on )
-            socket.on( 'message', mssgHandler );
-        else 
-            socket.onmessage = mssgHandler;
+        if( socket.on ){
+            socket.on( 'message', mssgHandler );            
+        }
+        else {
+            socket.onmessage = mssgHandler;            
+        }
     }
     
     /**
@@ -64,10 +67,12 @@ define( function( require, exports, module ){
     function checkSocket( norFn, errFn ){
         norFn = norFn || function(){};
         errFn = errFn || function(){};
-        if( socket.readyState == 2 || socket.readyState == 3 )
-            errFn();
-        else if( socket.readyState == 1 )
-            norFn();
+        if( socket.readyState == 2 || socket.readyState == 3 ){
+            errFn();            
+        }
+        else if( socket.readyState == 1 ) {
+            norFn();            
+        }
         else {
             socket.addEventListener( 'open',  norFn );
             socket.addEventListener( 'close', errFn );

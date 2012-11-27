@@ -37,8 +37,9 @@ define( function( require, exports, model ){
         },
 
         touchMove : function( event ){
-            if( !this._touching )
-                return;
+            if( !this._touching ){
+                return;                
+            }
             var disInfo = this._getDisInfo( event );
             this._touchMove( event, disInfo );  
         },

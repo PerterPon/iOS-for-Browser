@@ -24,8 +24,9 @@ define( function( require, exports, module ){
          */
         register : function( name, object ){
             var sttc  = this.self;
-            if( !name || !object )
-                throw sttc.managerId + ' name or object can not be empty!';
+            if( !name || !object ){
+                throw sttc.managerId + ' name or object can not be empty!';                
+            }
             sttc.pool[ name ] = object;
         },
 
@@ -36,12 +37,15 @@ define( function( require, exports, module ){
          */
         get : function( name ){
             var sttc = this.self;
-            if( !name )
-                throw sttc.managerId + ' name can not be empty!';
-            if( typeof name === 'string' )
-                return sttc.pool[ name ];
-            else 
-                return name;
+            if( !name ){
+                throw sttc.managerId + ' name can not be empty!';                
+            }
+            if( typeof name === 'string' ){
+                return sttc.pool[ name ];                
+            }
+            else {
+                return name;                
+            }
         }
 
     });

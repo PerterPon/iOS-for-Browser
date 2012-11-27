@@ -167,20 +167,23 @@ define( function( require, exports, module ){
         __iconIn : function(){
             var sttc  = this.values,
                 sttcs = this.self;
-            if( sttc.current || sttc.dock )
-                sttcs.Util.notify( sttc.controller, 'iconIn', [ sttc.inPos ] );
+            if( sttc.current || sttc.dock ){
+                sttcs.Util.notify( sttc.controller, 'iconIn', [ sttc.inPos ] );                
+            }
         },
 
         __iconOut : function(){
             var sttc  = this.values,
                 sttcs = this.self;
-            if( sttc.current || sttc.dock )
-                sttcs.Util.notify( sttc.controller, 'iconOut', [ sttc.outPos ] );
+            if( sttc.current || sttc.dock ){
+                sttcs.Util.notify( sttc.controller, 'iconOut', [ sttc.outPos ] );                
+            }
         },
 
         __multiScreenAutoTranslateComplete : function( curPos, curIdx ){
-            if( curPos )
-                return;
+            if( curPos ){
+                return;                
+            }
             var sttc     = this.values;
             sttc.current = curIdx == sttc.screenIdx;
         },
@@ -204,8 +207,9 @@ define( function( require, exports, module ){
 
         __changeIconPosition : function( curIdx, operation, isOriIconDock ){
             var sttc = this.values;
-            if( sttc.index <= curIdx || sttc.dock || !sttc.current || isOriIconDock )
-                return;
+            if( sttc.index <= curIdx || sttc.dock || !sttc.current || isOriIconDock ){
+                return;                
+            }
             operation == 'out' ? sttc.index-- : sttc.index++;
             this.__calPosition();
             this.self.Util.notify( sttc.controller, 'changePosition', [ sttc.inPos ] );
@@ -242,8 +246,9 @@ define( function( require, exports, module ){
                 startTime  = event.timeStamp;
                 //添加抖动定时器，不满足抖动条件的时候会被清除掉，一直不被清除则到时间后会触发抖动。
                 tapTimeOut = setTimeout( function(){
-                    if( !holding )
+                    if( !holding ){
                         return;
+                    }
                     sttc.shaking = true;
                     Util.notify( ctrl, 'shadeLayerTransparent' );
                     Event.dispatchEvent( 'startShake' );
@@ -296,8 +301,9 @@ define( function( require, exports, module ){
             };
 
             function dragStart( event ){
-                if( sttc.dragAutoTranslating )
-                    return;
+                if( sttc.dragAutoTranslating ){
+                    return;                    
+                }
                 dragging   = true;
                 Util.notify( ctrl, 'stopShake' );
                 Util.notify( ctrl, 'shadeLayerBlack' );
@@ -310,8 +316,9 @@ define( function( require, exports, module ){
             }
 
             function dragMove( event ){
-                if( !dragging )
-                    return;
+                if( !dragging ){
+                    return;                    
+                }
                 var evtPos = that._getTouchPos( event ),
                     dis    = {
                         x : evtPos.pageX - startPos.x,
@@ -332,8 +339,9 @@ define( function( require, exports, module ){
             }
 
             function dragEnd( event ){
-                if( !dragging )
-                    return;
+                if( !dragging ){
+                    return;                    
+                }
                 dragging = false;
                 curPosIn = true;
                 Util.notify( ctrl, 'changePosition', [ sttc.inPos ] );

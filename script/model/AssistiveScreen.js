@@ -114,8 +114,9 @@ define( function( require, exports, module ){
                 assistiveOptionsClick : assistiveOptionsClick
             };
             function touchStart( event ){
-                if( sttc.pointTranslating )
-                    return;
+                if( sttc.pointTranslating ){
+                    return;                    
+                }
                 Util.notify( ctrl, 'disableTransparent' );
                 dragging   = true;
             }
@@ -127,8 +128,9 @@ define( function( require, exports, module ){
              * @return {void}
              */
             function touchMove( event, disPos ){
-                if( !dragging || sttc.pointTranslating )
-                    return;
+                if( !dragging || sttc.pointTranslating ){
+                    return;                    
+                }
                 disPos.x += curPos.x;
                 disPos.y += curPos.y;
                 Util.notify( ctrl, 'translate', [ disPos ] );
@@ -141,8 +143,9 @@ define( function( require, exports, module ){
              * @return {void}
              */
             function touchStop( event, disPos ){
-                if( sttc.pointTranslating )
-                    return;
+                if( sttc.pointTranslating ){
+                    return;                    
+                }
                 var evtPos = that._getTouchPos( event, true ),
                     nowPos = {
                         x : disPos.x + curPos.x,
@@ -173,12 +176,15 @@ define( function( require, exports, module ){
                     x : curPos.x - curDirection == 'right' ? sttcs.assistiveWidth : 0,
                     y : curPos.y - curDirection == 'right' ? sttcs.assistiveHeight : 0
                 }
-                if( curPos.y <= areaTop )
-                    assistivePointPos.y = sttcs.assistivePointHeight / 2;
-                else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) )
-                    assistivePointPos.y = sttcs.assistiveHeight + sttcs.assistivePointHeight / 2;
-                else
-                    assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
+                if( curPos.y <= areaTop ){
+                    assistivePointPos.y = sttcs.assistivePointHeight / 2;                    
+                }
+                else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) ){
+                    assistivePointPos.y = sttcs.assistiveHeight + sttcs.assistivePointHeight / 2;                    
+                }
+                else {
+                    assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;                    
+                }
                 assistivePointPos.x     = ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
                 Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, assistiveAreaPos, assistivePointPos ] );
             }
