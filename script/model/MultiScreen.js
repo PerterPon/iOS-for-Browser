@@ -113,9 +113,8 @@ define( function( require, exports, module ){
          * @return {void}
          */
         __doMultiScreenAutoTranslate : function( boundaryScreen, direction, distance, isSwip ){
-            if( !boundaryScreen && isSwip ){
-                return;                
-            }
+            if( !boundaryScreen && isSwip )
+                return;
             var sttc  = this.values,
                 sttcs = this.self,
                 Event = window.iOS.Event;

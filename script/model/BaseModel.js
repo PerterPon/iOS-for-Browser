@@ -125,9 +125,8 @@ define( function( require, exports, module ){
          */
         _initView : function(){
             var sttc    = this.values;
-            if( !sttc.view ){
-                return;                
-            }
+            if( !sttc.view )
+                return;
             var view    = sttc.view,
                 viewCfg = {
                     clsList : sttc.clsList,
@@ -145,9 +144,8 @@ define( function( require, exports, module ){
          */
         _initController : function(){
             var sttc = this.values;
-            if( !sttc.controller ){
-                return;                
-            }
+            if( !sttc.controller )
+                return;
             var ctrl = sttc.controller;
             sttc.controller = new ctrl( sttc.ctrlCfg );
         },

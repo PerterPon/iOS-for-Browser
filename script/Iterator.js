@@ -32,7 +32,8 @@ define( function( require ){
             var sttc  = this.values,
                 queue = sttc.queue; 
             queue[ queue.length - 1 ][ 'cfg' ] = cfg;
-            ( queue.length == 1 ) && this.__doItrtr( cfg );                                
+            if( queue.length == 1 )
+                this.__doItrtr( cfg );
         },
 
         /**
@@ -46,7 +47,8 @@ define( function( require ){
             queue.push({
                 'preDom' : selector
             });
-            ( queue.length == 1 ) && this.__doSetPreDom( selector );
+            if( queue.length == 1 )
+                this.__doSetPreDom( selector );
         },
 
         __doSetPreDom : function( selector ){
@@ -75,9 +77,12 @@ define( function( require ){
                 html    = document.createElement( 'div' );
                 html.id = id;
                 html.className = cls;
-                cfg.flex   && ( html.style[ '-webkit-box-flex' ] = cfg.flex );
-                cfg.height && ( html.style[ 'height' ] = cfg.height );
-                cfg.width  && ( html.style[ 'width' ]  = cfg.width );
+                if( cfg.flex )
+                    html.style[ '-webkit-box-flex' ] = cfg.flex;
+                if( cfg.height )
+                    html.style[ 'height' ] = cfg.height;
+                if( cfg.width )
+                    html.style[ 'width' ]  = cfg.width;
                 preDom = dom || sttc.preDom || document.body;
                 preDom.appendChild( html );
                 cfg[ 'selector' ] = '#' + id;
@@ -98,9 +103,8 @@ define( function( require ){
             var sttc  = this.values,
                 queue = sttc.queue; 
             queue.shift();
-            if( !queue.length ){
+            if( !queue.length )
                 return;
-            }
             this.__doSetPreDom( queue[ 0 ][ 'preDom' ] );
             this.__doItrtr( queue[ 0 ][ 'cfg' ] );
         }

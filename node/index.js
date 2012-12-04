@@ -14,6 +14,7 @@ wss.on( 'connection', onconnection );
 function onconnection( ws ){
     console.log( ' - connected!' );
     socket = ws;
+    debugger;
     scktMngr.setSocket( ws );
     ws.on( 'close', function(){
         console.log( ' - disconnected!' );

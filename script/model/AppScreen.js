@@ -11,6 +11,8 @@ define( function( require, exports, module ){
             var Event = window.iOS.Event;
             Event.addEvent( 'openApp', this.__openAppHandle, this );
             Event.addEvent( 'closeApp', this.__closeAppHandle, this );
+            // Event.addEvent( 'iconOut', this.__iconOutHandle, this );
+            // Event.addEvent( 'iconIn', this.__iconInHandle, this );
         },
 
         __closeAppHandle : function(){
