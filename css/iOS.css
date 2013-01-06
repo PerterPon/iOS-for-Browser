@@ -89,8 +89,16 @@
 /**
  * assistiveScreen
  */
-.iOS_assistiveScreen { width: 0; height: 0;  position: absolute; z-index: 99; left: 0; top: 0 }
+/*.iOS_assistiveScreen { width: 55px; height: 55px;  position: absolute; z-index: 99; left: 0; top: 0 }
     .iOS_assistive_icon { background: url( ../resource/images/assistive/assistivePoint.png ) rgba( 0, 0, 0, 0.4 ) no-repeat center center; opacity: 0.5; top: 0px; left: 0; position: absolute; width: 55px; height: 55px; -webkit-border-radius: 10px }
     .iOS_assistive_area { width: 270px; height: 270px; position: absolute; -webkit-transform: scale3d( 0, 0, 0 ); -webkit-transform-origin: 27px 27px; -webkit-transition-delay: 100ms; -webkit-transition-timing-function: ease-out; -webkit-border-radius: 15px; background-color: rgba( 0, 0, 0, 0.7 ) }
         .iOS_assistive_area div { top: 0; position: absolute; -webkit-box-orient: block-axis; -webkit-box-pack: center; -webkit-box-align: center; }
         .iOS_assistive_area span { color: white; font-size: 12px; display: -webkit-box; }
+*/
+/**
+ * assistiveScreen
+ */
+.iOS_assistiveScreen { width: 55px; height: 55px; position: absolute; left: 0; top: 0; z-index: 99; background-color: rgba( 0, 0, 0, 0.4 ); opacity: 0.5; -webkit-border-radius: 10px }
+    .iOS_assistive_icon { width: 55px; height: 55px; position: absolute; left: 0; top: 0; background-repeat: no-repeat; background-position: center center }
+    .iOS_assistive_basePoint { background: url( ../resource/images/assistive/assistivePoint.png ) no-repeat center center; position: absolute; left: 0; top: 0 }
+
