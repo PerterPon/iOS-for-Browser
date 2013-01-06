@@ -155,8 +155,8 @@ define( function( require, exports, module ){
                 event.stopPropagation();
                 Util.notify( ctrl, 'touchstart', [ event ] );
             }).on( $.support.touchmove, function( event ){
-                event.stopPropagation();
                 Util.notify( ctrl, 'touchmove', [ event ] );
+                return false;
             }).on( $.support.touchstop, function( event ){
                 event.stopPropagation();
                 Util.notify( ctrl, 'touchstop', [ event ] );
