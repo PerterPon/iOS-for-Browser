@@ -293,12 +293,14 @@ define( function() {
             }
             for( var i in secondaryIcon ){
                 this._getElCacheByCls( 'iOS_assistive_' + i ).show().css( 'opacity', '0' );
-                setTimeout( function() {
-                    this._getElCacheByCls( 'iOS_assistive_' + i ).css( {
-                        opacity : 1,
-                        webkitTransform : 'translate3d('+ secondaryIcon[ i ].x +'px, '+ secondaryIcon[ i ].y +'px, 0)'
-                    } );
-                }, 1 );
+                ( function( i ) {
+                    setTimeout( function() {
+                        that._getElCacheByCls( 'iOS_assistive_' + i ).css( {
+                            opacity : 1,
+                            webkitTransform : 'translate3d('+ secondaryIcon[ i ].x +'px, '+ secondaryIcon[ i ].y +'px, 0)'
+                        } );
+                    }, 1 );
+                } )( i );
             }
         },
 
@@ -320,7 +322,7 @@ define( function() {
                 opacity : 1 
             } );
             for( var i in secondaryIcon ) {
-                this._getElCacheByCls( 'iOS_assistive_' + i ).css( {
+                that._getElCacheByCls( 'iOS_assistive_' + i ).css( {
                     webkitTransform : 'translate3d(0,0,0)',
                     opacity : 0
                 } )[ 0 ].addEventListener( 'webkitTransitionEnd', tranEndFuc );

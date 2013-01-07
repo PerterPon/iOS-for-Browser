@@ -180,8 +180,12 @@ define( function( require, exports, module ){
                 // else
                 //     assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
                 // assistivePointPos.x     = ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
-                
-                Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, assistiveAreaPos, assistivePointPos ] );
+                var sceondary = {},
+                    icons = sttc.data.data.icon;
+                for( var i in icons ){
+                    sceondary[ icons[ i ][ 'name' ] ] = icons[ i ][ 'position' ];
+                }
+                Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, sceondary ] );
                 return true;
             }
 
