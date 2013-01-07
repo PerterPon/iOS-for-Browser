@@ -56,8 +56,8 @@ define( function( require, exports, module ){
             this.self.Util.notify( this.values.view, 'showAssistiveOptions', [ position, assistiveAreaPos, assistivePos ] );
         },
 
-        EhideAssistiveOptions : function(){
-            this.self.Util.notify( this.values.view, 'hideAssistiveOptions');
+        EhideAssistiveOptions : function( position ){
+            this.self.Util.notify( this.values.view, 'hideAssistiveOptions', [ position ] );
         },
 
         EdisableTransparent : function(){

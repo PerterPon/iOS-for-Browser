@@ -18,8 +18,8 @@ define( function( require, exports, module ){
         },
 
         statics : {
-            assistivePointWidth  : 55,
-            assistivePointHeight : 55,
+            assistivePointWidth  : 57,
+            assistivePointHeight : 57,
             assistiveWidth       : 270,
             assistiveHeight      : 270
         },
@@ -68,7 +68,7 @@ define( function( require, exports, module ){
             sttc.rangeClickInstance   = new RangeClick( touchFuncs );
         },
 
-        _getDefaultData : function(){
+        _getDefaultData : function() {
             return require( '../../resource/defaultData/assistiveScreen/assistiveScreen' );
         },
 
@@ -76,7 +76,7 @@ define( function( require, exports, module ){
          * [_dataReady 数据获取完成回调函数，会在此通知view绘制assistive上的cion]
          * @return {void}
          */
-        _dataReady : function(){
+        _dataReady : function() {
             var sttc = this.values,
                 ctrl = sttc.controller,
                 renderData = sttc.data.data;
@@ -88,7 +88,7 @@ define( function( require, exports, module ){
             this.self.Util.notify( this.values.controller, 'showAssistivePoint' );
         },
 
-        __getTouchStartStopFunc : function(){
+        __getTouchStartStopFunc : function() {
             var sttc     = this.values,
                 sttcs    = this.self,
                 that     = this,
@@ -167,20 +167,22 @@ define( function( require, exports, module ){
             }
 
             function rangeClick(){
-                var assistivePointPos = {};
-                //FIXME
-                assistiveAreaPos  = {
-                    x : curPos.x - curDirection == 'right' ? sttcs.assistiveWidth : 0,
-                    y : curPos.y - curDirection == 'right' ? sttcs.assistiveHeight : 0
-                }
-                if( curPos.y <= areaTop )
-                    assistivePointPos.y = sttcs.assistivePointHeight / 2;
-                else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) )
-                    assistivePointPos.y = sttcs.assistiveHeight + sttcs.assistivePointHeight / 2;
-                else
-                    assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
-                assistivePointPos.x     = ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
+                // var assistivePointPos = {};
+                // //FIXME
+                // assistiveAreaPos  = {
+                //     x : curPos.x - curDirection == 'right' ? sttcs.assistiveWidth : 0,
+                //     y : curPos.y - curDirection == 'right' ? sttcs.assistiveHeight : 0
+                // }
+                // if( curPos.y <= areaTop )
+                //     assistivePointPos.y = sttcs.assistivePointHeight / 2;
+                // else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) )
+                //     assistivePointPos.y = sttcs.assistiveHeight + sttcs.assistivePointHeight / 2;
+                // else
+                //     assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
+                // assistivePointPos.x     = ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
+                
                 Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, assistiveAreaPos, assistivePointPos ] );
+                return true;
             }
 
             /**
@@ -195,7 +197,7 @@ define( function( require, exports, module ){
                 /*
                  * contain == 8 表示assistiveNode包含target节点。
                  */
-                contain && contain != 8 && sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ assistiveAreaPos ] );
+                contain && 8 != contain && sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ curPos ] );
             }
         },
 
@@ -203,7 +205,7 @@ define( function( require, exports, module ){
          * [__getAssistiveIconPotions 获取assistive的Icon的位置信息，根据不同的数量呈现不同的形式]
          * @return {void} 
          */
-        __getAssistiveIconPotions : function(){
+        __getAssistiveIconPotions : function() {
             //FIXME:目前只考虑了只有4个icon的情况，其他数量都还没有添加。
             var sttc   = this.values,
                 sttcs  = this.self,

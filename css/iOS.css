@@ -98,7 +98,7 @@
 /**
  * assistiveScreen
  */
-.iOS_assistiveScreen { width: 55px; height: 55px; position: absolute; left: 0; top: 0; z-index: 99; background-color: rgba( 0, 0, 0, 0.4 ); opacity: 0.5; -webkit-border-radius: 10px }
-    .iOS_assistive_icon { width: 55px; height: 55px; position: absolute; left: 0; top: 0; background-repeat: no-repeat; background-position: center center }
+.iOS_assistiveScreen { -webkit-transition-property: -webkit-transform,width,height; width: 57px; height: 57px; position: absolute; left: 0; top: 0; z-index: 99; background-color: rgba( 0, 0, 0, 0.4 ); opacity: 0.5; -webkit-border-radius: 10px; -webkit-transition-timing-function: ease-in-out }
+    .iOS_assistive_icon { opacity: 1; -webkit-transition-duration: 300ms; width: 57px; height: 57px; position: absolute; left: 0; top: 0; background-repeat: no-repeat; background-position: center center; -webkit-transition-timing-function: ease-in-out; }
     .iOS_assistive_basePoint { background: url( ../resource/images/assistive/assistivePoint.png ) no-repeat center center; position: absolute; left: 0; top: 0 }
 
