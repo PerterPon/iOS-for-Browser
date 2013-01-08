@@ -118,9 +118,10 @@ define( function( require, exports, module ){
                 rangeClick : rangeClick,
                 assistiveOptionsClick : assistiveOptionsClick
             };
-            function touchStart( event ){
-                if( sttc.pointTranslating )
+            function touchStart( event ) {
+                if( sttc.pointTranslating ) {
                     return;
+                }
                 Util.notify( ctrl, 'disableTransparent' );
                 dragging   = true;
             }
@@ -131,9 +132,10 @@ define( function( require, exports, module ){
              * @param  {Object} disPos     [此时相较于touchStart的位移]
              * @return {void}
              */
-            function touchMove( event, disPos ){
-                if( !dragging || sttc.pointTranslating )
+            function touchMove( event, disPos ) {
+                if( !dragging || sttc.pointTranslating ) {
                     return;
+                }
                 disPos.x += curPos.x;
                 disPos.y += curPos.y;
                 Util.notify( ctrl, 'translate', [ disPos ] );
@@ -145,9 +147,10 @@ define( function( require, exports, module ){
              * @param  {Object} disPos     [此时相较于touchStart的位移]
              * @return {void}
              */
-            function touchStop( event, disPos ){
-                if( sttc.pointTranslating )
+            function touchStop( event, disPos ) {
+                if( sttc.pointTranslating ) {
                     return;
+                }
                 var evtPos = that._getTouchPos( event, true ),
                     nowPos = {
                         x : disPos.x + curPos.x,
@@ -157,7 +160,7 @@ define( function( require, exports, module ){
                         x : null,
                         y : nowPos.y > 0 ? nowPos.y > boundary ? boundary : nowPos.y : 0
                     };
-                if( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ){
+                if( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ) {
                     curDirection = 'right';
                     tarPos.x     = width - sttcs.assistivePointWidth;
                 } else {
@@ -171,23 +174,10 @@ define( function( require, exports, module ){
                 dragging   = false;
             }
 
-            function rangeClick(){
-                // var assistivePointPos = {};
-                // //FIXME
-                // assistiveAreaPos  = {
-                //     x : curPos.x - curDirection == 'right' ? sttcs.assistiveWidth : 0,
-                //     y : curPos.y - curDirection == 'right' ? sttcs.assistiveHeight : 0
-                // }
-                // if( curPos.y <= areaTop )
-                //     assistivePointPos.y = sttcs.assistivePointHeight / 2;
-                // else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) )
-                //     assistivePointPos.y = sttcs.assistiveHeight + sttcs.assistivePointHeight / 2;
-                // else
-                //     assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
-                // assistivePointPos.x     = ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
+            function rangeClick() {
                 var sceondary = {},
                     icons = sttc.data.data.icon;
-                for( var i in icons ){
+                for( var i in icons ) {
                     sceondary[ icons[ i ][ 'name' ] ] = icons[ i ][ 'position' ];
                 }
                 curDisplayIcons = sceondary;
@@ -201,7 +191,7 @@ define( function( require, exports, module ){
              * @param  {DocumentDom} assistiveNode [assistive区域节点]
              * @return {void}
              */
-            function assistiveOptionsClick( event, assistiveNode ){
+            function assistiveOptionsClick( event, assistiveNode ) {
                 var target    = event.target,
                     contain   = target.compareDocumentPosition( assistiveNode ),
                     Event     = window.Event;
