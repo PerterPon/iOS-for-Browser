@@ -33,6 +33,7 @@ define( function( require, exports, module ){
             this.callParent();
             var Event = window.iOS.Event;
             Event.addEvent( 'startShake', this.__stratShakeHandle, this );
+            Event.addEvent( 'homeButtonClick', this.EhomeButtonClick, this );
         },
 
         __stratShakeHandle : function(){

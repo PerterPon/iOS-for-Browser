@@ -246,7 +246,15 @@ define( function() {
         },
 
         EdisableTransparent : function() {
+            // var oriDuration = this._getEl().css( '-webkit-transition-duration' );
+            // this._getEl().css( '-webkit-transition-duration', this.self.assistiveDuration );
             this._getEl().css( 'opacity', '1' );
+            // this._getEl()[ 0 ].addEventListener( 'webkitTransitionEnd', tranEndFuc );
+            // function tranEndFuc( event ) {
+            //     event.stopPropagation();
+            //     this.style.webkitTransitionDuration = oriDuration;
+            //     this.removeEventListener( 'webkitTransitionEnd', tranEndFuc );
+            // }
         },
 
         EenableTransparent : function() {
@@ -264,7 +272,7 @@ define( function() {
                 pos   = data[ 'position' ];
                 style = 'background:url(./resource/images/assistive/'+ data[ 'name' ] +'.png);display:none'
                 html +=
-                '<div class="'+ sttcs[ 'assistive'+ data[ 'text' ] ] +" "+ sttcs.assistiveIcon +'" style='+ style +'>'+
+                '<div class="'+ sttcs[ 'assistive'+ data[ 'text' ] ] +" "+ sttcs.assistiveIcon +'" name='+ data[ "name" ] +' style='+ style +'>'+
                     '<span>'+ data[ 'text' ] +'</span>'+
                 '</div>';
             }
@@ -291,7 +299,7 @@ define( function() {
                 icon.removeEventListener( 'webkitTransitionEnd', areaTransitionEnd );
                 document.body.addEventListener( 'click', that.__bodyClickHandle );
             }
-            for( var i in secondaryIcon ){
+            for( var i in secondaryIcon ) {
                 this._getElCacheByCls( 'iOS_assistive_' + i ).show().css( 'opacity', '0' );
                 ( function( i ) {
                     setTimeout( function() {
@@ -306,7 +314,8 @@ define( function() {
 
         EhideAssistiveOptions : function( position, secondaryIcon ) {
             var icon  = this._getEl(),
-                sttcs = this.self; 
+                sttcs = this.self,
+                that  = this;
             document.body.removeEventListener( 'click', this.__bodyClickHandle );
             icon[ 0 ].style.webkitTransitionDuration = sttcs.assistiveDuration;
             icon.css( {
@@ -322,7 +331,7 @@ define( function() {
                 opacity : 1 
             } );
             for( var i in secondaryIcon ) {
-                that._getElCacheByCls( 'iOS_assistive_' + i ).css( {
+                this._getElCacheByCls( 'iOS_assistive_' + i ).css( {
                     webkitTransform : 'translate3d(0,0,0)',
                     opacity : 0
                 } )[ 0 ].addEventListener( 'webkitTransitionEnd', tranEndFuc );
@@ -331,6 +340,7 @@ define( function() {
                 event.stopPropagation();
                 this.removeEventListener( 'webkitTransitionEnd', tranEndFuc );
                 this.style.display = 'none';
+                sttcs.Util.notify( that.values.controller, 'assistiveHideComplete' );
             }
         },
 

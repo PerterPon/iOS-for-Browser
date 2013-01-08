@@ -69,7 +69,7 @@ define( function( require, exports, module ){
         for( var i = 0; i < evntInstnc.length; i++ ){
             evntInstnc[ i ].handler.apply( evntInstnc[ i ].scope || tarObj, params );
         }
-        
+        return true;
     }
 
     var result = {

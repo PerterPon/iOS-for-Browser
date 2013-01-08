@@ -20,7 +20,8 @@ define( function( require, exports, module ){
                 [ 'enableTransparent' ],
                 [ 'disableTransparent' ],
                 [ 'renderChild' ],
-                [ 'assistiveOptionsClick' ]
+                [ 'assistiveOptionsClick' ],
+                [ 'assistiveHideComplete' ]
             ]
         },
 
@@ -52,12 +53,12 @@ define( function( require, exports, module ){
             this.self.Util.notify( this.values.model, 'assistivePointAutoTranslateComplete' );
         },
 
-        EshowAssistiveOptions : function( position, assistiveAreaPos, assistivePos ){
-            this.self.Util.notify( this.values.view, 'showAssistiveOptions', [ position, assistiveAreaPos, assistivePos ] );
+        EshowAssistiveOptions : function( position, sceondaryIcon ){
+            this.self.Util.notify( this.values.view, 'showAssistiveOptions', [ position, sceondaryIcon ] );
         },
 
-        EhideAssistiveOptions : function( position ){
-            this.self.Util.notify( this.values.view, 'hideAssistiveOptions', [ position ] );
+        EhideAssistiveOptions : function( position, sceondaryIcon ){
+            this.self.Util.notify( this.values.view, 'hideAssistiveOptions', [ position, sceondaryIcon ] );
         },
 
         EdisableTransparent : function(){
@@ -74,6 +75,10 @@ define( function( require, exports, module ){
 
         EassistiveOptionsClick : function( event, assistiveNode ){
             this.self.Util.notify( this.values.model, 'assistiveOptionsClick', [ event, assistiveNode ] );
+        },
+
+        EassistiveHideComplete : function() {
+            this.self.Util.notify( this.values.model, 'assistiveHideComplete' );
         }
 
     });

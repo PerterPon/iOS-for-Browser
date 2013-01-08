@@ -13,7 +13,8 @@ define( function( require, exports, module ){
                 [ 'touchmove' ],
                 [ 'touchstop' ],
                 [ 'assistivePointAutoTranslateComplete' ],
-                [ 'assistiveOptionsClick' ]
+                [ 'assistiveOptionsClick' ],
+                [ 'assistiveHideComplete' ]
             ]
         },
 
@@ -51,6 +52,10 @@ define( function( require, exports, module ){
 
         EassistiveOptionsClick : function( event, assistiveNode ){
             this.values.assistiveOptionsClickFunc( event, assistiveNode );
+        },
+
+        EassistiveHideComplete : function() {
+            this.self.Util.notify( this.values.controller, 'enableTransparent' );
         },
 
         _attachEventListener : function(){
@@ -105,7 +110,7 @@ define( function( require, exports, module ){
                     y : 0
                 },
                 curDirection = 'left',
-                startPos, startTime, assistiveAreaPos;
+                startPos, startTime, assistiveAreaPos, curDisplayIcons;
             return {
                 touchStart : touchStart,
                 touchMove  : touchMove,
@@ -185,6 +190,7 @@ define( function( require, exports, module ){
                 for( var i in icons ){
                     sceondary[ icons[ i ][ 'name' ] ] = icons[ i ][ 'position' ];
                 }
+                curDisplayIcons = sceondary;
                 Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, sceondary ] );
                 return true;
             }
@@ -196,12 +202,21 @@ define( function( require, exports, module ){
              * @return {void}
              */
             function assistiveOptionsClick( event, assistiveNode ){
-                var target  = event.target,
-                contain = target.compareDocumentPosition( assistiveNode );
+                var target    = event.target,
+                    contain   = target.compareDocumentPosition( assistiveNode ),
+                    Event     = window.Event;
                 /*
                  * contain == 8 表示assistiveNode包含target节点。
                  */
-                contain && 8 != contain && sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ curPos ] );
+                if( contain && 8 != contain ) {
+                    sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ curPos, curDisplayIcons ] );
+                } else {
+                    switch( target.name ) {
+                        case 'home' :
+                            Event.dispatchEvent( 'homeButtonClick' );
+                            break;
+                    }
+                }
             }
         },
 
