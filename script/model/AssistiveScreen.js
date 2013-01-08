@@ -13,14 +13,13 @@ define( function( require, exports, module ){
                 [ 'touchmove' ],
                 [ 'touchstop' ],
                 [ 'assistivePointAutoTranslateComplete' ],
-                [ 'assistiveOptionsClick' ],
-                [ 'assistiveHideComplete' ]
+                [ 'assistiveOptionsClick' ]
             ]
         },
 
         statics : {
-            assistivePointWidth  : 57,
-            assistivePointHeight : 57,
+            assistivePointWidth  : 55,
+            assistivePointHeight : 55,
             assistiveWidth       : 270,
             assistiveHeight      : 270
         },
@@ -54,10 +53,6 @@ define( function( require, exports, module ){
             this.values.assistiveOptionsClickFunc( event, assistiveNode );
         },
 
-        EassistiveHideComplete : function() {
-            this.self.Util.notify( this.values.controller, 'enableTransparent' );
-        },
-
         _attachEventListener : function(){
             this.callParent();
             window.iOS.Event.addEvent( 'unlock', this.__unlockHandle, this );
@@ -73,7 +68,7 @@ define( function( require, exports, module ){
             sttc.rangeClickInstance   = new RangeClick( touchFuncs );
         },
 
-        _getDefaultData : function() {
+        _getDefaultData : function(){
             return require( '../../resource/defaultData/assistiveScreen/assistiveScreen' );
         },
 
@@ -81,7 +76,7 @@ define( function( require, exports, module ){
          * [_dataReady 数据获取完成回调函数，会在此通知view绘制assistive上的cion]
          * @return {void}
          */
-        _dataReady : function() {
+        _dataReady : function(){
             var sttc = this.values,
                 ctrl = sttc.controller,
                 renderData = sttc.data.data;
@@ -93,7 +88,7 @@ define( function( require, exports, module ){
             this.self.Util.notify( this.values.controller, 'showAssistivePoint' );
         },
 
-        __getTouchStartStopFunc : function() {
+        __getTouchStartStopFunc : function(){
             var sttc     = this.values,
                 sttcs    = this.self,
                 that     = this,
@@ -110,7 +105,7 @@ define( function( require, exports, module ){
                     y : 0
                 },
                 curDirection = 'left',
-                startPos, startTime, assistiveAreaPos, curDisplayIcons;
+                startPos, startTime, assistiveAreaPos;
             return {
                 touchStart : touchStart,
                 touchMove  : touchMove,
@@ -118,10 +113,9 @@ define( function( require, exports, module ){
                 rangeClick : rangeClick,
                 assistiveOptionsClick : assistiveOptionsClick
             };
-            function touchStart( event ) {
-                if( sttc.pointTranslating ) {
+            function touchStart( event ){
+                if( sttc.pointTranslating )
                     return;
-                }
                 Util.notify( ctrl, 'disableTransparent' );
                 dragging   = true;
             }
@@ -132,10 +126,9 @@ define( function( require, exports, module ){
              * @param  {Object} disPos     [此时相较于touchStart的位移]
              * @return {void}
              */
-            function touchMove( event, disPos ) {
-                if( !dragging || sttc.pointTranslating ) {
+            function touchMove( event, disPos ){
+                if( !dragging || sttc.pointTranslating )
                     return;
-                }
                 disPos.x += curPos.x;
                 disPos.y += curPos.y;
                 Util.notify( ctrl, 'translate', [ disPos ] );
@@ -147,10 +140,9 @@ define( function( require, exports, module ){
              * @param  {Object} disPos     [此时相较于touchStart的位移]
              * @return {void}
              */
-            function touchStop( event, disPos ) {
-                if( sttc.pointTranslating ) {
+            function touchStop( event, disPos ){
+                if( sttc.pointTranslating )
                     return;
-                }
                 var evtPos = that._getTouchPos( event, true ),
                     nowPos = {
                         x : disPos.x + curPos.x,
@@ -160,7 +152,7 @@ define( function( require, exports, module ){
                         x : null,
                         y : nowPos.y > 0 ? nowPos.y > boundary ? boundary : nowPos.y : 0
                     };
-                if( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ) {
+                if( ( nowPos.x + sttcs.assistivePointWidth / 2 ) > width / 2 ){
                     curDirection = 'right';
                     tarPos.x     = width - sttcs.assistivePointWidth;
                 } else {
@@ -174,15 +166,21 @@ define( function( require, exports, module ){
                 dragging   = false;
             }
 
-            function rangeClick() {
-                var sceondary = {},
-                    icons = sttc.data.data.icon;
-                for( var i in icons ) {
-                    sceondary[ icons[ i ][ 'name' ] ] = icons[ i ][ 'position' ];
+            function rangeClick(){
+                var assistivePointPos = {};
+                //FIXME
+                assistiveAreaPos  = {
+                    x : curPos.x - curDirection == 'right' ? sttcs.assistiveWidth : 0,
+                    y : curPos.y - curDirection == 'right' ? sttcs.assistiveHeight : 0
                 }
-                curDisplayIcons = sceondary;
-                Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, sceondary ] );
-                return true;
+                if( curPos.y <= areaTop )
+                    assistivePointPos.y = sttcs.assistivePointHeight / 2;
+                else if( curPos.y >= ( areaTop + sttcs.assistiveHeight ) )
+                    assistivePointPos.y = sttcs.assistiveHeight + sttcs.assistivePointHeight / 2;
+                else
+                    assistivePointPos.y = curPos.y - areaTop + sttcs.assistivePointHeight / 2;
+                assistivePointPos.x     = ( curDirection == 'right' ? sttcs.assistiveWidth : 0 );
+                Util.notify( ctrl, 'showAssistiveOptions', [ { x : areaLeft, y : areaTop }, assistiveAreaPos, assistivePointPos ] );
             }
 
             /**
@@ -191,22 +189,13 @@ define( function( require, exports, module ){
              * @param  {DocumentDom} assistiveNode [assistive区域节点]
              * @return {void}
              */
-            function assistiveOptionsClick( event, assistiveNode ) {
-                var target    = event.target,
-                    contain   = target.compareDocumentPosition( assistiveNode ),
-                    Event     = window.Event;
+            function assistiveOptionsClick( event, assistiveNode ){
+                var target  = event.target,
+                contain = target.compareDocumentPosition( assistiveNode );
                 /*
                  * contain == 8 表示assistiveNode包含target节点。
                  */
-                if( contain && 8 != contain ) {
-                    sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ curPos, curDisplayIcons ] );
-                } else {
-                    switch( target.name ) {
-                        case 'home' :
-                            Event.dispatchEvent( 'homeButtonClick' );
-                            break;
-                    }
-                }
+                contain && contain != 8 && sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ assistiveAreaPos ] );
             }
         },
 
@@ -214,14 +203,14 @@ define( function( require, exports, module ){
          * [__getAssistiveIconPotions 获取assistive的Icon的位置信息，根据不同的数量呈现不同的形式]
          * @return {void} 
          */
-        __getAssistiveIconPotions : function() {
+        __getAssistiveIconPotions : function(){
             //FIXME:目前只考虑了只有4个icon的情况，其他数量都还没有添加。
             var sttc   = this.values,
                 sttcs  = this.self,
                 data   = sttc.data.data.icon,
                 perDis = sttcs.assistiveWidth / 3,
                 iconDis= ( perDis - 58 ) / 2,
-                verDis = ( perDis - 73 ) / 2
+                verDis = ( perDis - 73 ) / 2;
             data[ 0 ][ 'position' ] = {
                 x : perDis + iconDis,
                 y : iconDis
