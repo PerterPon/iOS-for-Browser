@@ -89,17 +89,8 @@
 /**
  * assistiveScreen
  */
-/*.iOS_assistiveScreen { width: 55px; height: 55px;  position: absolute; z-index: 99; left: 0; top: 0 }
-    .iOS_assistive_icon { background: url( ../resource/images/assistive/assistivePoint.png ) rgba( 0, 0, 0, 0.4 ) no-repeat center center; opacity: 0.5; top: 0px; left: 0; position: absolute; width: 55px; height: 55px; -webkit-border-radius: 10px }
-    .iOS_assistive_area { width: 270px; height: 270px; position: absolute; -webkit-transform: scale3d( 0, 0, 0 ); -webkit-transform-origin: 27px 27px; -webkit-transition-delay: 100ms; -webkit-transition-timing-function: ease-out; -webkit-border-radius: 15px; background-color: rgba( 0, 0, 0, 0.7 ) }
-        .iOS_assistive_area div { top: 0; position: absolute; -webkit-box-orient: block-axis; -webkit-box-pack: center; -webkit-box-align: center; }
-        .iOS_assistive_area span { color: white; font-size: 12px; display: -webkit-box; }
-*/
-/**
- * assistiveScreen
- */
 .iOS_assistiveScreen { -webkit-transition-property: -webkit-transform,width,height,opacity; width: 57px; height: 57px; position: absolute; left: 0; top: 0; z-index: 99; background-color: rgba( 0, 0, 0, 0.6 ); opacity: 0.5; -webkit-border-radius: 10px; -webkit-transition-timing-function: ease-in-out }
-    .iOS_assistive_icon { -webkit-box-align: end; -webkit-box-pack: center; opacity: 1; -webkit-transition-duration: 300ms; width: 57px; height: 57px; position: absolute; left: 0; top: 0; background-repeat: no-repeat; background-position: center center; -webkit-transition-timing-function: ease-in-out; }
+    .iOS_assistive_icon { -webkit-box-align: end; -webkit-box-pack: center; opacity: 1; -webkit-transition-duration: 300ms; width: 57px; height: 57px; position: absolute; left: 0; top: 0; background-repeat: no-repeat; background-position: center center; -webkit-transition-timing-function: ease-in-out }
     .iOS_assistive_icon span { display: -webkit-inline-box; color: white; font-size: 12px; font-family: arial; -webkit-transform: translate3d( 0, 11px, 0 ) }
     .iOS_assistive_basePoint { background: url( ../resource/images/assistive/assistivePoint.png ) no-repeat center center; position: absolute; left: 0; top: 0 }
 
