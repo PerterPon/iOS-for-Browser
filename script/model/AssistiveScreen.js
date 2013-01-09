@@ -190,7 +190,7 @@ define( function( require, exports, module ){
             }
 
             /**
-             * [assistiveOptionsClick 当展现了assistive的时候，body上的单击时间]
+             * [assistiveOptionsClick 当展现了assistive的时候，body上的单击事件]
              * @param  {MouseEvent} event         [事件对象]
              * @return {void}
              */
@@ -199,6 +199,11 @@ define( function( require, exports, module ){
                 optionsShow = false;
             }
 
+            /**
+             * [assistiveFuncIconClick 单击了辅助界面上的功能按钮之后会调用如下函数]
+             * @param  {[type]} event [事件对象]
+             * @return {[type]}       [description]
+             */
             function assistiveFuncIconClick( event ) {
                 var target  = event.target,
                     btnName = target.attributes.name.value,
@@ -206,7 +211,7 @@ define( function( require, exports, module ){
                 optionsShow = false;
                 sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ curPos, curDisplayIcons ] );
                 switch( btnName ){
-                    case 'home' : 
+                    case 'home' :
                         Event.dispatchEvent( 'homeButtonClick' );
                         break;
                 }

@@ -54,7 +54,8 @@ define( function() {
             icon.style.webkitTransitionDuration = sttcs.assistiveDuration;
             icon.style.webkitTransform = 'translate3d('+ position.x +'px, '+ position.y +'px, 0)';
             icon.addEventListener( 'webkitTransitionEnd', autoTranslateComplete );
-            function autoTranslateComplete() {
+            function autoTranslateComplete( event ) {
+                event.stopPropagation();
                 icon.style.webkitTransitionDuration = '0';
                 icon.removeEventListener( 'webkitTransitionEnd', autoTranslateComplete );
                 sttcs.Util.notify( sttc.controller, 'assistivePointAutoTranslateComplete' );
@@ -79,18 +80,16 @@ define( function() {
                 data  = icons[ i ];
                 pos   = data[ 'position' ];
                 style = 'background:url(./resource/images/assistive/'+ data[ 'name' ] +'.png);display:none'
-                html +=
+                html  =
                 '<div class="'+ sttcs[ 'assistive'+ data[ 'text' ] ] +" "+ sttcs.assistiveIcon +'" name='+ data[ "name" ] +' style='+ style +'>'+
                     '<span>'+ data[ 'text' ] +'</span>'+
                 '</div>';
                 funcIcon = $( html ).click( this.__funcIconClickHandle );
-                // funcIcon[ 0 ].addEventListener( 'click', this.__funcIconClickHandle );
                 this._getEl().append( funcIcon );
             }
         },
 
         EshowAssistiveOptions : function( position, secondaryIcon ) {
-            console.log( 123123 );
             var sttcs = this.self,
                 icon  = this._getEl()[ 0 ],
                 that  = this;
@@ -135,10 +134,13 @@ define( function() {
                 width  : sttcs.assistiveIconWidth + 'px',
                 height : sttcs.assistiveIconHeight + 'px'
             } );
-            icon[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ) {
+            icon[ 0 ].addEventListener( 'webkitTransitionEnd', iconTransCompelte );
+            function iconTransCompelte( event ) {
                 event.stopPropagation();
                 this.style.webkitTransitionDuration = '0';
-            } );
+                this.removeEventListener( 'webkitTransitionEnd', iconTransCompelte );
+                sttcs.Util.notify( that.values.controller, 'assistiveHideComplete' );
+            }
             this._getElCacheByCls( sttcs.assistiveBasePoint ).css( {
                 opacity : 1
             } );
@@ -152,7 +154,6 @@ define( function() {
                 event.stopPropagation();
                 this.removeEventListener( 'webkitTransitionEnd', tranEndFuc );
                 this.style.display = 'none';
-                sttcs.Util.notify( that.values.controller, 'assistiveHideComplete' );
             }
         },
 
@@ -184,7 +185,6 @@ define( function() {
             });
             this.__bodyClickHandle     = Util.bind( this.__bodyClickHandle, this );
             this.__funcIconClickHandle = Util.bind( this.__funcIconClickHandle, this );
-            // this._getElByCls( sttc.assistiveIcon ).not( '.' + sttc.assistiveBasePoint ).live( 'click', this.__funcIconClickHandle );
         },
 
         __bodyClickHandle : function( event ) {
@@ -197,7 +197,7 @@ define( function() {
             var sttcs = this.self;
             sttcs.Util.notify( this.values.controller, 'assistiveFuncIconClick', [ event ] );
         }
-        
+
     } );
 
     return VAssistiveScreen;

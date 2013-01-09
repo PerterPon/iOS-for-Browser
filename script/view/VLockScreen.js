@@ -102,6 +102,8 @@ define( function( require, exports, module ){
             this.__updateTime( time );
             sttc.slider    = this._getElByCls( sttcs.slider );
             sttc.sliderImg = this._getElByCls( sttcs.sldrImg );
+            //FXIME:test
+            this._getEl().append( '<div style="width:100%;height:100%;background:white;position:absolute;z-index:98"></div>' );
         },
 
         _attachDomEvent : function(){
