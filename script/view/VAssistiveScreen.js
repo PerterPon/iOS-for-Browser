@@ -62,15 +62,7 @@ define( function() {
         },
 
         EdisableTransparent : function() {
-            // var oriDuration = this._getEl().css( '-webkit-transition-duration' );
-            // this._getEl().css( '-webkit-transition-duration', this.self.assistiveDuration );
             this._getEl().css( 'opacity', '1' );
-            // this._getEl()[ 0 ].addEventListener( 'webkitTransitionEnd', tranEndFuc );
-            // function tranEndFuc( event ) {
-            //     event.stopPropagation();
-            //     this.style.webkitTransitionDuration = oriDuration;
-            //     this.removeEventListener( 'webkitTransitionEnd', tranEndFuc );
-            // }
         },
 
         EenableTransparent : function() {
@@ -81,8 +73,8 @@ define( function() {
             var sttc  = this.values,
                 sttcs = this.self,
                 icons = renderData[ 'icon' ],
-                html  = "", 
-                area, style;
+                html  = "",
+                area, style, funcIcon;
             for( var i = 0, data, pos; i < icons.length; i++ ) {
                 data  = icons[ i ];
                 pos   = data[ 'position' ];
@@ -91,11 +83,14 @@ define( function() {
                 '<div class="'+ sttcs[ 'assistive'+ data[ 'text' ] ] +" "+ sttcs.assistiveIcon +'" name='+ data[ "name" ] +' style='+ style +'>'+
                     '<span>'+ data[ 'text' ] +'</span>'+
                 '</div>';
+                funcIcon = $( html ).click( this.__funcIconClickHandle );
+                // funcIcon[ 0 ].addEventListener( 'click', this.__funcIconClickHandle );
+                this._getEl().append( funcIcon );
             }
-            this._getEl().append( html );
         },
 
         EshowAssistiveOptions : function( position, secondaryIcon ) {
+            console.log( 123123 );
             var sttcs = this.self,
                 icon  = this._getEl()[ 0 ],
                 that  = this;
@@ -112,7 +107,7 @@ define( function() {
             icon.addEventListener( 'webkitTransitionEnd', areaTransitionEnd );
             function areaTransitionEnd( event ) {
                 event.stopPropagation();
-                icon.removeEventListener( 'webkitTransitionEnd', areaTransitionEnd );
+                this.removeEventListener( 'webkitTransitionEnd', areaTransitionEnd );
                 document.body.addEventListener( 'click', that.__bodyClickHandle );
             }
             for( var i in secondaryIcon ) {
@@ -131,7 +126,8 @@ define( function() {
         EhideAssistiveOptions : function( position, secondaryIcon ) {
             var icon  = this._getEl(),
                 sttcs = this.self,
-                that  = this;
+                that  = this,
+                fucIconStyle;
             document.body.removeEventListener( 'click', this.__bodyClickHandle );
             icon[ 0 ].style.webkitTransitionDuration = sttcs.assistiveDuration;
             icon.css( {
@@ -144,7 +140,7 @@ define( function() {
                 this.style.webkitTransitionDuration = '0';
             } );
             this._getElCacheByCls( sttcs.assistiveBasePoint ).css( {
-                opacity : 1 
+                opacity : 1
             } );
             for( var i in secondaryIcon ) {
                 this._getElCacheByCls( 'iOS_assistive_' + i ).css( {
@@ -186,12 +182,20 @@ define( function() {
             this._getEl()[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ) {
                 event.stopPropagation();
             });
-            this.__bodyClickHandle = Util.bind( this.__bodyClickHandle, this );
+            this.__bodyClickHandle     = Util.bind( this.__bodyClickHandle, this );
+            this.__funcIconClickHandle = Util.bind( this.__funcIconClickHandle, this );
+            // this._getElByCls( sttc.assistiveIcon ).not( '.' + sttc.assistiveBasePoint ).live( 'click', this.__funcIconClickHandle );
         },
 
         __bodyClickHandle : function( event ) {
             var sttcs = this.self;
-            sttcs.Util.notify( this.values.controller, 'assistiveOptionsClick', [ event, this._getElCacheByCls( sttcs.assistiveArea )[ 0 ] ] );
+            sttcs.Util.notify( this.values.controller, 'assistiveOptionsClick', [ event ] );
+        },
+
+        __funcIconClickHandle : function( event ) {
+            event.stopPropagation();
+            var sttcs = this.self;
+            sttcs.Util.notify( this.values.controller, 'assistiveFuncIconClick', [ event ] );
         }
         
     } );

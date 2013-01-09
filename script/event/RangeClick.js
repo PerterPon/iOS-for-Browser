@@ -19,7 +19,7 @@ define( function( require, exports, model ){
         //按下时间默认值
         _sliderTimeThreshold : 200,
 
-        //触发rangeClick时所执行的函数
+        //触发rangeClick时所执行的函数,此函数的返回值须为true,否则会执行touchEnd事件.
         _rangeClick          : function(){
             return true;
         },

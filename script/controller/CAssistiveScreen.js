@@ -21,6 +21,7 @@ define( function( require, exports, module ){
                 [ 'disableTransparent' ],
                 [ 'renderChild' ],
                 [ 'assistiveOptionsClick' ],
+                [ 'assistiveFuncIconClick' ],
                 [ 'assistiveHideComplete' ]
             ]
         },
@@ -73,8 +74,12 @@ define( function( require, exports, module ){
             this.self.Util.notify( this.values.view, 'renderChild', [ renderData ] );
         },
 
-        EassistiveOptionsClick : function( event, assistiveNode ){
-            this.self.Util.notify( this.values.model, 'assistiveOptionsClick', [ event, assistiveNode ] );
+        EassistiveOptionsClick : function( event ){
+            this.self.Util.notify( this.values.model, 'assistiveOptionsClick', [ event ] );
+        },
+
+        EassistiveFuncIconClick : function( event ) {
+            this.self.Util.notify( this.values.model, 'assistiveFuncIconClick', [ event ] );
         },
 
         EassistiveHideComplete : function() {

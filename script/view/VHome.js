@@ -12,7 +12,7 @@ define( function( require, exports, module ){
                 sttc    = this.values,
                 sttcs   = this.self;
             $( function(){
-                $( '#iOS_homeButton, .iOS_assistive_home' ).live( 'click', function(){
+                $( '#iOS_homeButton' ).live( 'click', function(){
                     sttcs.Util.notify( sttc.controller, 'homeButtonClick' );
                 });
             });
