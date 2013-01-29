@@ -1,5 +1,5 @@
 ﻿
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     "use strick";
 
     require( './BaseView' );
@@ -22,13 +22,13 @@ define( function( require, exports, module ){
             thisPos : null
         },
 
-        Etranslate : function( x, y ){
+        Etranslate : function( x, y ) {
             var sttc  = this.values,
                 sttcs = this.self;
             sttc.slider[ 0 ].style.webkitTransform = 'translate3d('+ x +'px, '+ y +'px, 0)'; 
         },
 
-        EautoTranslate : function( tarPos, animTime ){
+        EautoTranslate : function( tarPos, animTime ) {
             var sttc   = this.values,
                 slider = sttc.slider[ 0 ],
                 Event  = window.iOS.Event;
@@ -36,14 +36,14 @@ define( function( require, exports, module ){
             slider.style.webkitTransform = 'translate3d('+ tarPos +'px, 0, 0)';
             slider.addEventListener( 'webkitTransitionEnd', translateCompletedHandler );
             sttc.thisPos = tarPos;
-            function translateCompletedHandler(){
+            function translateCompletedHandler() {
                 slider.style.webkitTransitionDuration = '0';
                 Event.dispatchEvent( 'multiScreenAutoTranslateComplete', [ sttc.thisPos, sttc.cfg.index ] );
                 slider.removeEventListener( 'webkitTransitionEnd', translateCompletedHandler );
             }
         },
 
-        _initView : function(){
+        _initView : function() {
             this.callParent();
             var sttc       = this.values,
                 sttcs      = this.self,

@@ -23,6 +23,9 @@ define( function( require, exports, module ){
                 }, {
                     "name" : "clock",
                     "text"  : "时钟"
+                }, {
+                    "name" : "notes",
+                    "text"  : "备忘录"
                 }],
                 [{
                     "name" : "appstore",

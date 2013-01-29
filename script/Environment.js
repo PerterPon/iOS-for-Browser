@@ -1,6 +1,6 @@
 //检查执行环境，包括移动设备和桌面设备。
 $(function(){
-    "use strick";
+    "use strict";
 
     var height, width, divice,
         sUserAgent = ( window.navigator.userAgent ).toLowerCase();
