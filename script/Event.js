@@ -3,7 +3,7 @@
  * [ 系统级别的事件都会存储在这里 ]
  */
 define( function( require ){
-    "use strick";
+    "use strict";
 
     var Util = require( '../util/Util' );
     window.iOS.Event = {

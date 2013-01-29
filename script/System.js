@@ -1,6 +1,6 @@
-﻿
+
 define( function( require, exports, module ){
-    "use strick";
+    "use strict";
 
     var height, width, divice,
         sUserAgent = ( window.navigator.userAgent ).toLowerCase();

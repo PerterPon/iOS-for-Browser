@@ -1,6 +1,6 @@
 
 define( function( require, exports, model ){
-    "use strick";
+    "use strict";
 
     require( './BaseEvent' );
     Ext.define( "Swip", {

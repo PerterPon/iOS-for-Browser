@@ -1,6 +1,6 @@
-﻿
+
 define( function() {
-    "use strick";
+    "use strict";
 
     Ext.define( 'VAssistiveScreen', {
         extend : 'BaseView',

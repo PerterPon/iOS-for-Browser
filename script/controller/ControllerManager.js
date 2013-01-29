@@ -1,6 +1,6 @@
 
 define( function( require, exports, module ){
-    "use strick";
+    "use strict";
 
     require( '../BaseManager' );
     Ext.define( 'ControllerManager', {

@@ -1,7 +1,7 @@
 //供webSocket使用
 
 define( function( require, exports, module ){
-    "use strick";
+    "use strict";
 
     var eventTree    = {},
         requestQueue = [],

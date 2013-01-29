@@ -1,6 +1,6 @@
-﻿
+
 define( function( require, exports, module ){
-    "use strick";
+    "use strict";
 
     require( './BaseModel' );
     Ext.define( 'AppScreen', {

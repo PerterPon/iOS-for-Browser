@@ -1,6 +1,6 @@
-﻿
+
 define( function( require ){
-    "use strick";
+    "use strict";
 
     var imgs = {
         system : './resource/images/background/background.jpg',

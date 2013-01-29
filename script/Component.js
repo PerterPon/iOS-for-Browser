@@ -1,6 +1,6 @@
-﻿//所有类的基类
+//所有类的基类
 define( function( require, exports, module ){
-    "use strick";
+    "use strict";
 
     Ext.define( 'Component', {
 

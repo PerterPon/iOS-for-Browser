@@ -1,10 +1,10 @@
-﻿
+
 /**
  * 一个单击事件，如果从按下到弹起，X轴或者Y轴的距离超过阀值，或者按住的时间超过阀值，则不会触发此事件。
  * 可在外面单独处理touchStart，move和stop事件，在构造函数中通过cfg参数传入。
  */
 define( function( require, exports, model ){
-    "use strick";
+    "use strict";
 
     require( './BaseEvent' );
     Ext.define( "RangeClick", {
