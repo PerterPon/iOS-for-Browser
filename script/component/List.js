@@ -3,7 +3,7 @@
  * List组件均只会根据数据返回HTML，而不会进行任何和DOM相关的操作，list中只会处理list自己的逻辑。
  */
 define( function( require, exports, model ){
-    "use strict";
+    //"use strict";
 
     require( '../Component' );
     var RangeClick = require( '../event/RangeClick' );

@@ -1,6 +1,6 @@
 //检查执行环境，包括移动设备和桌面设备。
 $(function(){
-    "use strict";
+    //"use strict";
 
     var height, width, divice,
         sUserAgent = ( window.navigator.userAgent ).toLowerCase();
@@ -80,7 +80,7 @@ $(function(){
         var img = new Image();
         img.src = './resource/images/boot/bootLogo.png';
         img.onload = function(){
-            delete img;
+            img = undefined;
         }
     }
 

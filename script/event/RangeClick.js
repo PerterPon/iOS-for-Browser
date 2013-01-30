@@ -4,7 +4,7 @@
  * 可在外面单独处理touchStart，move和stop事件，在构造函数中通过cfg参数传入。
  */
 define( function( require, exports, model ){
-    "use strict";
+    //"use strict";
 
     require( './BaseEvent' );
     Ext.define( "RangeClick", {

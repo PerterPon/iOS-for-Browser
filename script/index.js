@@ -1,6 +1,6 @@
 
 define( function( require, exports, module ){
-    "use strict";
+    //"use strict";
     
     var iterator = require( './Iterator' ),
         cfg      = require( './config/global' );

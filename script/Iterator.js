@@ -1,6 +1,6 @@
 
 define( function( require ){
-    "use strict";
+    //"use strict";
 
     Ext.define( 'Iterator', {
 

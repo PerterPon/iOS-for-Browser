@@ -1,6 +1,6 @@
 
 define( function( require, exports, module ){
-    "use strict";
+    //"use strict";
 
     var BaseIOS     = require( '../model/BaseIOS' ),
         TopBar      = require( '../model/TopBar' ),

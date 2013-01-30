@@ -1,6 +1,6 @@
 
 define( function( require, exports, model ){
-    "use strict";
+    //"use strict";
 
     Ext.define( 'BaseEvent', {
 

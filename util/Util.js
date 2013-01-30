@@ -1,7 +1,7 @@
 //nodejs和前端代码公用的文件
 
 define( function( require, exports, module ){
-    "use strict";
+    //"use strict";
 
     /**
      * [deepCopy 数组以及对象的深拷贝]

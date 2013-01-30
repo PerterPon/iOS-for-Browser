@@ -1,6 +1,6 @@
 
 define( function( require, exports, module ){
-    "use strict";
+    //"use strict";
 
     require( './IconContent' );
     Ext.define( 'AppIcon', {
