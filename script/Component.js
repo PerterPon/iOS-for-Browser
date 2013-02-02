@@ -29,7 +29,7 @@ define( function( require, exports, module ){
          */
         values : {},
 
-        constructor : function( cfg ){
+        constructor : function( cfg ) {
             this._clearValues();
             this._applyCfg( cfg );
             this._registerSelf();
@@ -40,16 +40,16 @@ define( function( require, exports, module ){
             this.values = {};
         },
 
-        _applyCfg : function( cfg ){
+        _applyCfg : function( cfg ) {
             var sttc  = this.values;
-            for( var i in cfg ){
+            for( var i in cfg ) {
                 if( i == 'subView' )
                     continue;
                 sttc[ i ] = cfg[ i ];
             }
         },
 
-        _registerSelf : function(){
+        _registerSelf : function() {
             var sttc    = this.values,
                 sttcs   = this.self,
                 manager = sttcs.manager;
@@ -60,15 +60,15 @@ define( function( require, exports, module ){
          * 添加事件
          * @return {void}
          */
-        _attachEventListener : function(){
+        _attachEventListener : function() {
             var sttcs   = this.self,
                 events  = sttcs.eventList,
                 Util    = sttcs.Util,
                 that    = this,
                 manager = sttcs.manager,
                 view, eventName, eventBody, scope;
-            for( var i = 0; i < events.length; i++ ){
-                view   = manager.get( events[ i ][ 1 ] || that );
+            for( var i  = 0; i < events.length; i++ ) {
+                view    = manager.get( events[ i ][ 1 ] || that );
                 eventName = events[ i ][ 0 ];
                 Util.listen( view, eventName, view[ 'E' + eventName ], that );
             }
