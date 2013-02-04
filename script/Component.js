@@ -1,5 +1,5 @@
 //所有类的基类
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     Ext.define( 'Component', {

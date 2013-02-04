@@ -33,7 +33,7 @@ define( function( require, exports, module ){
 
         EtopBarBlack : function(){
             this.self.Util.notify( this.values.view, 'topBarBlack' );
-        }
+        } 
 
     });
 
