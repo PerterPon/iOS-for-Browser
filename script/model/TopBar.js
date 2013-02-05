@@ -39,7 +39,7 @@ define( function( require, exports, module ){
             Util.notify( ctrl, 'updateTime', [ time ] );
         },
 
-        __openAppHandle : function( hideTopBar ){
+        __openAppHandle : function( appname, hideTopBar ){
             hideTopBar && this.self.Util.notify( this.values.controller, 'hideTopbar' );
         },
 

@@ -36,7 +36,7 @@ define( function( require, exports, module ) {
             this._attachEventListener();
         },
 
-        _clearValues : function(){
+        _clearValues : function() {
             this.values = {};
         },
 

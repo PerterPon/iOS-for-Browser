@@ -19,7 +19,7 @@ define( function( require, exports, module ){
             this.self.Util.notify( this.values.controller, 'closeApp' );
         },
 
-        __openAppHandle : function(){
+        __openAppHandle : function( appname, hideTopBar ){
             this.self.Util.notify( this.values.controller, 'openApp' );
         }
 

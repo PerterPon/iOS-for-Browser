@@ -105,7 +105,8 @@ define( function( require, exports, module ){
         _initInnerDom : function(){
             var sttcs = this.self,
                 sttc  = this.values,
-                htmlData = '<div class="'+ sttcs.scaleLayer +'">' +
+                htmlData = 
+                    '<div class="'+ sttcs.scaleLayer +'">' +
                         '<div class="'+ sttcs.shakeLayer +'">' +
                             '<img class="'+ sttcs.iconImg +'" src="resource/images/icons/icon_'+ sttc.name.substr( 1 ) +'.png" />' +
                             '<div class='+ sttcs.shadeLayer +'>' +
@@ -113,7 +114,7 @@ define( function( require, exports, module ){
                             '<span class="'+ sttcs.iconName +'">'+ sttc.cfg.text +'</span>' +
                         '</div>' +
                     '</div>';
-            this._getEl().html( htmlData );
+            this._getEl().html( htmlData ).attr( 'appname', sttc.name.substr( 1 ) );
         },
 
         _afterRender : function(){
