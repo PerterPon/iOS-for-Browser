@@ -1,5 +1,5 @@
 
-define( function( require ){
+define( function( require ) {
     //"use strict";
 
     Ext.define( 'Iterator', {
@@ -18,7 +18,7 @@ define( function( require ){
             queue  : [],
         },
 
-        constructor : function(){
+        constructor : function() {
             var sttcs = this.self;
             sttcs.Util.listen( this, 'iteratorComplete', this.__iteratorComplete );
         },
@@ -28,30 +28,32 @@ define( function( require ){
          * @param  {[type]} cfg [配置文件信息]
          * @return {void}
          */
-        itrtrView : function( cfg ){
+        itrtrView : function( cfg ) {
             var sttc  = this.values,
                 queue = sttc.queue; 
             queue[ queue.length - 1 ][ 'cfg' ] = cfg;
-            if( queue.length == 1 )
+            if( queue.length == 1 ) {
                 this.__doItrtr( cfg );
+            }
         },
 
         /**
          * [setPreDom 设置当前配置文件的父节点ID，注意，ID中不能有井号，会被替换成空]
          * @param {[type]} id [父节点ID]
          */
-        setPreDom : function( id ){
+        setPreDom : function( id ) {
             var sttc     = this.values,
                 queue    = sttc.queue,
                 selector = id.replace( '#', '' );
-            queue.push({
+            queue.push( {
                 'preDom' : selector
-            });
-            if( queue.length == 1 )
+            } );
+            if( queue.length == 1 ) {
                 this.__doSetPreDom( selector );
+            }
         },
 
-        __doSetPreDom : function( selector ){
+        __doSetPreDom : function( selector ) {
             this.values.preDom = document.getElementById( selector );
         },
 
@@ -62,33 +64,36 @@ define( function( require ){
          * @return  {Void}
          * @protected
          */
-        __doItrtr : function( tCfg, dom ){
+        __doItrtr : function( tCfg, dom ) {
             var sttcs  = this.self,
                 sttc   = this.values,
                 model, cls, id, html, instance, preDom, cfg;
-            for( var i = 0; i < tCfg.length; i++ ){
+            for( var i = 0; i < tCfg.length; i++ ) {
                 cfg    = tCfg[ i ];
                 model  = cfg[ 'class' ];
                 cls    = '';
                 id     = 'ios-' + sttc.curIdx;
-                for( var j = 0; j < ( cfg.clsList || [] ).length; j++ ){
+                for( var j = 0; j < ( cfg.clsList || [] ).length; j++ ) {
                     !cfg.clsList[ j ] || ( cls += cfg.clsList[ j ] + ' ' );
                 }
                 html    = document.createElement( 'div' );
                 html.id = id;
                 html.className = cls;
-                if( cfg.flex )
+                if( cfg.flex ) {
                     html.style[ '-webkit-box-flex' ] = cfg.flex;
-                if( cfg.height )
+                }
+                if( cfg.height ) {
                     html.style[ 'height' ] = cfg.height;
-                if( cfg.width )
+                }
+                if( cfg.width ) {
                     html.style[ 'width' ]  = cfg.width;
+                }
                 preDom = dom || sttc.preDom || document.body;
                 preDom.appendChild( html );
                 cfg[ 'selector' ] = '#' + id;
                 new model( cfg );
                 sttc.curIdx++;
-                if( cfg.subView && cfg.subView.length ){
+                if( cfg.subView && cfg.subView.length ) {
                     this.__doItrtr( cfg.subView, html );
                 }
             }
@@ -103,8 +108,9 @@ define( function( require ){
             var sttc  = this.values,
                 queue = sttc.queue; 
             queue.shift();
-            if( !queue.length )
+            if( !queue.length ) {
                 return;
+            }
             this.__doSetPreDom( queue[ 0 ][ 'preDom' ] );
             this.__doItrtr( queue[ 0 ][ 'cfg' ] );
         }

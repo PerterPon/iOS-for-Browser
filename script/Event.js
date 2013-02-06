@@ -2,7 +2,7 @@
 /**
  * [ 系统级别的事件都会存储在这里 ]
  */
-define( function( require ){
+define( function( require ) {
     //"use strict";
 
     var Util = require( '../util/Util' );
@@ -15,7 +15,7 @@ define( function( require ){
          * @param {Function} eventBody [事件处理函数]
          * @param {Object} tarObj    [事件处理函数宿主对象]
          */
-        addEvent : function( eventName, eventBody, tarObj ){
+        addEvent : function( eventName, eventBody, tarObj ) {
             var evtPool = this.eventPool;
             evtPool[ eventName ] ? '' : evtPool[ eventName ] = [];
             evtPool[ eventName ].push(
@@ -29,16 +29,11 @@ define( function( require ){
          * @param  {Array}  params    [参数]
          * @return {void}
          */
-        dispatchEvent : function( eventName, params ){
-            try {
-                var evtPool = this.eventPool,
-                    evtIns  = evtPool[ eventName ];
-                for( var i = 0; i < evtIns.length; i++ ){
-                    evtIns[ i ].apply( null, params );
-                }
-            } catch( e ){
-                console.log( e );
-                console.log( eventName + ' - there is no such event added!' );
+        dispatchEvent : function( eventName, params ) {
+            var evtPool = this.eventPool,
+                evtIns  = evtPool[ eventName ];
+            for( var i = 0; i < evtIns.length; i++ ) {
+                evtIns[ i ].apply( null, params );
             }
         },
 
@@ -47,9 +42,9 @@ define( function( require ){
          * @param  {[type]} eventName [description]
          * @return {[type]}           [description]
          */
-        clearEvent : function( eventName ){
+        clearEvent : function( eventName ) {
             this.eventPool[ eventName ] = null;
             delete this.eventPool[ eventName ];
         }
     };
-});
+} );

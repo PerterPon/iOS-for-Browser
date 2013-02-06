@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     require( './BaseView' );
@@ -44,7 +44,7 @@ define( function( require, exports, module ){
             shaker              : null
         },
 
-        EinitComplete : function( inPos, outPos ){
+        EinitComplete : function( inPos, outPos ) {
             var sttc = this.values,
                 funs = this.__getShakeStartEndHandleFun();
             sttc.shakeStartHandle = funs[ 'shakeStart' ];
@@ -52,57 +52,57 @@ define( function( require, exports, module ){
             this.__initIconView( inPos, outPos );
         },
 
-        EiconIn : function( position ){
+        EiconIn : function( position ) {
             this.__doSetIconPos( position );
         },
 
-        EiconOut : function( position ){
+        EiconOut : function( position ) {
             this.__doSetIconPos( position );
         },
 
-        EstartShake : function(){
+        EstartShake : function() {
             this.values.shakeStartHandle();
         },
 
-        EstopShake : function(){
+        EstopShake : function() {
             this.values.shakeStopHandle();
         },
 
-        EchangePosition : function( position ){
+        EchangePosition : function( position ) {
             this.__doSetIconPos( position );
         },
 
-        EshowShadeLayer : function(){
+        EshowShadeLayer : function() {
             this.values.shader.show().css( 'background', 'rgba( 0, 0, 0, 0.3 )' );
         },
 
-        EhideShadeLayer : function(){
+        EhideShadeLayer : function() {
             this.values.shader.hide().css( 'background', 'rgba( 0, 0, 0, 0 )' );
         },
 
-        EshadeLayerTransparent : function(){
+        EshadeLayerTransparent : function() {
             this.values.shader.css( 'background', 'rgba( 0, 0, 0, 0 )' );
         },
 
-        EshadeLayerBlack : function(){
+        EshadeLayerBlack : function() {
             this.values.shader.css( 'background', 'rgba( 0, 0, 0, 0.3 )' );
         },
 
-        EdragStartTranslate : function( scaleMultiple ){
+        EdragStartTranslate : function( scaleMultiple ) {
             var scaler = this._getElCacheByCls( this.self.scaleLayer )[ 0 ];
             scaler.style.webkitTransform = 'scale3d('+ scaleMultiple +', '+ scaleMultiple +', '+ scaleMultiple +')';
             //FIXME
             scaler.style.opacity = '0.5';
         },
 
-        EdragEndTranslate : function(){
+        EdragEndTranslate : function() {
             var scaler = this._getElCacheByCls( this.self.scaleLayer )[ 0 ];
             scaler.style.webkitTransform = 'scale3d( 1, 1, 1 )';
             //FIXME
             scaler.style.opacity = '1';
         },
 
-        _initInnerDom : function(){
+        _initInnerDom : function() {
             var sttcs = this.self,
                 sttc  = this.values,
                 htmlData = 
@@ -114,41 +114,44 @@ define( function( require, exports, module ){
                             '<span class="'+ sttcs.iconName +'">'+ sttc.cfg.text +'</span>' +
                         '</div>' +
                     '</div>';
-            this._getEl().html( htmlData ).attr( 'appname', sttc.name.substr( 1 ) );
+            this._getEl().html( htmlData ).attr( {
+                'appname' : sttc.name.substr( 1 ),
+                'topbar'  : JSON.stringify( sttc.cfg.topBar )
+            } );
         },
 
-        _afterRender : function(){
+        _afterRender : function() {
             var sttc    = this.values,
                 sttcs   = this.self;
             sttc.shaker = this._getElByCls( sttcs.shakeLayer );
             sttc.shader = this._getElByCls( sttcs.shadeLayer );
         },
 
-        _attachDomEvent : function(){
+        _attachDomEvent : function() {
             var sttc  = this.values,
                 sttcs = this.self,
                 ctrl  = sttc.controller,
                 Util  = sttcs.Util,
                 that  = this,
                 icon  = this._getEl()[ 0 ];
-            this._getEl().on( $.support.touchstart, function( event ){
+            this._getEl().on( $.support.touchstart, function( event ) {
                 Util.notify( ctrl, 'touchStart', [ event ] );
-            }).on( $.support.touchmove, function( event ){
+            }).on( $.support.touchmove, function( event ) {
                 Util.notify( ctrl, 'touchMove', [ event ] );
-            }).on( $.support.touchstop, function( event ){
+            }).on( $.support.touchstop, function( event ) {
                 // event.stopPropagation
                 Util.notify( ctrl, 'touchEnd', [ event ] );
             });
-            this._getElCacheByCls( sttcs.shadeLayer ).on( $.support.touchstart, function( event ){
+            this._getElCacheByCls( sttcs.shadeLayer ).on( $.support.touchstart, function( event ) {
                 event.stopPropagation();
                 icon.style.webkitTransitionDuration = '0';
                 icon.style.webkitTransitionDelay    = '0';
                 icon.style.zIndex                   = '1';
                 Util.notify( ctrl, 'dragStart', [ event ] );
-            }).on( $.support.touchmove, function( event ){
+            }).on( $.support.touchmove, function( event ) {
                 event.stopPropagation();
                 Util.notify( ctrl, 'dragMove', [ event ] );
-            }).on( $.support.touchstop, function(){
+            }).on( $.support.touchstop, function() {
                 event.stopPropagation();
                 //FIXME
                 icon.style.webkitTransitionDuration = '300ms';
@@ -157,7 +160,7 @@ define( function( require, exports, module ){
                 //FIXME
                 icon.style.webkitTransitionDelay    = '100ms';
             });
-            this._getElByCls( sttcs.scaleLayer )[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ){
+            this._getElByCls( sttcs.scaleLayer )[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ) {
                 event.stopPropagation();
             });
         },
@@ -166,13 +169,14 @@ define( function( require, exports, module ){
          * [__initIconView 初始化图标，包括位置等]
          * @return {void}
          */
-        __initIconView : function( inPos, outPos ){
+        __initIconView : function( inPos, outPos ) {
             var sttc = this.values,
                 cfg  = sttc.cfg;
-            if( cfg.current || cfg.dock )
+            if( cfg.current || cfg.dock ) {
                 this.__doSetIconPos( outPos );
-            else
+            } else {
                 this.__doSetIconPos( inPos );
+            }
         },
 
         /**
@@ -180,7 +184,7 @@ define( function( require, exports, module ){
          * @param  {Object} position [具体的位置信息]
          * @return {void}
          */
-        __doSetIconPos : function( position ){
+        __doSetIconPos : function( position ) {
             var icon = this._getEl()[ 0 ];
             icon.style.webkitTransform = 'translate3d('+ position.x +'px, '+ position.y +'px, 0)';
         },
@@ -190,7 +194,7 @@ define( function( require, exports, module ){
          * @param  {String}  gesture [手势]
          * @return {Function}
          */
-        __getShakeStartEndHandleFun : function(){
+        __getShakeStartEndHandleFun : function() {
             var sttc    = this.values,
                 sttcs   = this.self,
                 shaker  = sttc.shaker[ 0 ],
@@ -203,30 +207,31 @@ define( function( require, exports, module ){
                 'shakeStart' : shakeStartHandle,
                 'shakeStop'  : shakeStopHandle 
             };
-            function shakeHandle( event ){
+            function shakeHandle( event ) {
                 event.stopPropagation();
                 curDeg *= -1;
                 shaker.style.webkitTransform = 'rotateZ(' + curDeg + 'deg)';
             }
-            function dragAutoTranslateComplete( event ){
+            function dragAutoTranslateComplete( event ) {
                 event.stopPropagation();
                 sttcs.Util.notify( sttc.controller, 'dragAutoTranslateComplete' );
                 //FIXME
                 this.style.webkitTransitionDuration = '400ms';
                 this.style.zIndex = 0;
             }
-            function shakeStartHandle(){
-                if( shaking )
+            function shakeStartHandle() {
+                if( shaking ) {
                     return;
+                }
                 sttc.shader.show().css( 'background', 'rgba( 0, 0, 0, 0 )' );
-                var random = !Math.round(Math.random()) ? -1 : 1;
+                var random = !Math.round( Math.random() ) ? -1 : 1;
                 icon.addEventListener( 'webkitTransitionEnd', dragAutoTranslateComplete );
-                curDeg = deg * random;
+                curDeg  = deg * random;
                 shaker.style.webkitTransform = 'rotateZ(' + curDeg + 'deg)';
                 shaker.addEventListener( 'webkitTransitionEnd', shakeHandle );
                 shaking = true;
             }
-            function shakeStopHandle(){
+            function shakeStopHandle() {
                 icon.removeEventListener( 'webkitTransitionEnd', dragAutoTranslateComplete );
                 shaker.removeEventListener( 'webkitTransitionEnd', shakeHandle );
                 shaker.style.webkitTransform = 'rotateZ(0)';

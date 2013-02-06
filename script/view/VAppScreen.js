@@ -9,7 +9,8 @@ define( function( require, exports, module ){
         inheritableStatics : {
             eventList : [
                 [ 'openApp' ],
-                [ 'closeApp' ]
+                [ 'closeApp' ],
+                [ 'clearApp' ]
             ]
         },
 
@@ -18,25 +19,27 @@ define( function( require, exports, module ){
         },
 
         _initInnerDom : function(){
-            this.values.appContainer = this._getEl();
         },
 
-        EopenApp : function(){
-            var appContainer = this.values.appContainer[ 0 ];
+        EopenApp : function() {
+            var appContainer = this._getEl()[ 0 ];
             // appContainer.style.display = '';
             setTimeout( function(){
                 appContainer.style.webkitTransform = 'scale3d( 1, 1, 1 )';
             }, 1 );
         },
 
-        EcloseApp : function(){
-            var appContainer = this.values.appContainer[ 0 ];
+        EcloseApp : function() {
+            var appContainer = this._getEl()[ 0 ];
             appContainer.style.webkitTransform = 'scale3d( 0, 0, 0 )';
             appContainer.addEventListener( 'webkitTransitionEnd', appContainerAnimComplete );
             function appContainerAnimComplete(){
                 this.removeEventListener( 'webkitTransitionEnd', appContainerAnimComplete );
-
             }
+        },
+
+        EclearApp : function() {
+            this._getEl().html( '' );
         }
 
     });

@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     require( './BaseModel' );
@@ -12,18 +12,18 @@ define( function( require, exports, module ){
             ]
         },
 
-        _attachEventListener : function(){
+        _attachEventListener : function() {
             this.callParent();
             var sttc  = this.values,
                 Event = window.iOS.Event;
             Event.addEvent( 'unlockComplete', this.__unlockHandler, this );
         },
 
-        _getDefaultData : function(){
+        _getDefaultData : function() {
             return require( '../../resource/defaultData/iconScreen/iconScreen' );
         },
 
-        _handleChildCfg : function(){
+        _handleChildCfg : function() {
             var sttc      = this.values,
                 data      = sttc.data.data,
                 MultiScreen = require( './MultiScreen' ),
@@ -35,12 +35,12 @@ define( function( require, exports, module ){
                 DockIcon  = require( './DockIcon' ),
                 VDockIcon = require( '../view/VDockIcon' ),
                 CDockIcon = require( '../controller/CDockIcon' ),
-                newCfg    = [{
+                newCfg    = [ {
                     "class"    : MultiScreen,
                     "name"     : "multiScreen",
                     "clsList"  : [ "iOS_multiScreen" ],
                     "view"     : VMultiScreen,
-                    "controller" : CMultiScreen,
+                    "controller"  : CMultiScreen,
                     "data"     : {
                         data   : data[ 'screen' ]
                     },
@@ -55,11 +55,11 @@ define( function( require, exports, module ){
                         data  : data[ 'dock' ]
                     },
                     "renderChild" : true
-                }];
+                } ];
             sttc.data.data = newCfg;
         },
 
-        __unlockHandler : function(){
+        __unlockHandler : function() {
             var sttc  = this.values,
                 sttcs = this.self,
                 ctrl  = sttc.controller,
@@ -67,7 +67,7 @@ define( function( require, exports, module ){
             Util.notify( ctrl, 'unlock' );
         }
 
-    });
+    } );
 
     return IconScreen;
-});
+} );

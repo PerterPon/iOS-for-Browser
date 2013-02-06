@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     require( './BaseController' );
@@ -9,16 +9,21 @@ define( function( require, exports, module ){
         inheritableStatics : {
             eventList : [
                 [ 'openApp' ],
-                [ 'closeApp' ]
+                [ 'closeApp' ],
+                [ 'clearApp' ]
             ]
         },
 
-        EopenApp : function(){
+        EopenApp : function() {
             this.self.Util.notify( this.values.view, 'openApp' );
         },
 
-        EcloseApp : function(){
+        EcloseApp : function() {
             this.self.Util.notify( this.values.view, 'closeApp' );
+        },
+
+        EclearApp : function() {
+            this.self.Util.notify( this.values.view, 'clearApp' );
         }
 
     });

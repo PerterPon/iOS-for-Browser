@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     require( './BaseModel' );
@@ -59,35 +59,35 @@ define( function( require, exports, module ){
             rangeClickInstance  : null
         },
 
-        EtouchStart : function( event ){
+        EtouchStart : function( event ) {
             this.values.rangeClickInstance.touchStart( event );
         },
 
-        EtouchMove : function( event ){
+        EtouchMove : function( event ) {
             this.values.rangeClickInstance.touchMove( event );
         },
 
-        EtouchEnd : function( event ){
+        EtouchEnd : function( event ) {
             this.values.rangeClickInstance.touchStop( event );
         },
 
-        EdragStart : function( event ){
+        EdragStart : function( event ) {
             this.values.dragStartHandleFun( event );
         },
 
-        EdragMove : function( event ){
+        EdragMove : function( event ) {
             this.values.dragMoveHandleFun( event );
         },
 
-        EdragEnd : function( event ){
+        EdragEnd : function( event ) {
             this.values.dragEndHandleFun( event );
         },
 
-        EdragAutoTranslateComplete : function(){
+        EdragAutoTranslateComplete : function() {
             this.values.dragAutoTranslating = false;
         },
 
-        _initComplete : function(){
+        _initComplete : function() {
             var sttc     = this.values,
                 sttcs    = this.self,
                 fucs     = this.__getTouchStartEndFun(),
@@ -103,7 +103,7 @@ define( function( require, exports, module ){
             sttcs.Util.notify( sttc.controller, 'initComplete', [ sttc.inPos, sttc.outPos ] );
         },
 
-        _attachEventListener : function(){
+        _attachEventListener : function() {
             this.callParent();
             var Event = window.iOS.Event;
             Event.addEvent( 'iconIn', this.__iconIn, this );
@@ -118,7 +118,7 @@ define( function( require, exports, module ){
          * [__calPosition 计算图标的位置]
          * @return {}
          */
-        __calPosition : function(){
+        __calPosition : function() {
             var sttc = this.values,
                 idx  = sttc.index;
             sttc.inPos  = this.__getInPosition( idx );
@@ -131,7 +131,7 @@ define( function( require, exports, module ){
          * @param  {Number} index [图标对应的index值，从上往下，从左往右]
          * @return {Object}       [相应的位置信息]
          */
-        __getInPosition : function( index ){
+        __getInPosition : function( index ) {
             var posX   = index % 4,
                 System = window.iOS.System,
                 posY   = Math.floor( index / 4 ),
@@ -262,7 +262,7 @@ define( function( require, exports, module ){
                 holding     = false;
             }
 
-            function rangeMove(){
+            function rangeMove() {
                 Util.notify( ctrl, 'shadeLayerTransparent' );
                 Util.notify( ctrl, 'hideShadeLayer' );
                 //判定为touchMove，清除抖动定时器。
@@ -272,7 +272,7 @@ define( function( require, exports, module ){
 
             function rangeClick( event ) {
                 Event.dispatchEvent( 'iconOut' );
-                Event.dispatchEvent( 'openApp', [ event.currentTarget.getAttribute( 'appname' ), true ] );
+                Event.dispatchEvent( 'openApp', [ event.currentTarget.getAttribute( 'appname' ), JSON.parse( event.currentTarget.getAttribute( 'topbar' ) ) ] );
                 //判定为单击事件，清除抖动定时器。
                 clearTimeout( tapTimeOut );
                 holding = false;

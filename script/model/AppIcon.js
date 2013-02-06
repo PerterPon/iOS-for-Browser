@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     require( './IconContent' );
@@ -20,7 +20,7 @@ define( function( require, exports, module ){
             swipeTime : 450
         },
 
-        _attachEventListener : function(){
+        _attachEventListener : function() {
             this.callParent();
             var sttc  = this.values,
                 Event = window.iOS.Event;
@@ -29,7 +29,7 @@ define( function( require, exports, module ){
             Event.addEvent( 'multiScreenAutoTranslate', this.__multiScreenAutoTranslate, this );
         },
 
-        __unlockHandler : function(){
+        __unlockHandler : function() {
             var sttc  = this.values,
                 sttcs = this.self,
                 ctrl  = sttc.controller,
@@ -44,15 +44,15 @@ define( function( require, exports, module ){
          * @param  {Number} distance  [运动的距离]
          * @return {void}
          */
-        __multiScreenTranslate : function( curIdx, direction, distance ){
+        __multiScreenTranslate : function( curIdx, direction, distance ) {
             var sttc  = this.values,
                 sttcs = this.self,
                 Util  = sttcs.Util,
                 ctrl  = sttc.controller,
                 dis   = direction == 'left' ? 1 : -1;
-            if( curIdx == sttc.index ){
+            if( curIdx == sttc.index ) {
                 Util.notify( ctrl, 'translate', [ distance, 0 ] );
-            } else if( curIdx + dis == sttc.index ){
+            } else if( curIdx + dis == sttc.index ) {
                 distance += dis * sttcs.width;
                 Util.notify( ctrl, 'translate', [ distance, 0 ] );
             }
@@ -66,31 +66,35 @@ define( function( require, exports, module ){
          * @param  {Boolean}  isSwip         [当前是否是swip事件]
          * @return {void}
          */
-        __multiScreenAutoTranslate : function( curIdx, direction, distance, swipe ){
+        __multiScreenAutoTranslate : function( curIdx, direction, distance, swipe ) {
             var sttc  = this.values,
                 sttcs = this.self,
                 Util  = sttcs.Util,
                 ctrl  = sttc.controller,
                 moveBack = distance < sttcs.width / 2,
-                posFix   = direction == 'left' ? -1 : 1, 
+                posFix   = 'left' === direction ? -1 : 1, 
                 tarPos, animTime;
             if( ( sttc.index != curIdx ) && ( sttc.index + posFix != curIdx ) )
                 return;
             if( moveBack && !swipe ){
-                animTime    = sttcs.fullTime * distance / sttcs.width;
-                if( curIdx == sttc.index )
-                    tarPos  = 0;
+                animTime     = sttcs.fullTime * distance / sttcs.width;
+                if( curIdx  == sttc.index )
+                    tarPos   = 0;
                 else
-                    tarPos  = sttcs.width * ( direction == 'left' ? 1 : -1 );
+                    tarPos   = sttcs.width * ( 'left' === direction ? 1 : -1 );
             } else {
-                if( swipe )
+                if( swipe ) {
                     animTime = sttcs.swipeTime;
-                else
+                }
+                else {
                     animTime = sttcs.fullTime * ( sttcs.width - distance ) / sttcs.width;
-                if( curIdx == sttc.index )
-                    tarPos  = sttcs.width * ( direction == 'left' ? -1 : 1 );
-                else 
-                    tarPos  = 0;
+                }
+                if( curIdx  == sttc.index ) {
+                    tarPos   = sttcs.width * ( 'left' === direction ? -1 : 1 );
+                }
+                else {
+                    tarPos   = 0;
+                }
             }
             Util.notify( ctrl, 'autoTranslate', [ tarPos, animTime ] );
         }

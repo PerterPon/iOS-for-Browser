@@ -2,7 +2,7 @@
 define( function( require, exports, module ){
     //"use strict";
 
-    Ext.define( "BaseAmin", {
+    Ext.define( "BaseAnim", {
 
         _cur : null,
 
@@ -98,7 +98,7 @@ define( function( require, exports, module ){
             this._tarFrom = tarFrom;
             this._curTo   = curTo;
             this._tarTo   = tarTo;
-        }
+        },
 
         _cover : function( direction ) {
             var tarFrom = {
@@ -164,7 +164,7 @@ define( function( require, exports, module ){
             this._cur.style.zIndex = 1;
             this._tar.style.webkitTransitionDuration = 0;
             this._tar.style.zIndex = 2;
-            this.[ '_' + animType.toLowerCase() ]( direction );
+            this[ '_' + animType.toLowerCase() ]( direction );
             $.extend( true, this._cur.style, this._curFrom );
             $.extend( true, this._cur.style, this._tarFrom );
             setTimeout( function() {
@@ -174,5 +174,5 @@ define( function( require, exports, module ){
         }
     } );
 
-    return BaseAmin;
+    return BaseAnim;
 } );

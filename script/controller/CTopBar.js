@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     require( './BaseController' );
@@ -11,11 +11,12 @@ define( function( require, exports, module ){
                 [ 'updateTime' ],
                 [ 'hideTopbar' ],
                 [ 'topBarBlack' ],
-                [ 'rollBackTopbar' ]
+                [ 'rollBackTopbar' ],
+                [ 'changeColor' ]
             ]
         },
 
-        EupdateTime : function( time ){
+        EupdateTime : function( time ) {
             var sttc  = this.values,
                 sttcs = this.self,
                 Util  = sttcs.Util,
@@ -23,17 +24,21 @@ define( function( require, exports, module ){
             Util.notify( view, 'updateTime', [ time ] );
         },
 
-        EhideTopbar : function(){
+        EhideTopbar : function() {
             this.self.Util.notify( this.values.view, 'hideTopbar' );
         },
 
-        ErollBackTopbar : function(){
+        ErollBackTopbar : function() {
             this.self.Util.notify( this.values.view, 'rollBackTopbar' );
         },
 
-        EtopBarBlack : function(){
+        EtopBarBlack : function() {
             this.self.Util.notify( this.values.view, 'topBarBlack' );
-        } 
+        },
+
+        EchangeColor : function( color ) {
+            this.self.Util.notify( this.values.view, 'changeColor', [ color ] );
+        }
 
     });
 

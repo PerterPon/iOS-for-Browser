@@ -1,5 +1,5 @@
 
-define( function( require ){
+define( function( require ) {
     //"use strict";
 
     var imgs = {
@@ -46,20 +46,20 @@ define( function( require ){
         }
     };
 
-    (function cacheImg( info ){
+    ( function cacheImg( info ) {
         var img, subInfo;
-        for( var i in info ){
+        for( var i in info ) {
             subInfo = info[ i ];
-            if( typeof subInfo != 'string' ){
+            if( typeof subInfo != 'string' ) {
                 cacheImg( subInfo );
             } else {
                 img     = new Image();
                 img.src = info[ i ];
-                img.onload = function(){
+                img.onload = function() {
                     img = null;
                     delete img;
                 }
             }
         }
-    })( imgs );
-});
+    } )( imgs );
+} );

@@ -4,10 +4,17 @@ define( function( require, exports, module ){
 
     var Aminations = require( '../../animations/Anim' );
     Ext.define( 'CardView', {
-        constructor : function() {
+        constructor : function( cfg ) {
+            this._cfg = cfg;
             this._initCardView();
             this._initAnim();
         },
+
+        inheritableStatics : {
+            baseClass : 'iOS_cardView'
+        },
+
+        _cfg : {},
 
         _cardsMap : {},
 
@@ -34,6 +41,7 @@ define( function( require, exports, module ){
          * @return {[void]} []
          */
         _initCardView : function() {
+            
             this._cardsMap = {};
         },
 
@@ -80,7 +88,7 @@ define( function( require, exports, module ){
          * @param  {[String]} animType  [切换动画类型]
          * @return {[void]}
          */
-        active : function( name, direction, animType, curCallBack, tarCallBack ){
+        active : function( name, direction, animType, curCallBack, tarCallBack ) {
             animType = animType || 'slide';
             this._tarCard = _cardsMap[ name ];
             if( !this._tarCard ) {

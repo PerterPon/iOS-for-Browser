@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     require( '../Component' );
@@ -20,7 +20,7 @@ define( function( require, exports, module ){
             elPool : {}
         },
 
-        constructor : function( cfg ){
+        constructor : function( cfg ) {
             this.callParent( [ cfg ] );
             this._initView();
             this._beforeRender();
@@ -32,38 +32,40 @@ define( function( require, exports, module ){
          * [setController 设置controller]
          * @param {Object} ctrl [controller]
          */
-        setController : function( ctrl ){
-            this.self.ctrl = ctrl;
+        setController : function( ctrl ) {
+            this.values.ctrl = ctrl;
         },
 
         /**
          * 初始化本view，会在最初的时候调用
          * @return {void}
          */
-        _initView : function(){
+        _initView : function() {
             var sttc    = this.values;
+                sttcs   = this.self;
             sttc.elPool = {};
             ( sttc.visiable === false ) && this._getEl().hide();
+            sttcs.baseClass && this._getEl().addClass( sttcs.baseClass );
         },
 
         /**
          * 渲染前执行
          * @return {void}
          */
-        _beforeRender : function(){},
+        _beforeRender : function() {},
 
         /**
          * [_initInnerDom 初始化DOM]
          * @return  {void}
          * @protected
          */
-        _initInnerDom : function(){},
+        _initInnerDom : function() {},
 
         /**
          * 渲染
          * @return {void}
          */
-        _render : function(){
+        _render : function() {
             this._initInnerDom();
             this._attachDomEvent();
         },
@@ -78,18 +80,18 @@ define( function( require, exports, module ){
          * [_attachDomEvent 添加节点上的事件]
          * @return {void}
          */
-        _attachDomEvent : function(){},
+        _attachDomEvent : function() {},
 
         /**
          * [getEl 获得当前View的jQuery对象]
          * @return {jQuery} [当前View的jQuery对象]
          */
-        _getEl : function( select, isForce ){
+        _getEl : function( select, isForce ) {
             var sttc     = this.values,
                 elCache  = sttc.elPool,
                 selector = select || sttc.selector,
                 $el;
-            if( elCache[ selector ] && !isForce ){
+            if( elCache[ selector ] && !isForce ) {
                 $el      = elCache[ selector ];
             } else {
                 $el = selector == sttc.selector ? $( selector ) : $( sttc.selector ).find( selector );
@@ -117,7 +119,7 @@ define( function( require, exports, module ){
         _getElByCls : function( className ){
             return $( this.values.selector ).find( '.' + className );
         },
-        
+
         _removeElCacheByCls : function( className ){
             var sttc = this.values;
             sttc.elPool[ className ] = null;

@@ -26,14 +26,18 @@ define( function( require, exports, module ){
      * @param  {Array}    args [需要的参数]
      * @return {Function}
      */
-    function bind( fn, obj, args ){
-        return function(){
-            args         = args || [];
-            var callArgs = Array.prototype.slice.call( arguments, 0 );
-            callArgs     = callArgs.concat( args );
-            obj = obj || window;
-            return fn.apply( obj, callArgs );
-        };
+    function bind( fn, obj, args ) {
+        if( Function.bind ) {
+            return fn.bind( obj );
+        } else {
+            return function(){
+                args         = args || [];
+                var callArgs = Array.prototype.slice.call( arguments, 0 );
+                callArgs     = callArgs.concat( args );
+                obj = obj || window;
+                return fn.apply( obj, callArgs );
+            };
+        }
     }
 
     /**

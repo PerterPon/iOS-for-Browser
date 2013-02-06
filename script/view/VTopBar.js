@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     require( './BaseView' );
@@ -11,7 +11,8 @@ define( function( require, exports, module ){
                 [ 'updateTime' ],
                 [ 'hideTopbar' ],
                 [ 'topBarBlack' ],
-                [ 'rollBackTopbar' ]
+                [ 'rollBackTopbar' ],
+                [ 'changeColor' ]
             ]
         },
 
@@ -28,7 +29,7 @@ define( function( require, exports, module ){
             rightIcon : 'iOS_topBar_rightIcon',
             centerIcon: 'iOS_topBar_centerIcon',
             topBarInitinfo : {
-                'color'     : 'rgba( 0, 0, 0, 0.3 )',
+                'background': 'rgba( 0, 0, 0, 0.3 )',
                 'marginTop' : '0'
             }
         },
@@ -38,23 +39,27 @@ define( function( require, exports, module ){
             topBarColor  : null
         },
 
-        EupdateTime : function( time ){
+        EupdateTime : function( time ) {
             this.__updateTimeHandler( time );
         },
 
-        EhideTopbar : function(){
+        EhideTopbar : function() {
             this._getEl().css( 'marginTop', '-'+ this.values.topBarHeight +'px' );
         },
 
-        ErollBackTopbar : function(){
+        ErollBackTopbar : function() {
             this._getEl().css( this.self.topBarInitinfo );
         },
 
-        EtopBarBlack : function(){
+        EtopBarBlack : function() {
             this._getEl().css( 'background', 'rgba( 255, 255, 255, 1 )' );
         },
 
-        _initInnerDom : function(){
+        EchangeColor : function( color ) {
+            this[ '__changeColor2' + color.toUpperCase() ]();
+        },
+
+        _initInnerDom : function() {
             var sttcs     = this.self,
                 basePath = './resource/images/status/',
                 htmlData = '<div class="'+ sttcs.leftIcon +' abs">' +
@@ -73,13 +78,17 @@ define( function( require, exports, module ){
             this.values.topBarHeight = this._getEl().height();
         },
 
-        __updateTimeHandler : function( time ){
+        __updateTimeHandler : function( time ) {
             var sttcs      = this.self,
                 centerIcon = this._getElByCls( sttcs.centerIcon ),
                 htmlData   = '<span class='+ sttcs.time +'>'+ time.hours +':'+ time.minute +'</span>';
             centerIcon.html( htmlData );
+        },
+
+        __changeColor2BLACK : function() {
+            this._getEl()[ 0 ].style.background = 'rgba(0,0,0,1)';
         }
-    });
+    } );
 
     return VTopBar;
-});
+} );
