@@ -64,7 +64,7 @@ define( function( require ) {
          * @return  {Void}
          * @protected
          */
-        __doItrtr : function( tCfg, dom ) {
+        __doItrtr : function( tCfg, dom, parent ) {
             var sttcs  = this.self,
                 sttc   = this.values,
                 model, cls, id, html, instance, preDom, cfg;
@@ -91,10 +91,11 @@ define( function( require ) {
                 preDom = dom || sttc.preDom || document.body;
                 preDom.appendChild( html );
                 cfg[ 'selector' ] = '#' + id;
-                new model( cfg );
+                instance = new model( cfg, parent );
+                // parent && ( instance._parent = parent );
                 sttc.curIdx++;
                 if( cfg.subView && cfg.subView.length ) {
-                    this.__doItrtr( cfg.subView, html );
+                    this.__doItrtr( cfg.subView, html, instance );
                 }
             }
             sttcs.Util.notify( this, 'iteratorComplete' );

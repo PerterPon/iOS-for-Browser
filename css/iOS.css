@@ -1,4 +1,4 @@
-﻿body { background-color: #25262B; -webkit-box-orient: vertical; overflow: hidden }
+﻿body, html { background-color: #25262B; -webkit-box-orient: vertical; overflow: hidden }
 
 #iOS_outSide_bg { width: 386px; height: 853px; margin: 0 auto; background-image: url(../resource/images/background/iphone-bg.png) }
 #iOS_system_content { -webkit-box-orient : vertical; width: 320px; height: 480px; -webkit-transform: translate3d( 36px, 134px, 0 ); overflow: hidden }
@@ -80,7 +80,7 @@
  * appScreen
  */
 .iOS_appScreen { -webkit-transition-duration: 400ms; -webkit-transition-delay: 100ms; -webkit-transition-timing-function: ease-out; position: absolute; left: 0; width: 100%; height: 100%; -webkit-transform: scale3d( 0, 0, 0 ); background: white }
-
+    .iOS_app_iframe { width: 100%; height: 100%; border: none; background: transparent; overflow: hidden }
 /**
  * popScreen
  */

@@ -259,7 +259,7 @@ define( function( require, exports, module ) {
 
             function touchStop( event, disPos ) {
                 sttc.shaking ? event.stopPropagation() : !isTouchMove && rangeClick( event );
-                holding     = false;
+                holding = false;
             }
 
             function rangeMove() {
@@ -272,7 +272,7 @@ define( function( require, exports, module ) {
 
             function rangeClick( event ) {
                 Event.dispatchEvent( 'iconOut' );
-                Event.dispatchEvent( 'openApp', [ event.currentTarget.getAttribute( 'appname' ), JSON.parse( event.currentTarget.getAttribute( 'topbar' ) ) ] );
+                Event.dispatchEvent( 'openApp', [ event.currentTarget.getAttribute( 'appname' ), JSON.parse( event.currentTarget.getAttribute( 'config' ) ) ] );
                 //判定为单击事件，清除抖动定时器。
                 clearTimeout( tapTimeOut );
                 holding = false;

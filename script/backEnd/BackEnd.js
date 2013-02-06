@@ -1,8 +1,13 @@
 ﻿
 define( function( require, exports, module ) {
     // "use strict";
-    var iterator = require( '../Iterator' );
+    var iterator  = require( '../Iterator' ),
+        AppCenter = require( './AppCenter' );
     Ext.define( 'BackEnd', {
+
+        statics : {
+            iFrameCls : 'iOS_app_iframe'
+        },
 
         /**
          * [_cacheMap 缓存列表]
@@ -10,22 +15,50 @@ define( function( require, exports, module ) {
          */
         _cacheMap : {},
 
+        /**
+         * [_appCenter app中心]
+         * @type {[AppCenter]}
+         */
+        _appCenter : null,
+
+        _appScreen : null,
+
         constructor : function() {
+            this.__initAppCenter();
             this._attachEventListener();
         },
 
-        __openAppHandler : function( appname ) {
+        __initAppCenter : function() {
+            var appCenter = new AppCenter();
+            $.extend( window.iOS.AppCenter, appCenter );
+        },
+
+        __openAppHandler : function( appname, config ) {
             var DOMObject, appCfg,
                 cacheMap  = this._cacheMap,
                 Event     = window.iOS.Event;
             Event.dispatchEvent( 'clearApp' );
-            if( cacheMap[ name ] ) {
-                DOMObject = cacheMap[ name ].getDomObject();
+            if( config && config.isIframe ) {
+                this.__addIframeApp( config.URL );
             } else {
-                appCfg = require( '../config/notes' );
-                iterator.setPreDom( window.iOS.AppCenter[ 'screenId' ].replace( '#', '' ) );
-                iterator.itrtrView( appCfg );
+                if( cacheMap[ name ] ) {
+                    DOMObject = cacheMap[ name ].getDomObject();
+                } else {
+                    appCfg = require( '../config/notes' );
+                    iterator.setPreDom( window.iOS.AppCenter[ 'screenId' ].replace( '#', '' ) );
+                    iterator.itrtrView( appCfg );
+                }
             }
+        },
+
+        __addIframeApp : function( URL ) {
+            var iframe   = document.createElement( 'iframe' );
+            this._appScreen || ( this._appScreen = document.getElementById( window.iOS.AppCenter.screenId.replace( '#', '' ) ) );
+            iframe.classList.add( this.self.iFrameCls );
+            iframe.style.width  = window.iOS.System.width + 'px';
+            iframe.style.height = window.iOS.System.height + 'px'; 
+            iframe.src   = URL;
+            this._appScreen.appendChild( iframe );
         },
 
         _attachEventListener : function() {

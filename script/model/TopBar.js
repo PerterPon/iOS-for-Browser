@@ -39,8 +39,12 @@ define( function( require, exports, module ) {
             Util.notify( ctrl, 'updateTime', [ time ] );
         },
 
-        __openAppHandle : function( appname, topBarCfg ) {
-            topBarCfg[ 'show' ] && this.self.Util.notify( this.values.controller, 'hideTopbar' );
+        __openAppHandle : function( appname, config ) {
+            var topBarCfg = config && config[ 'topBar' ];
+            if( !topBarCfg ) {
+                return;
+            }
+            ( false === topBarCfg[ 'show' ] ) && this.self.Util.notify( this.values.controller, 'hideTopbar' );
             topBarCfg[ 'color' ] && this.self.Util.notify( this.values.controller, 'changeColor', [ topBarCfg[ 'color' ] ] );
         },
 

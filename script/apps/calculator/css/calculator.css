@@ -1,0 +1,67 @@
+@charset "utf-8";
+/* CSS Document */
+*{
+	padding:0px;
+	margin:0px;
+}
+#mainbox{
+	position:absolute;
+	width:320px;
+	height:460px;
+	left:0px;
+	background:url(../images/default.png) no-repeat;
+	overflow:hidden;
+}
+#show-pad{
+	position:absolute;
+	display:table;
+	width:320px;
+	height:89px;
+}
+#calculator-area{
+	-webkit-text-size-adjust:none;
+	text-align:right;
+	display:table-cell;
+	vertical-align:middle;
+	font-size:70px;
+	padding-right:10px;
+	font-family:Arial, Helvetica, sans-serif;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+#calculator-area{ 
+	padding-left:3px; 
+}
+}
+.buttons{
+	position:absolute;
+	opacity:0;
+	background:url(../images/buttons.png);
+}
+#buttons{
+	position:absolute;
+	width:298px;
+	height:344px;
+	left:11px;
+	top:102px;
+}
+#operators{
+	position:absolute;
+	top:61px;
+	left:0px;
+	width:298px;
+	height:285px;
+}
+#basicRing{
+	position:absolute;
+	background:url(../images/basicRing.png);
+	width:74px;
+	height:51px;
+	display:none;
+}
+#nums{
+	position:absolute;
+	width:220px;
+	height:222px;
+	left:0px;
+	top:61px;
+}

@@ -26,9 +26,20 @@ define( function( require, exports, module ){
                 }, {
                     "name"   : "notes",
                     "text"   : "备忘录",
-                    "topBar" : {
-                        show : false,
-                        color: "black"
+                    "config" : {
+                        "topBar"   : {
+                            "color"    : "black"
+                        }
+                    }
+                }, {
+                    "name"   : "calculator",
+                    "text"   : "计算器",
+                    "config" : {
+                        "topBar"   : {
+                            "color"    : "black"
+                        },
+                        "isIframe" : true,
+                        "URL"      : "http://www.baidu.com"
                     }
                 }],
                 [{

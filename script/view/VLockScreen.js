@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     require( './BaseView' );
@@ -32,7 +32,7 @@ define( function( require, exports, module ){
             slider    : null
         },
 
-        Eunlock : function(){
+        Eunlock : function() {
             var sttc       = this.values,
                 sttcs      = this.self,
                 that       = this,
@@ -42,20 +42,20 @@ define( function( require, exports, module ){
                 lockSlider = this._getElByCls( sttcs.lockSlider );
             lockDate[ 0 ].style.webkitTransform   = 'translate3d( 0, -'+ ( lockDate.height() + sttcs.topBarHeight ) +'px, 0 )';
             lockSlider[ 0 ].style.webkitTransform = 'translate3d( 0, '+ lockSlider.height() +'px, 0)';
-            lockDate[ 0 ].addEventListener( 'webkitTransitionEnd', function(){
+            lockDate[ 0 ].addEventListener( 'webkitTransitionEnd', function() {
                 that._getEl().hide();
                 Util.notify( ctrl, 'unlockComplete' );
                 this.removeEventListener( 'webkitTransitionEnd' );
             });
         },
 
-        EsliderTranslate : function( x, y ){
+        EsliderTranslate : function( x, y ) {
             var sttc = this.values;
             this.__doSetSliderPos( x, y );
             sttc.sliderImg[ 0 ].style.opacity = 1 - x / 120;
         },
 
-        EsliderBack : function(){
+        EsliderBack : function() {
             var sttc      = this.values,
                 slider    = sttc.slider[ 0 ],
                 sliderImg = sttc.sliderImg[ 0 ];
@@ -64,18 +64,18 @@ define( function( require, exports, module ){
             sliderImg.style.webkitTransitionDuration = '300ms';
             sliderImg.style.opacity = '1';
             slider.addEventListener( 'webkitTransitionEnd', translateCompleHandle );
-            function translateCompleHandle(){
+            function translateCompleHandle() {
                 slider.style.webkitTransitionDuration = '0ms';
                 sliderImg.style.webkitTransitionDuration = '0ms';
                 slider.removeEventListener( 'webkitTransitionEnd', translateCompleHandle );
             }
         },
 
-        EupdateTime : function( time ){
+        EupdateTime : function( time ) {
             this.__updateTime( time );
         },
 
-        _initInnerDom : function(){
+        _initInnerDom : function() {
             var sttcs     = this.self,
                 sttc      = this.values,
                 htmlData = '<div class="'+ sttcs.lockDate +' abs">' +
@@ -104,22 +104,22 @@ define( function( require, exports, module ){
             sttc.sliderImg = this._getElByCls( sttcs.sldrImg );
         },
 
-        _attachDomEvent : function(){
+        _attachDomEvent : function() {
             this.callParent();
             var sttc  = this.values,
                 sttcs = this.self, 
                 ctrl  = sttc.controller,
                 Util  = sttcs.Util;
-            sttc.slider.on( $.support.touchstart, function( event ){
-                Util.notify( ctrl, 'sliderDown', [ event ]);
-            }).bind( $.support.touchmove, function( event ){
-                Util.notify( ctrl, 'sliderMove', [ event ]);
-            }).bind( $.support.touchstop, function( event ){
-                Util.notify( ctrl, 'sliderUp', [ event ]);
+            sttc.slider.on( $.support.touchstart, function( event ) {
+                Util.notify( ctrl, 'sliderDown', [ event ] );
+            }).bind( $.support.touchmove, function( event ) {
+                Util.notify( ctrl, 'sliderMove', [ event ] );
+            }).bind( $.support.touchstop, function( event ) {
+                Util.notify( ctrl, 'sliderUp', [ event ] );
             });
         },
 
-        __updateTime : function( time ){
+        __updateTime : function( time ) {
             var sttcs    = this.self,
                 lockTime = this._getElByCls( sttcs.lockTime ),
                 lockDate = this._getElByCls( sttcs.lockDateInfo );
@@ -127,7 +127,7 @@ define( function( require, exports, module ){
             lockDate.text( time.month + '月' + time.day + '日 ' + '星期' + sttcs.week[ time.weekDay ] );
         },
 
-        __doSetSliderPos : function( x, y ){
+        __doSetSliderPos : function( x, y ) {
             var slider = this.values.slider[ 0 ];
             slider.style.webkitTransform = 'translate3d( '+ x +'px, '+ y +'px, 0 )';
         }

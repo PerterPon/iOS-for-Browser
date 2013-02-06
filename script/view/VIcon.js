@@ -116,7 +116,7 @@ define( function( require, exports, module ) {
                     '</div>';
             this._getEl().html( htmlData ).attr( {
                 'appname' : sttc.name.substr( 1 ),
-                'topbar'  : JSON.stringify( sttc.cfg.topBar )
+                'config'  : JSON.stringify( sttc.cfg.config )
             } );
         },
 

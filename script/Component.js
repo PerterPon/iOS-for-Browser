@@ -43,8 +43,9 @@ define( function( require, exports, module ) {
         _applyCfg : function( cfg ) {
             var sttc  = this.values;
             for( var i in cfg ) {
-                if( i == 'subView' )
+                if( 'subView' === i ) {
                     continue;
+                }
                 sttc[ i ] = cfg[ i ];
             }
         },

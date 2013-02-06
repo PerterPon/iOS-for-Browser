@@ -1,11 +1,13 @@
 ﻿
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     var Aminations = require( '../../animations/Anim' );
     Ext.define( 'CardView', {
+        extend : 'BaseView',
+
         constructor : function( cfg ) {
-            this._cfg = cfg;
+            this.callParent( [ cfg ] );
             this._initCardView();
             this._initAnim();
         },
@@ -41,7 +43,7 @@ define( function( require, exports, module ){
          * @return {[void]} []
          */
         _initCardView : function() {
-            
+            this.self.baseClass && this._getEl().addClass( this.self.baseClass );
             this._cardsMap = {};
         },
 
@@ -52,17 +54,17 @@ define( function( require, exports, module ){
             } );
         },
 
-        /**
-         * [addCard 向本card中添加card]
-         * @param {[Object||Array]} cards [需要被添加的card]
-         */
-        addCard : function( cards ) {
-            var cardsMap = {};
-            for( var i in cards ) {
-                cardsMap[ i ] = cards[ i ];
-            }
-            this._cardsMap = cardsMap;
-        },
+        // /**
+        //  * [addCard 向本card中添加card]
+        //  * @param {[Object||Array]} cards [需要被添加的card]
+        //  */
+        // addCard : function( cards ) {
+        //     var cardsMap = {};
+        //     for( var i in cards ) {
+        //         cardsMap[ i ] = cards[ i ];
+        //     }
+        //     this._cardsMap = cardsMap;
+        // },
 
         /**
          * [clearCard 清除card信息]
@@ -95,7 +97,19 @@ define( function( require, exports, module ){
                 return;
             }
             _amin.doAnim( this._curCard, this._tarCard, direction, animType, curCallBack, tarCallBack );
+        },
+
+        /**
+         * [registCard 注册下属card，此处采用向上注册法，每次下属card被实例化时，均会将自己注册到父级cardView上]
+         * @param  {[type]} name [description]
+         * @param  {[type]} card [description]
+         * @return {[type]}      [description]
+         */
+        registCard : function( name, card ) {
+            this._cardsMap[ name ] = card;
+            console.log( card );
         }
+
     } );
 
     return CardView;
