@@ -1,2 +1,9 @@
 ﻿
 .iOS_notes { display: -webkit-box; width: 100%; height: 100% }
+    .iOS_notes_cardView { background: url(../resource/images/apps/notes/topBar.png) no-repeat left top }
+    .iOS_notes_topBar { height: 44px; width: 100% }
+
+/**
+ * list
+ */
+.iOS_notes_

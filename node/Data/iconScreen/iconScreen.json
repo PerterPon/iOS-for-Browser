@@ -1,7 +1,7 @@
 ﻿{
     "data" : {
         "screen" : [
-            1,
+            0,
             [{
                 "name" : "SMS",
                 "text"  : "短信"
@@ -20,6 +20,46 @@
             }, {
                 "name" : "clock",
                 "text"  : "时钟"
+            }, {
+                "name"   : "notes",
+                "text"   : "备忘录",
+                "config" : {
+                    "topBar"   : {
+                        "color"    : "black"
+                    }
+                }
+            }, {
+                "name"   : "calculator",
+                "text"   : "计算器",
+                "config" : {
+                    "topBar"   : {
+                        "color"    : "black"
+                    },
+                    "isIframe" : true,
+                    "URL"      : "../../../script/apps/calculator/calculator.html"
+                }
+            }, {
+                "name"   : "compass",
+                "text"   : "指南针"
+            }, {
+                "name"   : "Nike",
+                "text"   : "Nike"
+            }, {
+                "name"   : "faceBook",
+                "text"   : "FaceBook"
+            }, {
+                "name"   : "twitter",
+                "text"   : "Twitter"
+            }, {
+                "name"   : "baidu",
+                "text"   : "百度",
+                "config" : {
+                    "topBar"    : {
+                        "color"      : "black"
+                    },
+                    "isIframe"  : true,
+                    "URL"       : "http://www.baidu.com"
+                }
             }],
             [{
                 "name" : "appstore",
@@ -34,9 +74,6 @@
                 "name" : "map",
                 "text"  : "地图"
             }, {
-                "name" : "youtube",
-                "text"  : "youtube"
-            }, {
                 "name" : "weather",
                 "text"  : "天气"
             }, {
@@ -47,9 +84,6 @@
                 "text"  : "备忘录"
             }],
             [{
-                "name" : "youtube",
-                "text"  : "youtube"
-            }, {
                 "name" : "weather",
                 "text"  : "天气"
             }, {
@@ -59,9 +93,6 @@
                 "name" : "notes",
                 "text"  : "备忘录"
             }, {
-                "name" : "youtube",
-                "text"  : "youtube"
-            }, {
                 "name" : "weather",
                 "text"  : "天气"
             }, {
@@ -70,9 +101,6 @@
             }, {
                 "name" : "notes",
                 "text"  : "备忘录"
-            }, {
-                "name" : "youtube",
-                "text"  : "youtube"
             }, {
                 "name" : "weather",
                 "text"  : "天气"

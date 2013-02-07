@@ -107,7 +107,6 @@ define( function( require, exports, module ) {
          */
         registCard : function( name, card ) {
             this._cardsMap[ name ] = card;
-            console.log( card );
         }
 
     } );

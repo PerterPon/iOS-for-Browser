@@ -39,7 +39,7 @@ define( function( require, exports, module ){
                             "color"    : "black"
                         },
                         "isIframe" : true,
-                        "URL"      : "http://www.baidu.com"
+                        "URL"      : "../../../script/apps/calculator/calculator.html"
                     }
                 }, {
                     "name"   : "compass",
@@ -53,6 +53,16 @@ define( function( require, exports, module ){
                 }, {
                     "name"   : "twitter",
                     "text"   : "Twitter"
+                }, {
+                    "name"   : "baidu",
+                    "text"   : "百度",
+                    "config" : {
+                        "topBar"    : {
+                            "color"      : "black"
+                        },
+                        "isIframe"  : true,
+                        "URL"       : "http://www.baidu.com"
+                    }
                 }],
                 [{
                     "name" : "appstore",
