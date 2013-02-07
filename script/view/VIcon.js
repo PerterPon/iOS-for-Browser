@@ -108,7 +108,7 @@ define( function( require, exports, module ) {
                 htmlData = 
                     '<div class="'+ sttcs.scaleLayer +'">' +
                         '<div class="'+ sttcs.shakeLayer +'">' +
-                            '<img class="'+ sttcs.iconImg +'" src="resource/images/icons/icon_'+ sttc.name.substr( 1 ) +'.png" />' +
+                            '<img class="'+ sttcs.iconImg +' iOS_icon_img" src="resource/images/icons/icon_'+ sttc.name.substr( 1 ) +'.png" />' +
                             '<div class='+ sttcs.shadeLayer +'>' +
                             '</div>' +
                             '<span class="'+ sttcs.iconName +'">'+ sttc.cfg.text +'</span>' +

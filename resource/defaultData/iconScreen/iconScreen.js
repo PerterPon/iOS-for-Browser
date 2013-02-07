@@ -41,6 +41,18 @@ define( function( require, exports, module ){
                         "isIframe" : true,
                         "URL"      : "http://www.baidu.com"
                     }
+                }, {
+                    "name"   : "compass",
+                    "text"   : "指南针"
+                }, {
+                    "name"   : "Nike",
+                    "text"   : "Nike"
+                }, {
+                    "name"   : "faceBook",
+                    "text"   : "FaceBook"
+                }, {
+                    "name"   : "twitter",
+                    "text"   : "Twitter"
                 }],
                 [{
                     "name" : "appstore",
@@ -55,9 +67,6 @@ define( function( require, exports, module ){
                     "name" : "map",
                     "text"  : "地图"
                 }, {
-                    "name" : "youtube",
-                    "text"  : "youtube"
-                }, {
                     "name" : "weather",
                     "text"  : "天气"
                 }, {
@@ -68,9 +77,6 @@ define( function( require, exports, module ){
                     "text"  : "备忘录"
                 }],
                 [{
-                    "name" : "youtube",
-                    "text"  : "youtube"
-                }, {
                     "name" : "weather",
                     "text"  : "天气"
                 }, {

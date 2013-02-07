@@ -14,14 +14,16 @@
  */
 .iOS_topBar { width: 100%; position: relative; z-index: 2; background-color: rgba( 0, 0, 0, 0.6 ); -webkit-transition-duration: 400ms; -webkit-transition-delay: 100ms }
 .iOS_topBar_leftIcon { left: 0; height: 100% }
-    .iOS_topBar_signal { margin-left: 5px }
+    .iOS_topBar_signal { margin-left: 5px; width: 19px; height: 20px }
     .iOS_topBar_att { margin-left: 3px }
     .iOS_topBar_wifi { margin-left: 8px }
-.iOS_topBar_centerIcon { -webkit-box-flex: 320; -webkit-box-pack: center; height: 100% }
+.iOS_topBar_centerIcon { -webkit-box-flex: 320; -webkit-box-pack: center; height: 20px; width: 36px }
     .iOS_topBar_time { color: white; font-family: arial; font-size: 14px }
 .iOS_topBar_rightIcon { right: 0; height: 100% }
-    .iOS_topBar_percent { line-height: 20px; margin-right: 3px; color: white; font-size: 12px; font-family: arial }
-    .iOS_topBar_battery { margin-right: 3px }
+    .iOS_topBar_verticalLock { width: 17px; height: 20px; margin-right: 3px }
+    .iOS_topBar_locate { width: 11px; height: 20px; margin-right: 3px; }
+    .iOS_topBar_percent { line-height: 20px; margin-right: 3px; color: white; font-size: 12px; font-family: arial; color: #b7b7b7; }
+    .iOS_topBar_battery { margin-right: 3px; width: 21px; height: 20px }
 
 /**
  * iOS
@@ -52,6 +54,7 @@
         .iOS_icon_scaleLayer img { vertical-align: bottom }
     .iOS_icon_shadeLayer { position: absolute; left: 0; top: 0; width: 56px; height: 57px; -webkit-border-radius: 10px; margin-left: 1px; display: none }
     .iOS_icon_iconName { display: -webkit-box; font-family: Tahoma, Geneva, sans-serif ;text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); font-size: 12px ;color: rgba(255, 255, 255, 0.8) }
+    .iOS_icon_img { width: 59px; height: 60px; }
 
 /**
  * appIcon

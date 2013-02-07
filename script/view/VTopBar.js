@@ -23,6 +23,9 @@ define( function( require, exports, module ) {
             wifi      : 'iOS_topBar_wifi',
             lock      : 'iOS_topBar_lock',
             time      : 'iOS_topBar_time',
+            clock     : 'iOS_topBar_clock',
+            vertical  : 'iOS_topBar_verticalLock',
+            locate    : 'iOS_topBar_locate',
             percent   : 'iOS_topBar_percent',
             battery   : 'iOS_topBar_battery',
             leftIcon  : 'iOS_topBar_leftIcon',
@@ -71,6 +74,8 @@ define( function( require, exports, module ) {
                     '<img src="'+ ( basePath + 'lock.png' ) +'" class="'+ sttcs.lock +' '+ sttcs.barIcon +'" />' +
                 '</div>' +
                 '<div class="'+ sttcs.rightIcon +' abs">' +
+                    '<img src="'+ ( basePath + 'verticalLock.png' ) +'" class="'+ sttcs.vertical + ' '+ sttcs.barIcon +'" />' +
+                    '<img src="'+ ( basePath + 'locate.png' ) +'" class="'+ sttcs.locate +' '+ sttcs.barIcon +' " />' +
                     '<div class="'+ sttcs.percent +'">100%</div>' + 
                     '<img src="'+ ( basePath + 'battery.png' ) +'" class="'+ sttcs.battery +' '+ sttcs.barIcon +'" />' +
                 '</div>';

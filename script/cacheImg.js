@@ -54,7 +54,7 @@ define( function( require ) {
                 cacheImg( subInfo );
             } else {
                 img     = new Image();
-                img.src = info[ i ];
+                img.src = info[ i ] + '?id=' + Math.random();
                 img.onload = function() {
                     img = null;
                     delete img;
