@@ -35,6 +35,7 @@ define( function( require, exports, modules ) {
                     "class"      : NotesList,
                     "clsList"    : [ "iOS_notes_notesList" ],
                     "name"       : "notesList",
+                    "needData"   : true,
                     "view"       : VNotesList,
                     "controller" : CNotesList
                 } ]

@@ -4,7 +4,6 @@ define( function( require, exports, modules ) {
 
     Ext.define( "NotesList", {
         extend : "BaseModel"
-
         
     } );
 

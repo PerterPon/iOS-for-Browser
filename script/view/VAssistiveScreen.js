@@ -25,18 +25,18 @@ define( function() {
 
         statics : {
             //FIXME:宽度变化比位移变化要少，所以宽度的运行速度会更加快一些。
-            assistiveDuration : '300ms,280ms,280ms',
-            assistiveIconWidth: 57,
-            assistiveIconHeight: 57,
-            assistiveWidth    : 270,
-            assistiveHeight   : 270,
-            assistiveAlpha    : 0.5,
-            assistiveIcon     : 'iOS_assistive_icon',
-            assistiveBasePoint: 'iOS_assistive_basePoint',
-            assistiveHome     : 'iOS_assistive_home',
-            assistiveFavorites: 'iOS_assistive_favorites',
-            assistiveGestures : 'iOS_assistive_gestures',
-            assistiveDevice   : 'iOS_assistive_device'
+            assistiveDuration   : '300ms,280ms,280ms',
+            assistiveIconWidth  : 57,
+            assistiveIconHeight : 57,
+            assistiveWidth      : 270,
+            assistiveHeight     : 270,
+            assistiveAlpha      : 0.5,
+            assistiveIcon       : 'iOS_assistive_icon',
+            assistiveBasePoint  : 'iOS_assistive_basePoint',
+            assistiveHome       : 'iOS_assistive_home',
+            assistiveFavorites  : 'iOS_assistive_favorites',
+            assistiveGestures   : 'iOS_assistive_gestures',
+            assistiveDevice     : 'iOS_assistive_device'
         },
 
         EshowAssistivePoint : function() {
@@ -173,13 +173,13 @@ define( function() {
             this._getEl().on( $.support.touchstart, function( event ) {
                 event.stopPropagation();
                 Util.notify( ctrl, 'touchstart', [ event ] );
-            }).on( $.support.touchmove, function( event ) {
+            } ).on( $.support.touchmove, function( event ) {
                 Util.notify( ctrl, 'touchmove', [ event ] );
                 return false;
-            }).on( $.support.touchstop, function( event ) {
+            } ).on( $.support.touchstop, function( event ) {
                 event.stopPropagation();
                 Util.notify( ctrl, 'touchstop', [ event ] );
-            });
+            } );
             this._getEl()[ 0 ].addEventListener( 'webkitTransitionEnd', function( event ) {
                 event.stopPropagation();
             });

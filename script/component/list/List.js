@@ -2,7 +2,7 @@
 /**
  * List组件均只会根据数据返回HTML，而不会进行任何和DOM相关的操作，list中只会处理list自己的逻辑。
  */
-define( function( require, exports, model ){
+define( function( require, exports, model ) {
     //"use strict";
 
     require( '../Component' );
@@ -11,7 +11,7 @@ define( function( require, exports, model ){
         extend : 'Component',
 
         inheritableStatics : {
-            listBoxCls : 'iOS_list_box',
+            listBoxCls  : 'iOS_list_box',
             listItemCls : 'iOS_list_item',
             listItemSelectedCls : 'iOS_list_item_selected'
         },
@@ -46,31 +46,53 @@ define( function( require, exports, model ){
              * [clickedCallaback 单击Item时候的回调函数]
              * @return {void}
              */
-            clickedCallback : function(){ return true; }
+            clickedCallback : function() { return true; }
         },
 
-        _registerSelf : function(){}，
+        /**
+         * [getDom 获取list的html,供前台使用]
+         * @return {[type]} [description]
+         */
+        getDom : function() {
 
+        },
 
-        _attachEventListener : function(){
+        /**
+         * [setData 设置需要渲染的数据]
+         * @param {[Object]} data [需要渲染成列表的数据]
+         */
+        setData : function( data ) {
+
+        },
+
+        /**
+         * [_generateHtml 生成HTML字串]
+         * @return {[String]} [HTML字串]
+         */
+        _generateHtml : function() {
+            return this.values.listBox;
+        },
+
+        _registerSelf : function() {},
+
+        _attachEventListener : function() {
             var sttc  = this.values,
                 sttcs = this.self,
-                rangeClick = sttc.rangeClick = new RangeClick({
+                rangeClick = sttc.rangeClick = new RangeClick( {
                     rangeClick : _itemClickHandle
-                });
-            $( '.' + sttcs.listItemCls ).live( $.support.touchstart, rangeClick.touchStart)
+                } );
+            $( '.' + sttcs.listItemCls ).live( $.support.touchstart, rangeClick.touchStart )
             .live( $.support.touchmove, rangeClick.touchMove )
             .live( $.support.touchend, rangeClick.touchEnd );
         },
 
-        _init : function(){
-            var sttc    = this.values,
-                sttcs   = this.self,
-                listBox =  sttcs.listBox;
-            listBox = $( '<div class="'+ sttcs.listBoxCls +' '+ sttc.listBoxCls +'"></div>' );
+        _init : function() {
+            var sttc      = this.values,
+                sttcs     = this.self;
+            sttcs.listBox = $( '<div class="'+ sttcs.listBoxCls +' '+ sttc.listBoxCls +'"></div>' );
         },
 
-        _itemClickHandle : function( event ){
+        _itemClickHandle : function( event ) {
             var sttc  = this.values,
                 sttcs = this.self;
                 selectedItem = sttc.selectedItem;

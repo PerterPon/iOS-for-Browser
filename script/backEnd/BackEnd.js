@@ -44,9 +44,13 @@ define( function( require, exports, module ) {
                 if( cacheMap[ name ] ) {
                     DOMObject = cacheMap[ name ].getDomObject();
                 } else {
-                    appCfg = require( '../config/notes' );
-                    iterator.setPreDom( window.iOS.AppCenter[ 'screenId' ].replace( '#', '' ) );
-                    iterator.itrtrView( appCfg );
+                    seajs.use( './script/config/' + appname, function( appCfg ) {
+                        if( !appCfg ){
+                            return;
+                        }
+                        iterator.setPreDom( window.iOS.AppCenter[ 'screenId' ].replace( '#', '' ) );
+                        iterator.itrtrView( appCfg );
+                    } );
                 }
             }
         },

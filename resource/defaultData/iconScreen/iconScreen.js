@@ -39,7 +39,7 @@ define( function( require, exports, module ){
                             "color"    : "black"
                         },
                         "isIframe" : true,
-                        "URL"      : "../../../script/apps/calculator/calculator.html"
+                        "URL"      : "./script/apps/calculator/calculator.html"
                     }
                 }, {
                     "name"   : "compass",
