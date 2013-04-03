@@ -39,7 +39,7 @@ define( function( require, exports, model ){
             }
         },
 
-        touchStart : function( event ){
+        touchStart : function( event ) {
             this.callParent( [ event ] );
             this._touchStart( event );
             this._rangeMoved    = false;

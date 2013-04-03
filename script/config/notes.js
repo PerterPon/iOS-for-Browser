@@ -41,6 +41,7 @@ define( function( require, exports, modules ) {
                 } ]
             }, {
                 "class"   : SigCard,
+                "visiable": false,
                 "clsList" : [ "iOS_notes_contentCard" ],
                 "name"    : "notesContentCard",
                 "subView" : [ {
@@ -56,6 +57,7 @@ define( function( require, exports, modules ) {
                 } ]
             }, {
                 "class"   : SigCard,
+                "visiable": false,
                 "clsList" : [ "iOS_notes_editCard" ],
                 "name"    : "notesEditCard",
                 "subView" : [ {

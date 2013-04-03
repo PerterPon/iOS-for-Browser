@@ -5,18 +5,37 @@
 define( function( require, exports, model ) {
     //"use strict";
 
-    require( '../Component' );
-    var RangeClick = require( '../event/RangeClick' );
+    require( '../../Component' );
+    var RangeClick = require( '../../event/RangeClick' );
     Ext.define( 'List', {
         extend : 'Component',
 
         inheritableStatics : {
             listBoxCls  : 'iOS_list_box',
             listItemCls : 'iOS_list_item',
-            listItemSelectedCls : 'iOS_list_item_selected'
+            listItemSelectedCls  : 'iOS_list_item_selected',
+            listItemTitleCls     : 'iOS_list_item_title',
+            listItemDeleteSpanCls: 'iOS_list_item_deleteSpan'
         },
 
         values : {
+            /**
+             * [data 要渲染的数据]
+             * @type {Object}
+             */
+            data : null,
+            /**
+             * [baseCls 列表容器的class]
+             * @type {String}
+             */
+            baseCls : null,
+
+            /**
+             * [deleteable 标记列表项是否可以被删除]
+             * @type {[Boolean]}
+             */
+            deleteable : null,
+
             /**
              * [listBox list容器]
              * @type {String}
@@ -29,7 +48,7 @@ define( function( require, exports, model ) {
             listBoxCls : null,
             /**
              * [listItemCls list列表项的自定义class]
-             * @type {[type]}
+             * @type {[String]}
              */
             listItemCls : null,
             /**
@@ -49,12 +68,19 @@ define( function( require, exports, model ) {
             clickedCallback : function() { return true; }
         },
 
+        constructor : function( cfg, baseCls, deleteable ) {
+            this.callParent( [ cfg ] );
+            this.values.baseCls    = baseCls;
+            this.values.deleteable = deleteable;
+            this._init();
+        },
+
         /**
          * [getDom 获取list的html,供前台使用]
          * @return {[type]} [description]
          */
         getDom : function() {
-
+            return this.values.listBox;
         },
 
         /**
@@ -62,7 +88,26 @@ define( function( require, exports, model ) {
          * @param {[Object]} data [需要渲染成列表的数据]
          */
         setData : function( data ) {
+            var html, dom;
+            if( data ) {
+                this.values.data = data;
+                html = this._generateHtml();
+                dom  = this._generateDom( html );
+            }
+        },
 
+        /**
+         * [getContentByIdx 根据index信息获取]
+         * @param  {[type]} index [description]
+         * @return {[type]}       [description]
+         */
+        getContentByIdx : function( index ) {
+            var data = this.values.data.listContent;
+            return {
+                index   : index,
+                title   : data[ index ][ 'title' ],
+                content : data[ index ][ 'content' ]
+            };
         },
 
         /**
@@ -70,7 +115,30 @@ define( function( require, exports, model ) {
          * @return {[String]} [HTML字串]
          */
         _generateHtml : function() {
-            return this.values.listBox;
+            var sttcs = this.values,
+                sttc  = this.self,
+                data  = sttcs.data.listData,
+                len   = data.length,
+                html  = '';
+            for( i    = 0; i < len; i++ ) {
+                html  += 
+                    '<div class="'+ sttc.listItemCls +'">' +
+                        '<div class="'+ sttc.listItemTitleCls +'">' +
+                            data[ i ][ 'title' ] +
+                        '</div>' +
+                        '<div class="'+ sttc.listItemDeleteSpanCls +'">' +
+                        '</div>' +
+                    '</div>';
+            }
+            return html;
+        },
+
+        /**
+         * [_generateDom 根绝html生成相应的DOM节点]
+         * @return {[]}
+         */
+        _generateDom : function( html ) {
+            this.values.listBox.children( '.' + this.self.listBoxCls ).append( html );
         },
 
         _registerSelf : function() {},
@@ -78,18 +146,28 @@ define( function( require, exports, model ) {
         _attachEventListener : function() {
             var sttc  = this.values,
                 sttcs = this.self,
+                Util  = sttcs.Util,
                 rangeClick = sttc.rangeClick = new RangeClick( {
-                    rangeClick : _itemClickHandle
+                    rangeClick : sttcs.Util.bind( this._itemClickHandle, this )
                 } );
-            $( '.' + sttcs.listItemCls ).live( $.support.touchstart, rangeClick.touchStart )
-            .live( $.support.touchmove, rangeClick.touchMove )
-            .live( $.support.touchend, rangeClick.touchEnd );
+            $( '.' + sttcs.listItemCls ).live( $.support.touchstart, Util.bind( rangeClick.touchStart, rangeClick ) )
+            .live( $.support.touchmove, Util.bind( rangeClick.touchMove, rangeClick ) )
+            .live( $.support.touchstop, Util.bind( rangeClick.touchStop, rangeClick ) );
         },
 
         _init : function() {
             var sttc      = this.values,
-                sttcs     = this.self;
-            sttcs.listBox = $( '<div class="'+ sttcs.listBoxCls +' '+ sttc.listBoxCls +'"></div>' );
+                sttcs     = this.self,
+                config    = {
+                    direction  : 'vertical',
+                    bounces    : 'vertical'
+                };
+            sttc.listBox = $(
+                '<div class="dragScroll_parent">' + 
+                    '<div class="'+ sttcs.listBoxCls +' '+ sttc.listBoxCls +'"></div>' +
+                '</div>'
+            );
+            $.scrollView( sttc.listBox.children( '.' + sttcs.listBoxCls )[ 0 ], config );
         },
 
         _itemClickHandle : function( event ) {

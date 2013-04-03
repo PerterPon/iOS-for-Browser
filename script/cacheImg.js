@@ -34,8 +34,7 @@ define( function( require ) {
             setting    : './resource/images/icons/icon_setting.png',
             SMS        : './resource/images/icons/icon_SMS.png',
             stocks     : './resource/images/icons/icon_stocks.png',
-            weather    : './resource/images/icons/icon_weather.png',
-            youtube    : './resource/images/icons/icon_youtube.png',
+            weather    : './resource/images/icons/icon_weather.png'
         },
         assistive : {
             home       : './resource/images/assistive/home.png',

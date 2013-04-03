@@ -47,7 +47,7 @@
             this.checkTouch();
             this.initPropertyOnReady();
             this.initEventName();
-            // this.initMobileProperty();
+            this.initMobileProperty();
             if($.support.touch){
                 this.setupForMobile();
             }else{

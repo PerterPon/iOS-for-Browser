@@ -1,13 +1,14 @@
 ﻿
 .iOS_notes { display: -webkit-box; width: 100%; height: 100% }
-    .iOS_notes.listCard { -webkit-box-orient: block-axis }
-      .iOS_notes_notesList { -webkit-box-flex: 1; }
+    .iOS_notes_listCard { -webkit-box-orient: block-axis }
+      .iOS_notes_notesList { -webkit-box-flex: 1; position: relative }
       .iOS_notes_cardView { background: url( ../resource/images/apps/notes/topBar.png ) repeat-x left top }
       .iOS_notes_topBar { height: 44px; width: 100% }
 
 /**
  * list
  */
+.iOS_notes_notesList { background: url( ../resource/images/apps/notes/body.png ) center center }
 .iOS_notes_edge_top { position: absolute; top: 0; background: url( ../resource/images/apps/notes/edgeTopMarginThin.png ) repeat-x left top; width: 100%; height: 11px }
 .iOS_notes_list_content { width: 100%; height: 100%; }
-.iOS_notes_edge_bottom { position: absolute; bottom: 0; background: url( ../resource/images/apps/notes/edgeTopMarginThin.png ) repeat-x left top; width: 100%; height: 5px }
+.iOS_notes_edge_bottom { position: absolute; bottom: 0; background: url( ../resource/images/apps/notes/edgeTopMarginThin.png ) repeat-x left top; width: 100%; height: 5px; left: 0 }

@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     require( '../Component' );
@@ -8,11 +8,11 @@ define( function( require, exports, module ){
         scktAdd  = 'ws://localhost:4239',
         socket, needSocket;
     
-    (function(){
+    ( function() {
         socket = new WebSocket( scktAdd );
         sockMngr.setSocket( socket );
         needSocket = true;
-    })();
+    } )();
 
     Ext.define( 'BaseModel', {
         extend : 'Component',
@@ -26,19 +26,19 @@ define( function( require, exports, module ){
             data : null
         },
 
-        constructor : function( cfg ){
+        constructor : function( cfg ) {
             this.callParent([ cfg ]);
             cfg.needData && this._requestData();
             this._initProgram( cfg );
             this._initComplete();
         },
 
-        _initComplete : function(){
+        _initComplete : function() {
             var sttc = this.values;
             !sttc.needData && sttc.renderChild && this._iteratorChild();
         },
 
-        _attachEventListener : function(){
+        _attachEventListener : function() {
             this.callParent();
             var sttcs = this.self,
                 Util  = sttcs.Util;
@@ -49,7 +49,7 @@ define( function( require, exports, module ){
          * [_requestData 获得数据]
          * @return {Object}   [获取到的数据]
          */
-        _requestData : function(){
+        _requestData : function() {
             var sttc  = this.values,
                 sttcs = this.self,
                 that  = this;
@@ -71,7 +71,7 @@ define( function( require, exports, module ){
          * [_getDefaultData 当socket连接不成功的时候，会从resource/dafaultData里面获取数据]
          * @return {Object} [data]
          */
-        _getDefaultData : function(){
+        _getDefaultData : function() {
             return {};
         },
 
@@ -79,7 +79,7 @@ define( function( require, exports, module ){
          * [_handleChildCfg 处理subview的配置信息，会直接修改self里面的内容]
          * @return {void}
          */
-        _handleChildCfg : function(){},
+        _handleChildCfg : function() {},
 
         /**
          * [_iteratorChild 迭代初始化下属]
@@ -93,18 +93,18 @@ define( function( require, exports, module ){
             iterator.itrtrView( sttc.data.data );
         },
 
-        _initProgram : function( cfg ){
+        _initProgram : function( cfg ) {
             var sttc = this.values,
                 View, Ctrl, viewCfg, ctrlCfg;
-            if( sttc.controller ){
+            if( sttc.controller ) {
                 Ctrl = sttc.controller;
                 ctrlCfg = {
                     name : 'C' + sttc.name
                 };
                 sttc.controller = new Ctrl( ctrlCfg );
             }
-            if( sttc.view ){
-                View = sttc.view;
+            if( sttc.view ) {
+                View    = sttc.view;
                 viewCfg = {
                     clsList : sttc.clsList,
                     name    : 'V' + sttc.name,
@@ -123,7 +123,7 @@ define( function( require, exports, module ){
          * @return  {void}
          * @protected
          */
-        _initView : function(){
+        _initView : function() {
             var sttc    = this.values;
             if( !sttc.view ) {
                 return;
@@ -143,7 +143,7 @@ define( function( require, exports, module ){
          * @return  {void}
          * @protected
          */
-        _initController : function(){
+        _initController : function() {
             var sttc = this.values;
             if( !sttc.controller ) {
                 return;
@@ -156,11 +156,11 @@ define( function( require, exports, module ){
          * [_dataReady 当数据加载完成时调用]
          * @return {}
          */
-        _dataReady : function(){
+        _dataReady : function() {
             this.values.renderChild && this._iteratorChild();
         },
 
-        _getTouchPos : function( event, isTouchEnd ){
+        _getTouchPos : function( event, isTouchEnd ) {
             return $.support.touch ? isTouchEnd ? event.originalEvent.changedTouches[ 0 ] : event.originalEvent.touches[ 0 ] : event;
         },
 
@@ -169,11 +169,11 @@ define( function( require, exports, module ){
          * @return  {Object} [取得的数据]
          * @public
          */
-        getData : function(){
+        getData : function() {
             return this.values.data;
         }
 
     });
 
     return BaseModel;
-});
+} );

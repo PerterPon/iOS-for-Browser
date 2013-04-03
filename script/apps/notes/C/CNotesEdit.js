@@ -3,7 +3,9 @@ define( function( require, exports, modules ) {
     "use strict";
 
     Ext.define( "CNotesEdit", {
-        extend : "BaseController"
+        extend : "BaseController",
+
+        
     } );
 
     return CNotesEdit;
