@@ -10,12 +10,13 @@ define( function( require, exports, module ) {
             eventList : [
                 [ 'openApp' ],
                 [ 'closeApp' ],
-                [ 'clearApp' ]
+                [ 'clearApp' ],
+                [ 'reopenApp' ]
             ]
         },
 
-        EopenApp : function() {
-            this.self.Util.notify( this.values.view, 'openApp' );
+        EopenApp : function( appname ) {
+            this.self.Util.notify( this.values.view, 'openApp', [ appname ] );
         },
 
         EcloseApp : function() {
@@ -24,6 +25,10 @@ define( function( require, exports, module ) {
 
         EclearApp : function() {
             this.self.Util.notify( this.values.view, 'clearApp' );
+        },
+
+        EreopenApp : function( DOMObject ) {
+            this.self.Util.notify( this.values.view, 'reopenApp', [ DOMObject ] );
         }
 
     });

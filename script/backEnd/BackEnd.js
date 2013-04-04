@@ -41,8 +41,9 @@ define( function( require, exports, module ) {
             if( config && config.isIframe ) {
                 this.__addIframeApp( config.URL );
             } else {
-                if( cacheMap[ name ] ) {
-                    DOMObject = cacheMap[ name ].getDomObject();
+                if( cacheMap[ appname ] ) {
+                    DOMObject = cacheMap[ appname ];
+                    window.iOS.Event.dispatchEvent( 'reopenApp', [ DOMObject ] );
                 } else {
                     seajs.use( './script/config/' + appname, function( appCfg ) {
                         if( !appCfg ){
@@ -83,8 +84,11 @@ define( function( require, exports, module ) {
          * @return {[void]}
          */
         destructor : function( name ) {
-            _cacheMap[ name ].destructor();
             delete _cacheMap[ name ];
+        },
+
+        addApp : function( name, DomObject ) {
+            this._cacheMap[ name ] = DomObject;
         }
 
     } );

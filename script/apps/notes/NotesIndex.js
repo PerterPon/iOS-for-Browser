@@ -1,9 +1,10 @@
 ﻿
-define( function( require, exports, moduls ) {
+define( function( require, exports, module ) {
 
+    require( '../BaseApp' );
     Ext.define( "NotesIndex", {
 
-        extend : "BaseModel"
+        extend : "BaseApp"
     } );
 
     return NotesIndex;

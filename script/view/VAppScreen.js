@@ -10,7 +10,8 @@ define( function( require, exports, module ){
             eventList : [
                 [ 'openApp' ],
                 [ 'closeApp' ],
-                [ 'clearApp' ]
+                [ 'clearApp' ],
+                [ 'reopenApp' ]
             ]
         },
 
@@ -18,14 +19,15 @@ define( function( require, exports, module ){
             appContainer : null
         },
 
-        _initInnerDom : function(){
+        _initView : function(){
+            //向外暴露appScreen
+            window.iOS.appScreen = this;
         },
 
-        EopenApp : function() {
-            var appContainer = this._getEl()[ 0 ];
-            // appContainer.style.display = '';
+        EopenApp : function( appname ) {
+            var appContainer = this._getEl();
             setTimeout( function(){
-                appContainer.style.webkitTransform = 'scale3d( 1, 1, 1 )';
+                appContainer[ 0 ].style.webkitTransform = 'scale3d( 1, 1, 1 )';
             }, 1 );
         },
 
@@ -40,6 +42,10 @@ define( function( require, exports, module ){
 
         EclearApp : function() {
             this._getEl().html( '' );
+        },
+
+        EreopenApp : function( DOMObject ) {
+            this._getEl().html( DOMObject );
         }
 
     });

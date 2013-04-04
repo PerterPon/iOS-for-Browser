@@ -6,12 +6,20 @@ define( function( require, exports, module ) {
     Ext.define( 'AppScreen', {
         extend : 'BaseModel',
 
+        values : {
+            /**
+             * [curAppName 当前打开的app的名字]
+             */
+            curAppName : null,
+        },
+
         _attachEventListener : function() {
             this.callParent();
             var Event = window.iOS.Event;
             Event.addEvent( 'openApp', this.__openAppHandle, this );
             Event.addEvent( 'closeApp', this.__closeAppHandle, this );
             Event.addEvent( 'clearApp', this.__clearAppHandle, this );
+            Event.addEvent( 'reopenApp', this.__reopenAppHandle, this );
             // Event.addEvent( 'iconOut', this.__iconOutHandle, this );
             // Event.addEvent( 'iconIn', this.__iconInHandle, this );
         },
@@ -32,7 +40,11 @@ define( function( require, exports, module ) {
         },
 
         __openAppHandle : function( appname, hideTopBar ) {
-            this.self.Util.notify( this.values.controller, 'openApp' );
+            this.self.Util.notify( this.values.controller, 'openApp', [ appname ] );
+        },
+
+        __reopenAppHandle : function( DOMObject ) {
+            this.self.Util.notify( this.values.controller, 'reopenApp', [ DOMObject ] );
         }
 
     });

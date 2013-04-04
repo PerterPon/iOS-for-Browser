@@ -173,9 +173,11 @@ define( function( require, exports, model ) {
         _itemClickHandle : function( event ) {
             var sttc  = this.values,
                 sttcs = this.self;
-                selectedItem = sttc.selectedItem;
+                selectedItem  = sttc.selectedItem;
             selectedItem && selectedItem.removeClass( sttcs.listItemSelectedCls );
             selectedItem = $( event.currentTarget );
+            selectedItem.addClass( sttcs.listItemSelectedCls );
+            sttc.selectedItem = selectedItem;
         }
 
     });

@@ -8,7 +8,8 @@
 /**
  * list
  */
-.iOS_notes_notesList { background: url( ../resource/images/apps/notes/body.png ) center center }
-.iOS_notes_edge_top { position: absolute; top: 0; background: url( ../resource/images/apps/notes/edgeTopMarginThin.png ) repeat-x left top; width: 100%; height: 11px }
-.iOS_notes_list_content { width: 100%; height: 100%; }
-.iOS_notes_edge_bottom { position: absolute; bottom: 0; background: url( ../resource/images/apps/notes/edgeTopMarginThin.png ) repeat-x left top; width: 100%; height: 5px; left: 0 }
+.iOS_notes_notesList { background: url( ../resource/images/apps/notes/body.png ) center center; -webkit-box-orient: block-axis }
+.iOS_notes_edge_top { z-index: 1; position: absolute; top: 0; background: url( ../resource/images/apps/notes/edgeTopMarginThin.png ) repeat-x left top; width: 100%; height: 11px }
+.iOS_notes_list_content { width: 100%; height: 100%; -webkit-box-flex: 1 }
+.iOS_notes_edge_bottom { z-index: 1; position: absolute; bottom: 0; background: url( ../resource/images/apps/notes/edgeTopMarginThin.png ) repeat-x left top; width: 100%; height: 5px; left: 0 }
+.iOS_notes_listItem_selected { background: rgba(172, 89, 61, 0.35) }
