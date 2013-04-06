@@ -33,7 +33,7 @@ define( function( require, exports, module ) {
             $.extend( window.iOS.AppCenter, appCenter );
         },
 
-        __openAppHandler : function( appname, config ) {
+        __openAppHandler : function( appname, config, forceRevolution ) {
             var DOMObject, appCfg,
                 cacheMap  = this._cacheMap,
                 Event     = window.iOS.Event;
@@ -41,7 +41,7 @@ define( function( require, exports, module ) {
             if( config && config.isIframe ) {
                 this.__addIframeApp( config.URL );
             } else {
-                if( cacheMap[ appname ] ) {
+                if( cacheMap[ appname ] && !forceRevolution ) {
                     DOMObject = cacheMap[ appname ];
                     window.iOS.Event.dispatchEvent( 'reopenApp', [ DOMObject ] );
                 } else {
@@ -84,11 +84,16 @@ define( function( require, exports, module ) {
          * @return {[void]}
          */
         destructor : function( name ) {
-            delete _cacheMap[ name ];
+            delete this._cacheMap[ name ];
         },
 
+        /**
+         * [addApp 添加app缓存]
+         * @param {[String]}     name      [app的名字]
+         * @param {[Dom Object]} DomObject [app的节点]
+         */
         addApp : function( name, DomObject ) {
-            this._cacheMap[ name ] = DomObject;
+            this._cacheMap[ name ] || ( this._cacheMap[ name ] = DomObject );
         }
 
     } );

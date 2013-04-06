@@ -117,7 +117,7 @@ define( function( require, exports, model ) {
         _generateHtml : function() {
             var sttcs = this.values,
                 sttc  = this.self,
-                data  = sttcs.data.listData,
+                data  = sttcs.data.data.listData,
                 len   = data.length,
                 html  = '';
             for( i    = 0; i < len; i++ ) {
@@ -153,6 +153,7 @@ define( function( require, exports, model ) {
             $( '.' + sttcs.listItemCls ).live( $.support.touchstart, Util.bind( rangeClick.touchStart, rangeClick ) )
             .live( $.support.touchmove, Util.bind( rangeClick.touchMove, rangeClick ) )
             .live( $.support.touchstop, Util.bind( rangeClick.touchStop, rangeClick ) );
+            window.iOS.Event.addEvent( 'reopenApp', Util.bind( this.__reopenAppHandle, this ) );
         },
 
         _init : function() {
@@ -167,7 +168,7 @@ define( function( require, exports, model ) {
                     '<div class="'+ sttcs.listBoxCls +' '+ sttc.listBoxCls +'"></div>' +
                 '</div>'
             );
-            $.scrollView( sttc.listBox.children( '.' + sttcs.listBoxCls )[ 0 ], config );
+            this.__enableScrollView();
         },
 
         _itemClickHandle : function( event ) {
@@ -178,6 +179,21 @@ define( function( require, exports, model ) {
             selectedItem = $( event.currentTarget );
             selectedItem.addClass( sttcs.listItemSelectedCls );
             sttc.selectedItem = selectedItem;
+        },
+
+        __enableScrollView : function() {
+            var sttc   = this.values,
+                sttcs  = this.self,
+                config = {
+                    direction : 'vertical',
+                    bounces   : 'vertical'
+                };
+            $.scrollView( sttc.listBox.children( '.' + sttcs.listBoxCls )[ 0 ], config );
+        },
+
+        __reopenAppHandle : function( appname ) {
+                
+            this.__enableScrollView();
         }
 
     });

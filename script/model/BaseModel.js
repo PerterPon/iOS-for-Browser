@@ -28,8 +28,8 @@ define( function( require, exports, module ) {
 
         constructor : function( cfg ) {
             this.callParent([ cfg ]);
-            cfg.needData && this._requestData();
             this._initProgram( cfg );
+            cfg.needData && this._requestData();
             this._initComplete();
         },
 

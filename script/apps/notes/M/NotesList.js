@@ -6,6 +6,10 @@ define( function( require, exports, modules ) {
     Ext.define( "NotesList", {
         extend : "BaseModel",
 
+        _getDefaultData : function() {
+            return require( '../../../../resource/defaultData/notes/NotesList' );
+        },
+
         _dataReady : function() {
             var sttc   = this.values,
                 sttcs  = this.self,
