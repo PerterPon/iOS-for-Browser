@@ -30,7 +30,17 @@ define( function( require, exports, modules ) {
                 "subView" : [ {
                     "class"      : NotesBar,
                     "clsList"    : [ "iOS_notes_listBar" ],
-                    "name"       : "notesListBar"
+                    "name"       : "notesListBar",
+                    "leftBtnCfg" : {
+                        "text"   : ""
+                    },
+                    "centerTitle": {
+                        "text"   : "备忘录()"
+                    },
+                    "rightBtnCfg": {
+                        "text"      : "+"
+                    }
+
                 }, {
                     "class"      : NotesList,
                     "clsList"    : [ "iOS_notes_notesList" ],

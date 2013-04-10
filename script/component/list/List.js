@@ -11,6 +11,7 @@ define( function( require, exports, model ) {
         extend : 'Component',
 
         inheritableStatics : {
+            manager     : require( './ListManager' ),
             listBoxCls  : 'iOS_list_box',
             listItemCls : 'iOS_list_item',
             listItemSelectedCls  : 'iOS_list_item_selected',

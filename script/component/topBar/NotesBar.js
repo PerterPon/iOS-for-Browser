@@ -9,6 +9,7 @@ define( function( require, exports, module ) {
         statics : {
             baseClass : 'iOS_notes_topBar'
         }
+        
     } );
 
     return NotesBar;

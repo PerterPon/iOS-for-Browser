@@ -2,6 +2,7 @@
 define( function( require ) {
     //"use strict";
 
+    var CardView = require( './component/cardView/CardView' );
     Ext.define( 'Iterator', {
 
         statics : {

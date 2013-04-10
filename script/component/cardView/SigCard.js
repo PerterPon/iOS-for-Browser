@@ -7,7 +7,8 @@ define( function( require, exports, modules ) {
         extend : 'BaseView',
 
         inheritableStatics : {
-            baseClass : 'iOS_sigCard'
+            baseClass : 'iOS_sigCard',
+            manager   : require( './CardManager' )
         },
 
         _cfg : null,
@@ -25,6 +26,14 @@ define( function( require, exports, modules ) {
             this._parent = parent;
             this._registSelf();
             this._getEl();
+        },
+
+        /**
+         * [getTopBar 获取TopBar对象]
+         * @return {[Object]}
+         */
+        getTopBar : function() {
+
         },
 
         __initCard : function() {

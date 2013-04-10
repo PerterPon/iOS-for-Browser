@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     Ext.define( 'BaseManager', {
@@ -11,9 +11,10 @@ define( function( require, exports, module ){
             managerId : null
         },
 
-        constructor: function( managerId ){
+        constructor: function( managerId ) {
             var sttc       = this.self;
-            sttc.managerId = managerId; 
+            sttc.managerId = managerId;
+            this._registSelf( managerId );
         },
 
         /**
@@ -22,7 +23,7 @@ define( function( require, exports, module ){
          * @param  {Object} object [对应实例对象]
          * @return {void}
          */
-        register : function( name, object ){
+        register : function( name, object ) {
             var sttc  = this.self;
             if( !name || !object )
                 throw sttc.managerId + ' name or object can not be empty!';
@@ -34,7 +35,7 @@ define( function( require, exports, module ){
          * @param  {string/object} name [实例名字，或者实例]
          * @return {Object}
          */
-        get : function( name ){
+        get : function( name ) {
             var sttc = this.self;
             if( !name )
                 throw sttc.managerId + ' name can not be empty!';
@@ -42,6 +43,16 @@ define( function( require, exports, module ){
                 return sttc.pool[ name ];
             else 
                 return name;
+        },
+
+        /**
+         * [_registSelf 将此manager注册到manager容器中]
+         * @param  {[String]} id [manager的id]
+         * @return {[void]}
+         */
+        _registSelf : function( id ) {
+            window.iOS.Manager || ( window.iOS.Manager = {} );
+            window.iOS.Manager[ id ] = this;
         }
 
     });

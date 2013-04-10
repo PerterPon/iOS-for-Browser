@@ -38,6 +38,8 @@ define( function( require, exports, module ) {
          */
         _tarCard : null,
 
+        _registerSelf : function() {},
+
         /**
          * [_initCardView 初始化]
          * @return {[void]} []
