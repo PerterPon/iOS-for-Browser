@@ -17,9 +17,7 @@ define( function( require, exports, module ) {
     Ext.define( 'BaseModel', {
         extend : 'Component',
 
-        inheritableStatics : {
-            manager : require( './ModelManager' )
-        },
+        manager : require( './ModelManager' ),
 
         values : {
             name : null,

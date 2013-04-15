@@ -6,9 +6,7 @@ define( function( require, exports, module ){
     Ext.define( 'BaseController', {
         extend : 'Component',
 
-        inheritableStatics : {
-            manager : require( './ControllerManager' )
-        },
+        manager : require( './ControllerManager' ),
 
         values : {
             view  : null,

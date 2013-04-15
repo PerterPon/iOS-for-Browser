@@ -16,6 +16,7 @@ define( function( require, exports, module ){
                 [ 'assistivePointAutoTranslate' ],
                 [ 'assistivePointAutoTranslateComplete' ],
                 [ 'showAssistiveOptions' ],
+                [ 'showAssistiveOptionsComplete' ],
                 [ 'hideAssistiveOptions' ],
                 [ 'enableTransparent' ],
                 [ 'disableTransparent' ],
@@ -56,6 +57,10 @@ define( function( require, exports, module ){
 
         EshowAssistiveOptions : function( position, sceondaryIcon ){
             this.self.Util.notify( this.values.view, 'showAssistiveOptions', [ position, sceondaryIcon ] );
+        },
+
+        EshowAssistiveOptionsComplete : function() {
+            this.self.Util.notify( this.values.model, 'showAssistiveOptionsComplete' );
         },
 
         EhideAssistiveOptions : function( position, sceondaryIcon ){

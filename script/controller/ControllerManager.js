@@ -7,7 +7,7 @@ define( function( require, exports, module ){
         extend : 'BaseManager'
     });
 
-    var ctrlMgr = new ControllerManager( 'module' ),
+    var ctrlMgr = new ControllerManager( 'controller' ),
         Util    = require( '../../util/Util' );
 
     return {

@@ -8,9 +8,9 @@ define( function( require, exports, module ){
 
     });
 
-    var modelMgr = new ModelManager( 'module' ),
+    var modelMgr = new ModelManager( 'model' ),
         Util     = require( '../../util/Util' );
-
+        
     return {
         register : Util.bind( modelMgr.register, modelMgr ),
         get      : Util.bind( modelMgr.get, modelMgr )

@@ -107,7 +107,8 @@ define( function() {
             function areaTransitionEnd( event ) {
                 event.stopPropagation();
                 this.removeEventListener( 'webkitTransitionEnd', areaTransitionEnd );
-                document.body.addEventListener( 'click', that.__bodyClickHandle );
+                // document.body.addEventListener( 'click', that.__bodyClickHandle );
+                that.self.Util.notify( that.values.controller, 'showAssistiveOptionsComplete' );
             }
             for( var i in secondaryIcon ) {
                 this._getElCacheByCls( 'iOS_assistive_' + i ).show().css( 'opacity', '0' );

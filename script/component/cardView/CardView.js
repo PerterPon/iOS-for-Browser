@@ -1,7 +1,7 @@
 ﻿
 define( function( require, exports, module ) {
     //"use strict";
-
+    require( '../../view/BaseView' );
     var Aminations = require( '../../animations/Anim' );
     Ext.define( 'CardView', {
         extend : 'BaseView',
@@ -55,18 +55,6 @@ define( function( require, exports, module ) {
                 height : window.iOS.System.height 
             } );
         },
-
-        // /**
-        //  * [addCard 向本card中添加card]
-        //  * @param {[Object||Array]} cards [需要被添加的card]
-        //  */
-        // addCard : function( cards ) {
-        //     var cardsMap = {};
-        //     for( var i in cards ) {
-        //         cardsMap[ i ] = cards[ i ];
-        //     }
-        //     this._cardsMap = cardsMap;
-        // },
 
         /**
          * [clearCard 清除card信息]

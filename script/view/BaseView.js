@@ -6,9 +6,7 @@ define( function( require, exports, module ) {
     Ext.define( 'BaseView', {
         extend : 'Component',
 
-        inheritableStatics : {
-            manager : require( './ViewManager' ),
-        },
+        manager : require( './ViewManager' ),
 
         values : {
             name    : null,
@@ -34,6 +32,14 @@ define( function( require, exports, module ) {
          */
         setController : function( ctrl ) {
             this.values.ctrl = ctrl;
+        },
+
+        /**
+         * [getEl 映射,供外部接口适用]
+         * @return {[void]}
+         */
+        getEl : function() {
+            return this._getEl.apply( this, arguments );
         },
 
         /**

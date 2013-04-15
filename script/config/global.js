@@ -1,5 +1,5 @@
 
-define( function( require, exports, module ){
+define( function( require, exports, module ) {
     //"use strict";
 
     var BaseIOS     = require( '../model/BaseIOS' ),
@@ -10,6 +10,7 @@ define( function( require, exports, module ){
         PopScreen   = require( '../model/PopScreen' ),
         Home        = require( '../model/Home' ),
         AssistiveScreen = require( '../model/AssistiveScreen' ),
+        MaskScreen  = require( '../model/MaskScreen' ),
         VIOS        = require( '../view/VIOS' ),
         VTopBar     = require( '../view/VTopBar' ),
         VIconScreen = require( '../view/VIconScreen' ),
@@ -18,14 +19,16 @@ define( function( require, exports, module ){
         VPopScreen  = require( '../view/VPopScreen' ),
         VHome       = require( '../view/VHome' ),
         VAssistiveScreen = require( '../view/VAssistiveScreen' ),
+        VMaskScreen = require( '../view/VMaskScreen' ),
         CTopBar     = require( '../controller/CTopBar' ),
         CLockScreen = require( '../controller/CLockScreen' ),
         CAppScreen  = require( '../controller/CAppScreen' ),
         CPopScreen  = require( '../controller/CPopScreen' ),
         CIconScreen = require( '../controller/CIconScreen' ),
         CHome       = require( '../controller/CHome' ),
-        CAssistiveScreen = require( '../controller/CAssistiveScreen' );
-    return [{
+        CAssistiveScreen = require( '../controller/CAssistiveScreen' ),
+        CMaskScreen = require( '../controller/CMaskScreen' );
+    return [ {
         "class"      : TopBar,
         "clsList"    : [ 'iOS_topBar' ],
         "name"       : "topBar",
@@ -38,7 +41,7 @@ define( function( require, exports, module ){
         "name"       : "iOS",
         "view"       : VIOS,
         "flex"       : "460",
-        "subView"    : [{
+        "subView"    : [ {
             "class"      : PopScreen,
             "clsList"    : [ "iOS_popScreen" ],
             "visiable"   : false,
@@ -66,7 +69,14 @@ define( function( require, exports, module ){
             "name"       : "appScreen",
             "view"       : VAppScreen,
             "controller" : CAppScreen
-        }]
+        }, {
+            "class"      : MaskScreen,
+            "clsList"    : [ 'iOS_maskScreen' ],
+            "name"       : "maskView",
+            "visiable"   : false,
+            "view"       : VMaskScreen,
+            "controller" : CMaskScreen
+        } ]
     }, {
         "class"      : AssistiveScreen,
         "clsList"    : [ 'iOS_assistiveScreen' ],
@@ -75,12 +85,12 @@ define( function( require, exports, module ){
         "view"       : VAssistiveScreen,
         "controller" : CAssistiveScreen,
         "needData"   : true,
-        "subView"    : [{
+        "subView"    : [ {
             "class"  : Home,
             "name"   : 'home',
             "clsList": 'iOS_home',
             "controller" : CHome,
             "view"       : VHome
-        }]
-    }];
-});
+        } ]
+    } ];
+} );

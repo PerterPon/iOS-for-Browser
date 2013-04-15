@@ -52,8 +52,7 @@ define( function( require, exports, module ) {
 
         _registerSelf : function() {
             var sttc    = this.values,
-                sttcs   = this.self,
-                manager = sttcs.manager;
+                manager = this.manager;
             manager.register( sttc.name, this );
         },
 
@@ -69,7 +68,7 @@ define( function( require, exports, module ) {
                 manager = sttcs.manager,
                 view, eventName, eventBody, scope;
             for( var i  = 0; i < events.length; i++ ) {
-                view    = manager.get( events[ i ][ 1 ] || that );
+                view    = that;
                 eventName = events[ i ][ 0 ];
                 Util.listen( view, eventName, view[ 'E' + eventName ], that );
             }

@@ -11,8 +11,14 @@ define( function( require, exports, module ) {
             managerId : null
         },
 
+        values : {
+            managerId : null,
+
+            pool : {}
+        },
+
         constructor: function( managerId ) {
-            var sttc       = this.self;
+            var sttc       = this.values;
             sttc.managerId = managerId;
             this._registSelf( managerId );
         },
@@ -24,7 +30,7 @@ define( function( require, exports, module ) {
          * @return {void}
          */
         register : function( name, object ) {
-            var sttc  = this.self;
+            var sttc  = this.values;
             if( !name || !object )
                 throw sttc.managerId + ' name or object can not be empty!';
             sttc.pool[ name ] = object;
@@ -36,7 +42,7 @@ define( function( require, exports, module ) {
          * @return {Object}
          */
         get : function( name ) {
-            var sttc = this.self;
+            var sttc = this.values;
             if( !name )
                 throw sttc.managerId + ' name can not be empty!';
             if( typeof name === 'string' )

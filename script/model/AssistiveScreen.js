@@ -13,6 +13,7 @@ define( function( require, exports, module ){
                 [ 'touchmove' ],
                 [ 'touchstop' ],
                 [ 'assistivePointAutoTranslateComplete' ],
+                [ 'showAssistiveOptionsComplete' ],
                 [ 'assistiveOptionsClick' ],
                 [ 'assistiveFuncIconClick' ],
                 [ 'assistiveHideComplete' ]
@@ -33,7 +34,8 @@ define( function( require, exports, module ){
             assistiveOptionsClickFunc : null,
             assistiveFuncIconClickFunc: null,
             pointTranslating     : false,
-            rangeClickInstance   : null
+            rangeClickInstance   : null,
+            showMask             : null
         },
 
         Etouchstart : function( event ){
@@ -52,6 +54,10 @@ define( function( require, exports, module ){
             this.values.pointTranslating = false;
         },
 
+        EshowAssistiveOptionsComplete : function() {
+            this.values.showMask();
+        },
+
         EassistiveOptionsClick : function( event, assistiveNode ){
             this.values.assistiveOptionsClickFunc( event, assistiveNode );
         },
@@ -62,6 +68,7 @@ define( function( require, exports, module ){
 
         EassistiveHideComplete : function() {
             this.self.Util.notify( this.values.controller, 'enableTransparent' );
+            window.iOS.Event.dispatchEvent( 'hideMask' );
         },
 
         _initComplete : function(){
@@ -73,6 +80,7 @@ define( function( require, exports, module ){
             sttc.assistiveOptionsClickFunc  = touchFuncs[ 'assistiveOptionsClick' ];
             sttc.assistiveFuncIconClickFunc = touchFuncs[ 'assistiveFuncIconClick' ]; 
             sttc.rangeClickInstance   = new RangeClick( touchFuncs );
+            sttc.showMask             = touchFuncs[ 'showMask' ];
         },
 
         _getDefaultData : function() {
@@ -97,6 +105,7 @@ define( function( require, exports, module ){
                 that     = this,
                 Util     = sttcs.Util,
                 ctrl     = sttc.controller,
+                Event    = window.iOS.Event,
                 dragging = false,
                 height   = window.iOS.System.height,
                 width    = window.iOS.System.width,
@@ -115,6 +124,7 @@ define( function( require, exports, module ){
                 touchMove  : touchMove,
                 touchStop  : touchStop,
                 rangeClick : rangeClick,
+                showMask   : showMask,
                 assistiveOptionsClick : assistiveOptionsClick,
                 assistiveFuncIconClick: assistiveFuncIconClick
             };
@@ -195,7 +205,7 @@ define( function( require, exports, module ){
              * @return {void}
              */
             function assistiveOptionsClick( event ) {
-                sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ curPos, curDisplayIcons ] );
+                Util.notify( ctrl, 'hideAssistiveOptions', [ curPos, curDisplayIcons ] );
                 optionsShow = false;
             }
 
@@ -209,12 +219,34 @@ define( function( require, exports, module ){
                     btnName = target.attributes.name.value,
                     Event   = window.iOS.Event;
                 optionsShow = false;
-                sttcs.Util.notify( sttc.controller, 'hideAssistiveOptions', [ curPos, curDisplayIcons ] );
+                Util.notify( ctrl, 'hideAssistiveOptions', [ curPos, curDisplayIcons ] );
                 switch( btnName ){
                     case 'home' :
                         Event.dispatchEvent( 'homeButtonClick' );
                         break;
                 }
+            }
+
+            /**
+             * [showMask 显示mask界面]
+             * @return {[void]}
+             */
+            function showMask() {
+                var cfg = {
+                    maskClicker   : maskScreenClickHandle,
+                    suspendedName : that.values.name
+                };
+                Event.dispatchEvent( 'showMask', [ cfg ] );
+            }
+
+            /**
+             * [maskScreenClickHandle 当单击了mask层之后的回调函数]
+             * @return {[type]} [description]
+             */
+            function maskScreenClickHandle() {
+                Util.notify( ctrl, 'hideAssistiveOptions', [ curPos, curDisplayIcons ] );
+                optionsShow = false;
+                Event.dispatchEvent( 'hideMask' );
             }
         },
 
