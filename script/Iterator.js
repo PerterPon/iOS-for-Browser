@@ -2,7 +2,9 @@
 define( function( require ) {
     //"use strict";
 
-    var CardView = require( './component/cardView/CardView' );
+    var CardView = require( './component/cardView/CardView' ),
+        SigCard  = require( './component/cardView/SigCard' );
+
     Ext.define( 'Iterator', {
 
         statics : {
@@ -26,14 +28,14 @@ define( function( require ) {
 
         /**
          * [itrtrView 迭代实例化配置文件信息]
-         * @param  {[type]} cfg [配置文件信息]
+         * @param  {[Object]} cfg [配置文件信息]
          * @return {void}
          */
         itrtrView : function( cfg ) {
             var sttc  = this.values,
                 queue = sttc.queue; 
             queue[ queue.length - 1 ][ 'cfg' ] = cfg;
-            if( queue.length == 1 ) {
+            if( 1 === queue.length ) {
                 this.__doItrtr( cfg );
             }
         },
@@ -49,7 +51,7 @@ define( function( require ) {
             queue.push( {
                 'preDom' : selector
             } );
-            if( queue.length == 1 ) {
+            if( 1 === queue.length ) {
                 this.__doSetPreDom( selector );
             }
         },
@@ -65,20 +67,20 @@ define( function( require ) {
          * @return  {Void}
          * @protected
          */
-        __doItrtr : function( tCfg, dom, parent ) {
-            var sttcs  = this.self,
-                sttc   = this.values,
-                model, cls, id, html, instance, preDom, cfg;
-            for( var i = 0; i < tCfg.length; i++ ) {
-                cfg    = tCfg[ i ];
-                model  = cfg[ 'class' ];
-                cls    = '';
-                id     = 'ios-' + sttc.curIdx;
-                for( var j = 0; j < ( cfg.clsList || [] ).length; j++ ) {
+        __doItrtr : function( tCfg, dom, parentCardView, parentSigCard ) {
+            var sttcs    = this.self,
+                sttc     = this.values,
+                model, cls, id, html, instance, preDom, cfg, cardView, sigCard, i, j;
+            for( i = 0; i < tCfg.length; i++ ) {
+                cfg      = tCfg[ i ];
+                model    = cfg[ 'class' ];
+                cls      = '';
+                id       = 'ios-' + sttc.curIdx;
+                for( j   = 0; j < ( cfg.clsList || [] ).length; j++ ) {
                     !cfg.clsList[ j ] || ( cls += cfg.clsList[ j ] + ' ' );
                 }
-                html    = document.createElement( 'div' );
-                html.id = id;
+                html     = document.createElement( 'div' );
+                html.id  = id;
                 html.className = cls;
                 if( cfg.flex ) {
                     html.style[ '-webkit-box-flex' ] = cfg.flex;
@@ -92,12 +94,22 @@ define( function( require ) {
                 preDom = dom || sttc.preDom || document.body;
                 preDom.appendChild( html );
                 cfg[ 'selector' ] = '#' + id;
-                instance = new model( cfg, parent );
+                instance = new model( cfg );
+                model instanceof CardView ? cardView = instance : ( ( model instanceof SigCard ) && ( sigCard = instance ) );
+                if( parentCardView ) {
+                    parentCardView.addSigCard( cfg[ 'name' ], instance );
+                    instance.cardView = parentCardView;
+                } else if( parentSigCard ) {
+                    parentSigCard.addItems( cfg[ 'name' ], instance );
+                    instance.sigCard = parentSigCard;                    
+                }
                 // parent && ( instance._parent = parent );
                 sttc.curIdx++;
                 if( cfg.subView && cfg.subView.length ) {
-                    this.__doItrtr( cfg.subView, html, instance );
+                    this.__doItrtr( cfg.subView, html, cardView, sigCard );
                 }
+                cardView = null;
+                sigCard  = null;
             }
             sttcs.Util.notify( this, 'iteratorComplete' );
         },

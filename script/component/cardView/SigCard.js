@@ -13,35 +13,25 @@ define( function( require, exports, modules ) {
 
         _cfg : null,
 
-        /**
-         * [_parent 父级元素，通常来说会是一个cardView]
-         * @type {[CardView]}
-         */
-        _parent : parent,
+        values : {
+            //sigCard里的item
+            itemPool : {}
+        },
 
-        constructor : function( cfg, parent ) {
+        constructor : function( cfg ) {
             this.callParent( [ cfg ] );
             this.__initCard();
             this._cfg    = cfg;
             this._parent = parent;
-            this._registSelf();
             this._getEl();
         },
 
-        /**
-         * [getTopBar 获取TopBar对象]
-         * @return {[Object]}
-         */
-        getTopBar : function() {
-
+        addItems : function( name, item ) {
+            this.values[ 'itemPool' ][ name ] = item;
         },
 
         __initCard : function() {
             this.self.baseClass && ( this._getEl().addClass( this.self.baseClass ) );
-        },
-
-        _registSelf : function() {
-            this._parent && this._parent.registCard( this._cfg[ 'name' ], this );
         }
     } );
 

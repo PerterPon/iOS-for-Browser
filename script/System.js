@@ -14,7 +14,8 @@ define( function( require, exports, module ){
             android    : sUserAgent.indexOf( 'android' ),    
             windowsCe  : sUserAgent.indexOf( 'window ce' ),    
             windowsMobile : sUserAgent.indexOf( 'windows mobile' ),
-            windowsDesktop: sUserAgent.indexOf( 'Windows NT' )
+            windowsDesktop: sUserAgent.indexOf( 'Windows NT' ),
+            macintosh     : sUserAgent.indexOf( 'Macintosh' )
         };
         for( var i in diviceTest ){
             if( diviceTest[ i ] >= 0 ){

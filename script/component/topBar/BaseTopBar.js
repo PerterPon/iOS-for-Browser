@@ -10,11 +10,22 @@ define( function( require, exports, module ) {
             manager        : require( './TopBarManager' ),
             leftBtnCls     : 'iOS_topBar_leftBtn',
             centerTitleCls : 'iOS_topBar_centerTitle',
-            rightBtnCls    : 'iOS_topBar_rightBtn' 
+            rightBtnCls    : 'iOS_topBar_rightBtn',
+            btns           : [ 'leftBtnCfg', 'centerTittle', 'rightBtnCfg' ]
         },
 
-        //不注册到vm里去
-        _registerSelf : function() {},
+        constructor : function() {
+            this.callParent( arguments );
+            this._initBtns();
+        },
+
+        _initBtns : function() {
+            var btns = this.self.btn,
+                sttc = this.values;
+            btns.foeach( function( value, index ) {
+                sttc[ value ] && this._doGenerateBtn( value, btns[ index ] );
+            } );
+        },
 
         /**
          * [_initLeftBtn 初始化左侧按钮]
@@ -40,7 +51,7 @@ define( function( require, exports, module ) {
         },
 
         _doGenerateBtn : function( type, cfg ) {
-            this[ 'generateBtn' + type ] && ( this[ 'generateBtn' + type ]( cfg ) );
+            this[ '_generateBtn' + type ] && ( this[ 'generateBtn' + type ]( cfg ) );
         },
 
         /**
@@ -49,7 +60,7 @@ define( function( require, exports, module ) {
          */
         _generateBtnRound : function() {
             var sttcs   = this.self,
-                $canvas = $( '<canvas class="'+ sttcs.leftBtnCfg +'"></canvas>' );
+                $canvas = $( '<canvas class="'+ sttcs.leftBtnCls +'"></canvas>' );
 
         },
 
@@ -58,7 +69,8 @@ define( function( require, exports, module ) {
          * @return {[void]}
          */
         _generateBtnArrow : function() {
-
+            var sttcs   = this.self,
+                $canvas = $( 'canvas class="'+ sttcs.right +'"' ) 
         }
 
     } );

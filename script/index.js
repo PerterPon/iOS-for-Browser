@@ -19,7 +19,7 @@ define( function( require, exports, module ) {
         }
         setTimeout( function() {
             removeBootLogo();
-        }, 2000 );
+        }, 500 );
     }
 
     function initBackEnd() {

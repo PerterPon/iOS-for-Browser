@@ -28,7 +28,7 @@ define( function( require, exports, module ) {
         _attachDomEvent : function() {
             this.callParent();
             var that = this;
-            this._getEl().on( $.support.click, function( event ) {
+            this._getEl().on( 'click', function( event ) {
                 event.stopPropagation();
                 that.self.Util.notify( that.values.controller, 'maskClick' );
             } );

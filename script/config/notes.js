@@ -32,13 +32,16 @@ define( function( require, exports, modules ) {
                     "clsList"    : [ "iOS_notes_listBar" ],
                     "name"       : "notesListBar",
                     "leftBtnCfg" : {
-                        "text"   : ""
+                        "text"   : "",
+                        "type"   : "arrow"
                     },
                     "centerTitle": {
-                        "text"   : "备忘录()"
+                        "text"   : "备忘录()",
+                        "type"   : "none"
                     },
                     "rightBtnCfg": {
-                        "text"      : "+"
+                        "text"      : "+",
+                        "type"      : "round"
                     }
 
                 }, {
