@@ -1,2 +1,3 @@
-node/node_modules
+node_modules
 move.js
+node/pid.txt
