@@ -6,12 +6,12 @@ define( function( require, exports, module ) {
     Ext.define( "BaseTopBar", {
         extend : 'BaseView',
 
-        inheriteableStatics : {
-            manager        : require( './TopBarManager' ),
-            leftBtnCls     : 'iOS_topBar_leftBtn',
-            centerTitleCls : 'iOS_topBar_centerTitle',
-            rightBtnCls    : 'iOS_topBar_rightBtn',
-            btns           : [ 'leftBtnCfg', 'centerTittle', 'rightBtnCfg' ]
+        inheritableStatics : {
+            manager   : require( './TopBarManager' ),
+            leftCls   : 'iOS_topBar_leftBtn',
+            centerCls : 'iOS_topBar_centerTitle',
+            rightCls  : 'iOS_topBar_rightBtn',
+            btns      : [ 'leftBtnCfg', 'centerTittle', 'rightBtnCfg' ]
         },
 
         constructor : function() {
@@ -20,59 +20,58 @@ define( function( require, exports, module ) {
         },
 
         _initBtns : function() {
-            var btns = this.self.btn,
-                sttc = this.values;
-            btns.foeach( function( value, index ) {
-                sttc[ value ] && this._doGenerateBtn( value, btns[ index ] );
+            var btns = this.self.btns,
+                sttc = this.values,
+                that = this;
+            btns.forEach( function( value, index ) {
+                sttc[ value ] && that._doGenerateBtn( sttc[ value ][ 'type' ] , sttc[ value ] );
             } );
         },
 
-        /**
-         * [_initLeftBtn 初始化左侧按钮]
-         * @return {[vois]}
-         */
-        _initLeftBtn : function() {
-            var btnCfg = this.leftBtnCfg;
-        },
-
-        /**
-         * [_initCenterText 初始化工具栏中间文字]
-         * @return {[void]}
-         */
-        _initCenterText : function() {
-        },
-
-        /**
-         * [_initRightBtn 初始化右侧按钮]
-         * @return {[void]}
-         */
-        _initRightBtn : function() {
-            var btnCfg = this._rightBtnCfg;
-        },
-
         _doGenerateBtn : function( type, cfg ) {
-            this[ '_generateBtn' + type ] && ( this[ 'generateBtn' + type ]( cfg ) );
+            var btn;
+            this[ '_generateBtn' + type ] && ( btn = this[ 'generateBtn' + type.toUpperCase() ]( cfg ) );
+            this._getEl().append( btn );
         },
 
         /**
          * [_generateBtnRound 生成圆角状的按钮]
-         * @return {[jQuery Dom Object]}
+         * @return {[Dom Object]}
          */
-        _generateBtnRound : function() {
-            var sttcs   = this.self,
-                $canvas = $( '<canvas class="'+ sttcs.leftBtnCls +'"></canvas>' );
-
+        _generateBtnROUND : function( cfg ) {
+            var sttcs  = this.self,
+                sttc   = this.values,
+                dir    = cfg[ 'direction' ],
+                canvas = document.createElement( 'canvas' );
+            canvas.classList.add( sttc[ dir +'Cls' ] );
+            
+            return canvas;
         },
 
         /**
          * [_generateBtnArrow 生成箭头状的按钮]
-         * @return {[void]}
+         * @return {[Dom Object]}
          */
-        _generateBtnArrow : function() {
+        _generateBtnARROW : function( cfg ) {
             var sttcs   = this.self,
-                $canvas = $( 'canvas class="'+ sttcs.right +'"' ) 
-        }
+                dir     = cfg[ 'direction' ],
+                canvas  = document.createElement( 'canvas' );
+            canvas.classList.add( sttc[ dir +'Cls' ] );
+            return canvas;
+        },
 
+        /**
+         * [_generateBtnTitle 生成一个没有任何图形背景的标题]
+         * @param  {[type]} cfg [description]
+         * @return {[Dom Object]}
+         */
+        _generateBtnTitle :function( cfg ) {
+            var sttcs   = this.self,
+                dir     = cfg[ 'direction' ],
+                span    = document.createElement( 'span' );
+            span.classList.add( sttc[ dir +'Cls' ] );
+            return span;
+        }
     } );
 
     return BaseTopBar;

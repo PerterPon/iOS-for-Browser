@@ -79,7 +79,7 @@ define( function() {
             for( var i = 0, data, pos; i < icons.length; i++ ) {
                 data  = icons[ i ];
                 pos   = data[ 'position' ];
-                style = 'background:url(./resource/images/assistive/'+ data[ 'name' ] +'.png);display:none'
+                style = 'background-image:url(./resource/images/assistive/'+ data[ 'name' ] +'.png);display:none'
                 html  =
                 '<div class="'+ sttcs[ 'assistive'+ data[ 'text' ] ] +" "+ sttcs.assistiveIcon +'" name='+ data[ "name" ] +' style='+ style +'>'+
                     '<span>'+ data[ 'text' ] +'</span>'+

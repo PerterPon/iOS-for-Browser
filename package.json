@@ -1,0 +1,23 @@
+{
+  "name": "ios4browser",
+  "main": "./node/index",
+  "version": "0.1.1",
+  "description": "iOS for Browser",
+  "author": "Pon <PerterPon@gmail.com>",
+  "dependencies": {
+    "ws": "*",
+    "seajs": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "expect.js": "*",
+    "jquery": "*",
+    "jsdom": "*"
+  },
+  "engines": [
+    "node >=0.8.14"
+  ],
+  "scripts": {
+    "test": "make test"
+  }
+}

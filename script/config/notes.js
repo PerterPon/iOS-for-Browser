@@ -31,19 +31,15 @@ define( function( require, exports, modules ) {
                     "class"      : NotesBar,
                     "clsList"    : [ "iOS_notes_listBar" ],
                     "name"       : "notesListBar",
-                    "leftBtnCfg" : {
-                        "text"   : "",
-                        "type"   : "arrow"
-                    },
-                    "centerTitle": {
-                        "text"   : "备忘录()",
-                        "type"   : "none"
-                    },
-                    "rightBtnCfg": {
+                    "btns"       : [{
+                        "text"      : "备忘录()",
+                        "type"      : "title",
+                        "direction" : "center"
+                    }, {
                         "text"      : "+",
-                        "type"      : "round"
-                    }
-
+                        "type"      : "round",
+                        "direction" : "right"
+                    } ]
                 }, {
                     "class"      : NotesList,
                     "clsList"    : [ "iOS_notes_notesList" ],
@@ -60,7 +56,20 @@ define( function( require, exports, modules ) {
                 "subView" : [ {
                     "class"      : NotesBar,
                     "clsList"    : [ "iOS_notes_contentBar" ],
-                    "name"       : "notesContentBar"
+                    "name"       : "notesContentBar",
+                    "btns"       : [ {
+                        "text"      : "备忘录",
+                        "type"      : "arrowLeft",
+                        "direction" : "left"
+                    }, {
+                        "text"      : "",
+                        "type"      : "title",
+                        "direction" : "center"
+                    }, {
+                        "text"      : "+",
+                        "type"      : "round",
+                        "direction" : "right"
+                    } ]
                 }, {
                     "class"      : NotesContent,
                     "clsList"    : [ "iOS_notes_notesContent" ],
@@ -76,7 +85,16 @@ define( function( require, exports, modules ) {
                 "subView" : [ {
                     "class"      : NotesBar,
                     "clsList"    : [ "iOS_notes_editBar" ],
-                    "name"       : "notesEditBar"
+                    "name"       : "notesEditBar",
+                    "btns"       : [ {
+                        "text"      : "",
+                        "type"      : "title",
+                        "direction" : "center"
+                    }, {
+                        "text"      : "完成",
+                        "type"      : "round",
+                        "direction" : "right"
+                    } ]
                 }, {
                     "class"      : NotesEdit,
                     "clsList"    : [ "iOS_notes_notesEdit" ],

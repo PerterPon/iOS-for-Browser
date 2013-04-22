@@ -7,9 +7,18 @@ var fs       = require( 'fs' ),
     filePath = require( './filePath' ),
     socket;
 
+initpid();
+
 console.log( ' - started!' );
 
 wss.on( 'connection', onconnection );
+
+function initpid() {
+    var args = process.argv;
+    if( args.indexOf( 'unittest' ) > -1 ) {
+        fs.writeFile( './pid.txt', process.pid );
+    }
+}
 
 function onconnection( ws ){
     console.log( ' - connected!' );
