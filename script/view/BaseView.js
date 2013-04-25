@@ -51,7 +51,10 @@ define( function( require, exports, module ) {
                 sttcs   = this.self;
             sttc.elPool = {};
             ( sttc.visiable === false ) && this._getEl().hide();
-            sttcs.baseClass && this._getEl().addClass( sttcs.baseClass );
+            if( sttcs.baseClass ){
+                this._getEl()[ 0 ].classList.add( sttcs.baseClass );
+            }
+            // sttcs.baseClass && 
         },
 
         /**

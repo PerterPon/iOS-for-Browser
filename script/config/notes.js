@@ -29,16 +29,21 @@ define( function( require, exports, modules ) {
                 "name"    : "notesListCard",
                 "subView" : [ {
                     "class"      : NotesBar,
-                    "clsList"    : [ "iOS_notes_listBar" ],
+                    "clsList"    : [ "iOS_notes_listBar", "iOS_notes_topBar" ],
                     "name"       : "notesListBar",
-                    "btns"       : [{
+                    "btns"       : [ {
+                        "text"      : "备忘录",
+                        "type"      : "arrow",
+                        "direction" : "left"
+                    }, {
                         "text"      : "备忘录()",
                         "type"      : "title",
                         "direction" : "center"
                     }, {
                         "text"      : "+",
                         "type"      : "round",
-                        "direction" : "right"
+                        "direction" : "right",
+                        "fontSize"  : "20"
                     } ]
                 }, {
                     "class"      : NotesList,
@@ -55,7 +60,7 @@ define( function( require, exports, modules ) {
                 "name"    : "notesContentCard",
                 "subView" : [ {
                     "class"      : NotesBar,
-                    "clsList"    : [ "iOS_notes_contentBar" ],
+                    "clsList"    : [ "iOS_notes_contentBar", "iOS_notes_topBar" ],
                     "name"       : "notesContentBar",
                     "btns"       : [ {
                         "text"      : "备忘录",
@@ -84,7 +89,7 @@ define( function( require, exports, modules ) {
                 "name"    : "notesEditCard",
                 "subView" : [ {
                     "class"      : NotesBar,
-                    "clsList"    : [ "iOS_notes_editBar" ],
+                    "clsList"    : [ "iOS_notes_editBar", "iOS_notes_topBar" ],
                     "name"       : "notesEditBar",
                     "btns"       : [ {
                         "text"      : "",

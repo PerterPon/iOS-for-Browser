@@ -6,9 +6,7 @@ define( function( require, exports, module ) {
     Ext.define( "NotesBar", {
         extend : 'BaseTopBar',
 
-        statics : {
-            baseClass : 'iOS_notes_topBar'
-        }
+        centerCls : 'iOS_notes_topBar_centerTtile'
         
     } );
 

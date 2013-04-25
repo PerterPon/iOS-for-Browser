@@ -117,6 +117,14 @@
 .iOS_list_item_selected div, .iOS_list_item_selected span { color: white } 
 .dragScroll_parent { width: 100% }
 
+/**
+ * toolBar
+ */
+.iOS_toolBar { -webkit-box-pack: center; -webkit-box-align: center }
+.iOS_topBar_leftBtn { position: absolute; top: 7px; left: 5px }
+.iOS_topBar_centerTtile { display: -webkit-box; }
+.iOS_topBar_rightBtn { position: absolute; top: 7px; right: 5px }
+
 
 
 
