@@ -42,6 +42,12 @@ define( function( require ) {
             device     : './resource/images/assistive/device.png',
             gesture    : './resource/images/assistive/gestures.png',
             favorites  : './resource/images/assistive/favorites.png'
+        },
+        toolBar : {
+            arrow      : './resource/images/component/bars/arrow.png',
+            arrow_pressed : './resource/images/component/bars/arrow_pressed.png',
+            round      : './resource/images/component/bars/round.png',
+            round_pressed : './resource/images/component/bars/round_pressed.png'
         }
     };
 

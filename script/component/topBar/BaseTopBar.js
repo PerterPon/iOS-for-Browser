@@ -19,17 +19,49 @@ define( function( require, exports, module ) {
             this._initBtns();
         },
 
+        values : {
+            left  : {
+                cfg  : {},
+                el   : null
+            },
+            right : {
+                cfg  : {},
+                el   : null
+            }
+        },
+
         _initBtns : function() {
-            var sttc = this.values,
-                that = this,
-                btns = sttc.btns;
+            var sttcs = this.values,
+                that  = this,
+                btns  = sttcs.btns;
             btns.forEach( function( value, index ) {
+                sttcs[ value[ 'direction' ] ]          = {};
+                sttcs[ value[ 'direction' ] ][ 'cfg' ] = value;
                 that._doGenerateBtn( value[ 'type' ], value );
             } );
         },
 
+        _attachDomEvent : function() {
+            var sttc     = this.self,
+                sttcs    = this.values,
+                that     = this,
+                leftBtn  = this._getElCacheByCls( sttc[ 'leftCls' ] ),
+                rightBtn = this._getElCacheByCls( sttc[ 'rightCls' ] );
+            leftBtn && leftBtn.live( $.support.touchstart, function( event ) {
+                that._creatBtn( sttcs[ 'left' ][ 'el' ], sttcs[ 'left' ][ 'cfg' ], true );
+            } ).live( $.support.touchstop, function( event ) {
+                that._creatBtn( sttcs[ 'left' ][ 'el' ], sttcs[ 'left' ][ 'cfg' ] );
+            } );
+            rightBtn && rightBtn.live( $.support.touchstart, function( event ) {
+                that._creatBtn( sttcs[ 'right' ][ 'el' ], sttcs[ 'right' ][ 'cfg' ], true );
+            } ).live( $.support.touchstop, function( event ) {
+                that._creatBtn( sttcs[ 'right' ][ 'el' ], sttcs[ 'right' ][ 'cfg' ] );
+            } );
+        },
+
         _doGenerateBtn : function( type, cfg ) {
-            var btn;
+            var sttcs = this.values,
+                btn;
             type = type.toUpperCase();
             this[ '_generateBtn' + type ] && ( btn = this[ '_generateBtn' + type ]( cfg ) );
             this._getEl().append( btn );
@@ -47,6 +79,7 @@ define( function( require, exports, module ) {
             canvas.classList.add( this[ dir +'Cls' ] );
             canvas.classList.add( sttcs[ dir +'Cls' ] );
             this._creatBtn( canvas, cfg );
+            sttc[ cfg[ 'direction' ] ][ 'el' ] = canvas;
             return canvas;
         },
 
@@ -62,6 +95,7 @@ define( function( require, exports, module ) {
             canvas.classList.add( sttcs[ dir +'Cls' ] );
             canvas.classList.add( this[ dir +'Cls' ] );
             this._creatBtn( canvas, cfg );
+            sttc[ cfg[ 'direction' ] ][ 'el' ] = canvas;
             return canvas;
         },
 
@@ -81,7 +115,7 @@ define( function( require, exports, module ) {
             return span;
         },
 
-        _creatBtn: function( canvas, cfg ){
+        _creatBtn: function( canvas, cfg, pressed ){
             var sttc     = this.self,
                 ctx      = canvas.getContext('2d'),
                 shape    = cfg.type,
@@ -91,10 +125,6 @@ define( function( require, exports, module ) {
             //稍微留白调整
             contentLen += 3;
             img        = new Image();
-            if( cfg.pressed ) {
-                shape += '_pressed';
-            }
-            img.src    = './resource/images/component/bars/' + shape + '.png';
             img.onload = function() {
                 ctx.clearRect( 0, 0, canvas.width, canvas.height );
                 ctx.font         = fontSize + 'px Verdana, Geneva, sans-serif';
@@ -103,6 +133,7 @@ define( function( require, exports, module ) {
                 contentLen       = ctx.measureText( content ).width;
                 if( shape == 'arrow' ) {
                     btnLeft  = 13;
+                    contentLen += 2;
                     btnRight = 5;
                 } else if(shape == 'round') {
                     adjust      = 1.5;
@@ -119,6 +150,7 @@ define( function( require, exports, module ) {
                 ctx.fillStyle    = cfg.fontColor || 'white';
                 ctx.fillText( content, btnLeft + adjust, canvas.height / 2 );
             };
+            img.src    = './resource/images/component/bars/' + shape + ( pressed ? '_pressed' : '' ) +'.png';
         }
     } );
 
