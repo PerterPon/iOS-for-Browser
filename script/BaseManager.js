@@ -4,12 +4,12 @@ define( function( require, exports, module ) {
 
     Ext.define( 'BaseManager', {
 
-        inheritableStatics : {
-            //缓存池，用换缓存各种子类数据
-            pool      : {},
-            //标识本manager的身份信息
-            managerId : null
-        },
+        // inheritableStatics : {
+        //     //缓存池，用换缓存各种子类数据
+        //     pool      : {},
+        //     //标识本manager的身份信息
+        //     managerId : null
+        // },
 
         values : {
             managerId : null,
@@ -19,6 +19,7 @@ define( function( require, exports, module ) {
 
         constructor: function( managerId ) {
             var sttc       = this.values;
+            this.__initManager();
             sttc.managerId = managerId;
             this._registSelf( managerId );
         },
@@ -59,6 +60,15 @@ define( function( require, exports, module ) {
         _registSelf : function( id ) {
             window.iOS.Manager || ( window.iOS.Manager = {} );
             window.iOS.Manager[ id ] = this;
+        },
+
+        /**
+         * [__initManager 初始化本manager]
+         * @return {[type]} [description]
+         */
+        __initManager : function() {
+            this.values = {};
+            this.values.pool = {};
         }
 
     });

@@ -5,19 +5,20 @@
 define( function( require, exports, model ) {
     //"use strict";
 
-    require( '../../Component' );
+    require( '../../view/BaseView' );
     var RangeClick = require( '../../event/RangeClick' );
     Ext.define( 'List', {
-        extend : 'Component',
+        extend : 'BaseView',
 
         inheritableStatics : {
-            manager     : require( './ListManager' ),
             listBoxCls  : 'iOS_list_box',
             listItemCls : 'iOS_list_item',
             listItemSelectedCls  : 'iOS_list_item_selected',
             listItemTitleCls     : 'iOS_list_item_title',
             listItemDeleteSpanCls: 'iOS_list_item_deleteSpan'
         },
+
+        manager : require( './ListManager' ),
 
         values : {
             /**
@@ -73,7 +74,6 @@ define( function( require, exports, model ) {
             this.callParent( [ cfg ] );
             this.values.baseCls    = baseCls;
             this.values.deleteable = deleteable;
-            this._init();
         },
 
         /**
@@ -136,28 +136,30 @@ define( function( require, exports, model ) {
 
         /**
          * [_generateDom 根绝html生成相应的DOM节点]
-         * @return {[]}
+         * @return {}
          */
         _generateDom : function( html ) {
             this.values.listBox.children( '.' + this.self.listBoxCls ).append( html );
         },
 
-        _registerSelf : function() {},
-
-        _attachEventListener : function() {
+        _attachDomEvent : function() {
             var sttc  = this.values,
                 sttcs = this.self,
                 Util  = sttcs.Util,
                 rangeClick = sttc.rangeClick = new RangeClick( {
                     rangeClick : sttcs.Util.bind( this._itemClickHandle, this )
-                } );
-            $( '.' + sttcs.listItemCls ).live( $.support.touchstart, Util.bind( rangeClick.touchStart, rangeClick ) )
-            .live( $.support.touchmove, Util.bind( rangeClick.touchMove, rangeClick ) )
-            .live( $.support.touchstop, Util.bind( rangeClick.touchStop, rangeClick ) );
+                } ),
+                support   = $.support,
+                eventList = [],
+                $listBox  = sttc.listBox;
+            eventList[ support.touchstart ] = Util.bind( rangeClick.touchStart, rangeClick );
+            eventList[ support.touchmove ]  = Util.bind( rangeClick.touchMove,  rangeClick );
+            eventList[ support.touchstop ]  = Util.bind( rangeClick.touchStop,  rangeClick );
+            $listBox.on( eventList, '.'+ sttcs.listItemCls );
             window.iOS.Event.addEvent( 'reopenApp', Util.bind( this.__reopenAppHandle, this ) );
         },
 
-        _init : function() {
+        _beforeRender : function() {
             var sttc      = this.values,
                 sttcs     = this.self,
                 config    = {
@@ -193,7 +195,6 @@ define( function( require, exports, model ) {
         },
 
         __reopenAppHandle : function( appname ) {
-                
             this.__enableScrollView();
         }
 

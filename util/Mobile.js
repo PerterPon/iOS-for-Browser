@@ -180,7 +180,7 @@
                 $.fn[name] = function(fn) {
                     return fn ? this.bind(name, fn) : this.trigger(name);
                 };
-                $.attrFn[name] = true;
+                // $.attrFn[name] = true;
             });
             /**
              * add by ftt

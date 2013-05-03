@@ -6,23 +6,30 @@ define( function( require, exports, module ){
             "screen" : [
                 0,
                 [{
-                    "name" : "SMS",
-                    "text"  : "短信"
+                    "name"   : "SMS",
+                    "text"   : "短信"
                 }, {
-                    "name" : "calendar",
-                    "text"  : "日历"
+                    "name"   : "calendar",
+                    "text"   : "日历",
+                    "config" : {
+                        "topBar" : {
+                            "color" : "black"
+                        },
+                        "isIframe"  : true,
+                        "URL"       : "./script/apps/calendar/index.html"
+                    }
                 }, {
-                    "name" : "camera",
-                    "text"  : "相机"
+                    "name"   : "camera",
+                    "text"   : "相机"
                 }, {
-                    "name" : "photo",
-                    "text"  : "照片"
+                    "name"   : "photo",
+                    "text"   : "照片"
                 }, {
-                    "name" : "setting",
-                    "text"  : "设置"
+                    "name"   : "setting",
+                    "text"   : "设置"
                 }, {
-                    "name" : "clock",
-                    "text"  : "时钟"
+                    "name"   : "clock",
+                    "text"   : "时钟"
                 }, {
                     "name"   : "notes",
                     "text"   : "备忘录",

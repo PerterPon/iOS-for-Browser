@@ -129,6 +129,15 @@ define( function( require, exports, module ) {
             return $( this.values.selector ).find( '.' + className );
         },
 
+        /**
+         * [_live 为当前元素节点下的节点绑定live事件]
+         * @param  {Obejct} evtList  [事件列表，以对象的形式传递]
+         * @param  {String} selector [需要绑定的元素选择器，与jQuery相同]
+         */
+        _live : function( evtList, selector ) {
+            this._getEl().on( evtList, selector );
+        },
+
         _removeElCacheByCls : function( className ){
             var sttc = this.values;
             sttc.elPool[ className ] = null;

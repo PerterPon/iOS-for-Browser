@@ -46,17 +46,34 @@ define( function( require, exports, module ) {
                 sttcs    = this.values,
                 that     = this,
                 leftBtn  = this._getElCacheByCls( sttc[ 'leftCls' ] ),
-                rightBtn = this._getElCacheByCls( sttc[ 'rightCls' ] );
-            leftBtn && leftBtn.live( $.support.touchstart, function( event ) {
+                rightBtn = this._getElCacheByCls( sttc[ 'rightCls' ] ),
+                support  = $.support,
+                leftEvtList  = {},
+                rightEvtList = {};
+            leftEvtList[ support.touchstart ]  = function() {
                 that._creatBtn( sttcs[ 'left' ][ 'el' ], sttcs[ 'left' ][ 'cfg' ], true );
-            } ).live( $.support.touchstop, function( event ) {
+            };
+            leftEvtList[ support.touchstop ]   = function() {
                 that._creatBtn( sttcs[ 'left' ][ 'el' ], sttcs[ 'left' ][ 'cfg' ] );
-            } );
-            rightBtn && rightBtn.live( $.support.touchstart, function( event ) {
+            };
+            rightEvtList[ support.touchstart ] = function() {
                 that._creatBtn( sttcs[ 'right' ][ 'el' ], sttcs[ 'right' ][ 'cfg' ], true );
-            } ).live( $.support.touchstop, function( event ) {
+            }
+            rightEvtList[ support.touchstop ]  = function() {
                 that._creatBtn( sttcs[ 'right' ][ 'el' ], sttcs[ 'right' ][ 'cfg' ] );
-            } );
+            }
+            leftBtn  && this._getEl().on( leftEvtList, '.'+ sttc[ 'leftCls' ] );
+            rightBtn && this._getEl().on( rightEvtList, '.'+ sttc[ 'rightCls' ] );
+            // leftBtn && leftBtn.live( $.support.touchstart, function( event ) {
+            //     that._creatBtn( sttcs[ 'left' ][ 'el' ], sttcs[ 'left' ][ 'cfg' ], true );
+            // } ).live( $.support.touchstop, function( event ) {
+            //     that._creatBtn( sttcs[ 'left' ][ 'el' ], sttcs[ 'left' ][ 'cfg' ] );
+            // } );
+            // rightBtn && rightBtn.live( $.support.touchstart, function( event ) {
+            //     that._creatBtn( sttcs[ 'right' ][ 'el' ], sttcs[ 'right' ][ 'cfg' ], true );
+            // } ).live( $.support.touchstop, function( event ) {
+            //     that._creatBtn( sttcs[ 'right' ][ 'el' ], sttcs[ 'right' ][ 'cfg' ] );
+            // } );
         },
 
         _doGenerateBtn : function( type, cfg ) {

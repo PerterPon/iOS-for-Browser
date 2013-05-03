@@ -1,0 +1,30 @@
+﻿.x-time{
+    font-size: .75em;
+    color: #666;
+    margin-top: .5em;
+}
+
+.x-list-item-body .tertiary {
+    font-weight: normal;
+    color: #999;
+    font-size: .8em;
+}
+
+.x-list-item-body .name {
+    -webkit-box-flex: 1;
+    box-flex: 1;
+    font-weight: bold;
+    font-size: 1.4em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 1em;
+}
+
+.noteTime{
+    font-size: .8em;
+    margin: 0 1.5em 0 1em;
+    width: 2.5em;
+}

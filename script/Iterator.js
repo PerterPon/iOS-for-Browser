@@ -15,7 +15,7 @@ define( function( require ) {
             curIdx : 0,
             preDom : null,
             /**
-             * [queue 迭代队列，为防止错误产生，只能自己维护一个队列]
+             * [queue 迭代队列，保证渲染顺序]
              * @type {Array}
              */
             queue  : [],
@@ -41,7 +41,7 @@ define( function( require ) {
         },
 
         /**
-         * [setPreDom 设置当前配置文件的父节点ID，注意，ID中不能有井号，会被替换成空]
+         * [setPreDom 设置当前配置文件的父节点ID]
          * @param {[type]} id [父节点ID]
          */
         setPreDom : function( id ) {
@@ -110,6 +110,7 @@ define( function( require ) {
                 }
                 cardView = null;
                 sigCard  = null;
+                cfg.callBack && cfg.callBack();
             }
             sttcs.Util.notify( this, 'iteratorComplete' );
         },

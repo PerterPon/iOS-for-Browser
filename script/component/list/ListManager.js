@@ -6,7 +6,7 @@ define( function( require, exports, modules ) {
         extend : 'BaseManager'
 
     } );
-     
+    
     var listMngr = new ListManager( 'list' ),
         Util     = require( '../../../util/Util' );
 
