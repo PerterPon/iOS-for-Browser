@@ -50,6 +50,10 @@ define( function( require, exports, module ) {
             sttc.shakeStartHandle = funs[ 'shakeStart' ];
             sttc.shakeStopHandle  = funs[ 'shakeStop' ];
             this.__initIconView( inPos, outPos );
+            //FIXME:
+            if( !sttc.cfg.config ) {
+                this._getEl().css( 'opacity', '0.5' );
+            }
         },
 
         EiconIn : function( position ) {

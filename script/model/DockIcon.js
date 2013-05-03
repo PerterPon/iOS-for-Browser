@@ -13,8 +13,8 @@ define( function( require, exports, module ){
         _attachEventListener : function(){
             this.callParent();
             var Event = window.iOS.Event;
-            Event.addEvent( 'iconIn', this.__iconInHandle,   this );
-            Event.addEvent( 'iconOut', this.__iconOutHandle, this )
+            Event.addEvent( 'iconIn',  this.__iconInHandle,  this );
+            Event.addEvent( 'iconOut', this.__iconOutHandle, this );
         },
 
         __iconInHandle : function(){

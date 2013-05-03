@@ -74,32 +74,32 @@ define( function( require, exports, module ) {
                 moveBack = distance < sttcs.width / 2,
                 posFix   = 'left' === direction ? -1 : 1, 
                 tarPos, animTime;
-            if( ( sttc.index != curIdx ) && ( sttc.index + posFix != curIdx ) )
+            if( ( sttc.index != curIdx ) && ( sttc.index + posFix != curIdx ) ) {
                 return;
-            if( moveBack && !swipe ){
+            }
+            if( moveBack && !swipe ) {
                 animTime     = sttcs.fullTime * distance / sttcs.width;
-                if( curIdx  == sttc.index )
+                if( curIdx  == sttc.index ) {
                     tarPos   = 0;
-                else
+                } else {
                     tarPos   = sttcs.width * ( 'left' === direction ? 1 : -1 );
+                }
             } else {
                 if( swipe ) {
                     animTime = sttcs.swipeTime;
-                }
-                else {
+                } else {
                     animTime = sttcs.fullTime * ( sttcs.width - distance ) / sttcs.width;
                 }
                 if( curIdx  == sttc.index ) {
                     tarPos   = sttcs.width * ( 'left' === direction ? -1 : 1 );
-                }
-                else {
+                } else {
                     tarPos   = 0;
                 }
             }
             Util.notify( ctrl, 'autoTranslate', [ tarPos, animTime ] );
         }
 
-    });
+    } );
 
     return AppIcon;
 });
