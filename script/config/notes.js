@@ -27,6 +27,11 @@ define( function( require, exports, modules ) {
                 "class"   : SigCard,
                 "clsList" : [ "iOS_notes_listCard" ],
                 "name"    : "notesListCard",
+                "default" : true,
+                "cards"   : {
+                    "rightBtn" : "notesEditCard",
+                    "list"     : "notesContentCard"
+                },
                 "subView" : [ {
                     "class"      : NotesBar,
                     "clsList"    : [ "iOS_notes_listBar", "iOS_notes_topBar" ],
@@ -54,26 +59,31 @@ define( function( require, exports, modules ) {
                     "controller" : CNotesList
                 } ]
             }, {
-                "class"   : SigCard,
-                "visiable": false,
-                "clsList" : [ "iOS_notes_contentCard" ],
-                "name"    : "notesContentCard",
-                "subView" : [ {
+                "class"    : SigCard,
+                "visiable" : false,
+                "clsList"  : [ "iOS_notes_contentCard" ],
+                "name"     : "notesContentCard",
+                "cards"    : {
+                    "leftBtn"  : "notesListCard",
+                    "rightBtn" : "notesEditCard"
+                },
+                "subView"  : [ {
                     "class"      : NotesBar,
                     "clsList"    : [ "iOS_notes_contentBar", "iOS_notes_topBar" ],
                     "name"       : "notesContentBar",
                     "btns"       : [ {
                         "text"      : "备忘录",
-                        "type"      : "arrowLeft",
+                        "type"      : "arrow",
                         "direction" : "left"
                     }, {
-                        "text"      : "",
+                        "text"      : "test测试",
                         "type"      : "title",
                         "direction" : "center"
                     }, {
                         "text"      : "+",
                         "type"      : "round",
-                        "direction" : "right"
+                        "direction" : "right",
+                        "fontSize"  : "20"
                     } ]
                 }, {
                     "class"      : NotesContent,

@@ -7,7 +7,7 @@ define( function( require, exports, module ) {
         extend : 'BaseTopBar',
 
         centerCls : 'iOS_notes_topBar_centerTtile'
-        
+
     } );
 
     return NotesBar;

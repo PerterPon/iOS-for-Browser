@@ -7,10 +7,12 @@ define( function( require, exports, modules ) {
     } );
      
     var cardMngr = new CardManager( 'card' ),
-        Util     = require( '../../../util/Util' );
+        Util     = require( '../../../util/Util' ),
+        register = Util.bind( cardMngr.register, cardMngr ),
+        get      = Util.bind( cardMngr.get,      cardMngr );
 
     return {
-        register : Util.bind( cardMngr.register, cardMngr ),
-        get      : Util.bind( cardMngr.get, cardMngr )
+        register : register,
+        get      : get
     };
 } );

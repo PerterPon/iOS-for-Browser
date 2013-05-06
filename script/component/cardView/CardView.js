@@ -58,7 +58,7 @@ define( function( require, exports, module ) {
 
         /**
          * [clearCard 清除card信息]
-         * @return {[]}
+         * @return {}
          */
         clearCard : function() {
             this._cardsMap = {};
@@ -74,19 +74,37 @@ define( function( require, exports, module ) {
         },
 
         /**
+         * [addSigCard 添加sigCard]
+         * @param {[type]} name      [description]
+         * @param {[type]} sigCard   [description]
+         * @param {[type]} isDefault [description]
+         */
+        addSigCard : function( name, sigCard, isDefault ) {
+            this._cardsMap[ name ] = sigCard;
+            isDefault && ( this._curCard = sigCard );
+        },
+
+        /**
          * [active 切换acrd]
          * @param  {[String]} name      [被切换的card名称]
-         * @param  {[String]} direction [切换方向]
-         * @param  {[String]} animType  [切换动画类型]
+         * @param  {[Object]} changeCfg [切换card时候的配置信息]
          * @return {[void]}
          */
-        active : function( name, direction, animType, curCallBack, tarCallBack ) {
-            animType = animType || 'slide';
-            this._tarCard = _cardsMap[ name ];
+        active : function( name, changeCfg ) {
+            var tarCard     = this._cardsMap[ name ],
+                curCard     = this._curCard,
+                curCallBack = curCard.getChangedCallBack(),
+                tarCallBack = tarCard.getChangedCallBack(),
+                direction   = changeCfg.direction,
+                animType    = changeCfg.animType || 'slide',
+                that        = this;
+            this._tarCard   = tarCard;
             if( !this._tarCard ) {
                 return;
             }
-            _amin.doAnim( this._curCard, this._tarCard, direction, animType, curCallBack, tarCallBack );
+            this._amin.doAnim( curCard.getEl(), tarCard.getEl(), direction, animType, curCallBack, tarCallBack, function() {
+                that._curCard = tarCard;
+            } );
         }
 
     } );

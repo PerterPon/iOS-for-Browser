@@ -53,27 +53,19 @@ define( function( require, exports, module ) {
             leftEvtList[ support.touchstart ]  = function() {
                 that._creatBtn( sttcs[ 'left' ][ 'el' ], sttcs[ 'left' ][ 'cfg' ], true );
             };
-            leftEvtList[ support.touchstop ]   = function() {
+            leftEvtList[ support.touchstop ]   = function( event ) {
                 that._creatBtn( sttcs[ 'left' ][ 'el' ], sttcs[ 'left' ][ 'cfg' ] );
+                that._leftBtnClickHandler( event );
             };
             rightEvtList[ support.touchstart ] = function() {
                 that._creatBtn( sttcs[ 'right' ][ 'el' ], sttcs[ 'right' ][ 'cfg' ], true );
             }
-            rightEvtList[ support.touchstop ]  = function() {
+            rightEvtList[ support.touchstop ]  = function( event ) {
                 that._creatBtn( sttcs[ 'right' ][ 'el' ], sttcs[ 'right' ][ 'cfg' ] );
+                that._rightBtnClickHandler();
             }
             leftBtn  && this._getEl().on( leftEvtList, '.'+ sttc[ 'leftCls' ] );
             rightBtn && this._getEl().on( rightEvtList, '.'+ sttc[ 'rightCls' ] );
-            // leftBtn && leftBtn.live( $.support.touchstart, function( event ) {
-            //     that._creatBtn( sttcs[ 'left' ][ 'el' ], sttcs[ 'left' ][ 'cfg' ], true );
-            // } ).live( $.support.touchstop, function( event ) {
-            //     that._creatBtn( sttcs[ 'left' ][ 'el' ], sttcs[ 'left' ][ 'cfg' ] );
-            // } );
-            // rightBtn && rightBtn.live( $.support.touchstart, function( event ) {
-            //     that._creatBtn( sttcs[ 'right' ][ 'el' ], sttcs[ 'right' ][ 'cfg' ], true );
-            // } ).live( $.support.touchstop, function( event ) {
-            //     that._creatBtn( sttcs[ 'right' ][ 'el' ], sttcs[ 'right' ][ 'cfg' ] );
-            // } );
         },
 
         _doGenerateBtn : function( type, cfg ) {
@@ -93,6 +85,7 @@ define( function( require, exports, module ) {
                 sttc   = this.values,
                 dir    = cfg[ 'direction' ],
                 canvas = document.createElement( 'canvas' );
+            canvas.setAttribute( 'direction', dir );
             canvas.classList.add( this[ dir +'Cls' ] );
             canvas.classList.add( sttcs[ dir +'Cls' ] );
             this._creatBtn( canvas, cfg );
@@ -109,6 +102,7 @@ define( function( require, exports, module ) {
                 sttc    = this.values,
                 dir     = cfg[ 'direction' ],
                 canvas  = document.createElement( 'canvas' );
+            canvas.setAttribute( 'direction', dir );
             canvas.classList.add( sttcs[ dir +'Cls' ] );
             canvas.classList.add( this[ dir +'Cls' ] );
             this._creatBtn( canvas, cfg );
@@ -149,16 +143,16 @@ define( function( require, exports, module ) {
                 ctx.fillStyle    = cfg.fontColor || 'white';
                 contentLen       = ctx.measureText( content ).width;
                 if( shape == 'arrow' ) {
-                    btnLeft  = 13;
-                    contentLen += 2;
-                    btnRight = 5;
+                    btnLeft      = 13;
+                    contentLen  += 2;
+                    btnRight     = 5;
                 } else if(shape == 'round') {
-                    adjust      = 1.5;
+                    adjust       = 1.5;
                     contentLen += 3;
-                    btnLeft  = btnRight = 5;
+                    btnLeft      = btnRight = 5;
                 }
-                canvas.height = 30;
-                canvas.width  = btnLeft + contentLen + btnRight;
+                canvas.height    = 30;
+                canvas.width     = btnLeft + contentLen + btnRight;
                 ctx.drawImage( img, 0, 0, btnLeft, 30, 0, 0, btnLeft, 30 );
                 ctx.drawImage( img, btnLeft, 0, 1, 30, btnLeft, 0, contentLen, 30 );
                 ctx.drawImage( img, btnLeft + 1, 0, btnRight, 30, btnLeft + contentLen, 0, btnRight, 30 );
@@ -168,7 +162,30 @@ define( function( require, exports, module ) {
                 ctx.fillText( content, btnLeft + adjust, canvas.height / 2 );
             };
             img.src    = './resource/images/component/bars/' + shape + ( pressed ? '_pressed' : '' ) +'.png';
-        }
+        },
+
+        /**
+         * [_leftBtnClickHandler 左侧按钮单击事件]
+         * @return {}
+         */
+        _leftBtnClickHandler : function( event ) {
+            var sttc = this.self,
+                cfg  = {
+                    //FIXME:
+                    direction : 'right',
+                    callBack  : sttcs.Util.bind( this._showAndHide, this )
+                };
+            this.sigCard.changeCard( 'leftBtn', cfg );
+        },
+
+        _showAndHide : function( showOrHide ) {},
+
+        /**
+         * [_rightBtnClickHandler 右侧按钮单击事件]
+         * @return {}
+         */
+        _rightBtnClickHandler : function( event ) {},
+
     } );
 
     return BaseTopBar;

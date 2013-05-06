@@ -24,13 +24,15 @@ define( function( require, exports, module ){
          * [_animTime 默认的动画执行时间]
          * @type {Number}
          */
-        _animTime : 400,
+        _animTime : '400ms',
 
         /**
          * [_timeingFunction 动画执行类别]
          * @type {}
          */
-        _timingFunction : null,
+        _timingFunction : 'easy-in-out',
+
+        _animDelay : '150ms',
 
         _curCallBack : function() {},
 
@@ -42,18 +44,15 @@ define( function( require, exports, module ){
             }
         },
 
-        _calFromTo : function( animType ) {
-        },
-
         _slide : function( direction ) {
             var curFrom = {
+                webkitTransitionDuration : this._animTime,
+                webkitTransitionTimingFunction : this._timingFunction
             }, tarFrom = {
+                webkitTransitionDuration : this._animTime,
+                webkitTransitionTimingFunction : this._timingFunction
             }, curTo = {
-                webkitTransitionDuration : this._animTime,
-                webkitTransitionTimingFunction : this._timingFunction
             }, tarTo = {
-                webkitTransitionDuration : this._animTime,
-                webkitTransitionTimingFunction : this._timingFunction
             }, that = this;
             if( 'left' === direction ) {
                 tarFrom[ 'webkitTransform' ] = 'translate3d('+ this._width +'px, 0, 0)';
@@ -67,7 +66,7 @@ define( function( require, exports, module ){
 
             } else if( 'bottom' === direction ) {
 
-            };
+            }
             this._curFrom = curFrom;
             this._tarFrom = tarFrom;
             this._curTo   = curTo;
@@ -145,19 +144,22 @@ define( function( require, exports, module ){
          * @param  {[Function]} tarCallBack   [目标card动画效果结束是的回调函数]
          * @return {[void]}
          */
-        doAnim : function( cur, tar, direction, animType, curCallBack, tarCallBack ) {
+        doAnim : function( cur, tar, direction, animType, curCallBack, tarCallBack, callBack ) {
+            var that  = this;
             curCallBack && ( this._curCallBack = curCallBack );
             tarCallBack && ( this._tarCallBack = tarCallBack );
             this._cur = cur.extend ? cur[ 0 ] : cur;
             this._tar = tar.extend ? tar[ 0 ] : tar;
             this._cur.addEventListener( 'webkitTransitionEnd', function( event ) {
                 event.stopPropagation();
-                that._curCallBack();
+                this.style.display = 'none';
+                that._curCallBack( 'hide' );
+                callBack && callBack();
                 this.removeEventListener( 'webkitTransitionEnd', arguments.callee );
             } );
             this._tar.addEventListener( 'webkitTransitionEnd', function( event ) {
                 event.stopPropagation();
-                that._tarCallBack();
+                that._tarCallBack( 'show' );
                 this.removeEventListener( 'webkitTransitionEnd', arguments.callee );
             } );
             this._cur.style.webkitTransitionDuration = 0;
@@ -166,10 +168,13 @@ define( function( require, exports, module ){
             this._tar.style.zIndex = 2;
             this[ '_' + animType.toLowerCase() ]( direction );
             $.extend( true, this._cur.style, this._curFrom );
-            $.extend( true, this._cur.style, this._tarFrom );
+            $.extend( true, this._tar.style, this._tarFrom );
+            this._tar.style.display = '-webkit-box';
+            this._tar.style.webkitTransitionDelay = this._animDelay;
+            this._cur.style.webkitTransitionDelay = this._animDelay;
             setTimeout( function() {
-                $.extend( true, that._cur.style, this._curTo );
-                $.extend( true, that._cur.style, this._tarTo );                
+                $.extend( true, that._cur.style, that._curTo );
+                $.extend( true, that._tar.style, that._tarTo );                
             }, 1 );
         }
     } );

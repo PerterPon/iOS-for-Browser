@@ -6,7 +6,7 @@ define( function( require, exports, modules ) {
         extend : 'BaseManager'
     } );
      
-    var topBarMngr = new TopBarManager( 'card' ),
+    var topBarMngr = new TopBarManager( 'topBar' ),
         Util       = require( '../../../util/Util' );
 
     return {

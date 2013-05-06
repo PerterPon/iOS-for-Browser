@@ -8,6 +8,10 @@ define( function( require, exports, module ) {
 
         inheritableStatics : {
             listItemSelectedCls : 'iOS_notes_listItem_selected'
+        },
+
+        statics : {
+            sigCard : 'notesListCard'
         }
     } );
 

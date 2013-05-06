@@ -95,13 +95,13 @@ define( function( require ) {
                 preDom.appendChild( html );
                 cfg[ 'selector' ] = '#' + id;
                 instance = new model( cfg );
-                model instanceof CardView ? cardView = instance : ( ( model instanceof SigCard ) && ( sigCard = instance ) );
+                instance instanceof CardView ? cardView = instance : ( ( instance instanceof SigCard ) && ( sigCard = instance ) );
                 if( parentCardView ) {
                     parentCardView.addSigCard( cfg[ 'name' ], instance );
-                    instance.cardView = parentCardView;
+                    instance.setCardView( parentCardView );
                 } else if( parentSigCard ) {
                     parentSigCard.addItems( cfg[ 'name' ], instance );
-                    instance.sigCard = parentSigCard;                    
+                    instance.sigCard = parentSigCard;
                 }
                 // parent && ( instance._parent = parent );
                 sttc.curIdx++;

@@ -64,7 +64,7 @@ define( function( require, exports, model ) {
              */
             selectedItem : null,
             /**
-             * [clickedCallaback 单击Item时候的回调函数]
+             * [clickedCallback 单击Item时候的回调函数]
              * @return {void}
              */
             clickedCallback : function() { return true; }
@@ -112,6 +112,15 @@ define( function( require, exports, model ) {
         },
 
         /**
+         * [clearSelect 清除当前选取对象]
+         * @return
+         */
+        clearSelect : function() {
+            this.values.selectedItem.classList.remove( this.self.listItemSelectedCls );
+            this.values.selectedItem = null;
+        },
+
+        /**
          * [_generateHtml 生成HTML字串]
          * @return {[String]} [HTML字串]
          */
@@ -123,7 +132,7 @@ define( function( require, exports, model ) {
                 html  = '';
             for( i    = 0; i < len; i++ ) {
                 html  += 
-                    '<div class="'+ sttc.listItemCls +'">' +
+                    '<div class="'+ sttc.listItemCls +'" index="'+ i +'">' +
                         '<div class="'+ sttc.listItemTitleCls +'">' +
                             data[ i ][ 'title' ] +
                         '</div>' +
@@ -176,12 +185,15 @@ define( function( require, exports, model ) {
 
         _itemClickHandle : function( event ) {
             var sttc  = this.values,
-                sttcs = this.self;
-                selectedItem  = sttc.selectedItem;
-            selectedItem && selectedItem.removeClass( sttcs.listItemSelectedCls );
-            selectedItem = $( event.currentTarget );
-            selectedItem.addClass( sttcs.listItemSelectedCls );
+                sttcs = this.self,
+                selectedItem  = sttc.selectedItem,
+                index;
+            selectedItem && selectedItem.classList.remove( sttcs.listItemSelectedCls );
+            selectedItem = event.currentTarget;
+            selectedItem.classList.add( sttcs.listItemSelectedCls );
             sttc.selectedItem = selectedItem;
+            index = selectedItem.getAttribute( 'index' );
+            sttc.clickedCallback && sttc.clickedCallback( event, index );
         },
 
         __enableScrollView : function() {
