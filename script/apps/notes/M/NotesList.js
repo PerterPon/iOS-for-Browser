@@ -12,7 +12,7 @@ define( function( require, exports, modules ) {
         },
 
         _getDefaultData : function() {
-            return require( '../../../../resource/defaultData/notes/NotesList' );
+            return require( '../../../../../../resource/defaultData/notes/NotesList' );
         },
 
         _dataReady : function() {
@@ -52,7 +52,10 @@ define( function( require, exports, modules ) {
         },  
 
         __notifySigCard : function() {
-            this.sigCard.changeCard( "list" );
+            var direction = {
+                "direction" : "right"
+            };
+            this.sigCard.changeCard( "list", direction );
         }
     } );
 

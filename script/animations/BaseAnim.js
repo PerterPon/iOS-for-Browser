@@ -6,19 +6,13 @@ define( function( require, exports, module ){
 
         _cur : null,
 
-        _tar : null,
-
         _width : null,
 
         _height : null,
 
         _curFrom : {},
 
-        _tarFrom : {},
-
         _curTo : {},
-
-        _tarTo : {},
 
         /**
          * [_animTime 默认的动画执行时间]
@@ -36,8 +30,6 @@ define( function( require, exports, module ){
 
         _curCallBack : function() {},
 
-        _tarCallBack : function() {},
-
         constructor : function( cfg ) {
             for( var i in cfg ) {
                 this[ '_' + i ] = cfg[ i ];
@@ -48,42 +40,27 @@ define( function( require, exports, module ){
             var curFrom = {
                 webkitTransitionDuration : this._animTime,
                 webkitTransitionTimingFunction : this._timingFunction
-            }, tarFrom = {
-                webkitTransitionDuration : this._animTime,
-                webkitTransitionTimingFunction : this._timingFunction
             }, curTo = {
-            }, tarTo = {
             }, that = this;
             if( 'left' === direction ) {
-                tarFrom[ 'webkitTransform' ] = 'translate3d('+ this._width +'px, 0, 0)';
-                curTo[ 'webkitTransform' ]   = 'translate3d(-'+ this._width +'px, 0, 0)';
-                tarTo[ 'webkitTransform' ]   = 'translate3d(0, 0, 0)';
+                curTo[ 'webkitTransform' ] = 'translate3d(-'+ this._width +'px, 0, 0)';
             } else if( 'right' === direction ) {
-                tarFrom[ 'webkitTransform' ] = 'translate3d(-'+ this._width +'px, 0, 0)';
-                curTo[ 'webkitTransform' ]   = 'translate3d('+ this._width +'px, 0, 0)';
-                tarTo[ 'webkitTransform' ]   = 'translate3d(0, 0, 0)';                
+                curTo[ 'webkitTransform' ] = 'translate3d('+ this._width +'px, 0, 0)';
             } else if( 'top' === direction ) {
-
+                curTo[ 'webkitTransform' ] = 'translate3d(0, -'+ this._height +'px, 0)';
             } else if( 'bottom' === direction ) {
-
+                curTo[ 'webkitTransform' ] = 'translate3d(0, '+ this._height +'px, 0)';
             }
             this._curFrom = curFrom;
-            this._tarFrom = tarFrom;
             this._curTo   = curTo;
-            this._tarTo   = tarTo;
         },
 
         _reveal : function( direction ) {
-            var tarFrom = {
-                webkitTransform : 'translate3d(0,0,0)'
-            }, curFrom  = {
-            }, tarTo    = {
-                webkitTransitionDuration : this._animTime,
-                webkitTransitionTimingFunction : this._timingFunction
-            }, curTo    = {
-                webkitTransitionDuration : this._animTime,
-                webkitTransitionTimingFunction : this._timingFunction
-            };
+            var curFrom  = {
+                }, curTo    = {
+                    webkitTransitionDuration : this._animTime,
+                    webkitTransitionTimingFunction : this._timingFunction
+                };
             if( 'top' === direction ) {
                 curTo[ 'webkitTransform' ] = 'translate3d(0, -'+ this._height +'px, 0)';
             } else if( 'bottom' === direction ) {
@@ -94,35 +71,10 @@ define( function( require, exports, module ){
                 curTo[ 'webkitTransform' ] = 'translate3d('+ this._width +'px, 0, 0)';
             };
             this._curFrom = curFrom;
-            this._tarFrom = tarFrom;
             this._curTo   = curTo;
-            this._tarTo   = tarTo;
         },
 
         _cover : function( direction ) {
-            var tarFrom = {
-
-            }, curFrom = {
-
-            }, tarTo = {
-
-            }, curTo = {
-
-            };
-            if( 'top' === direction ) {
-                tarFrom[ 'webkitTransform' ] = 'translate3d(0, '+ this._height +'px, 0)';
-            } else if( 'bottom' === direction ) {
-                tarFrom[ 'webkitTransform' ] = 'translate3d(0, -'+ this._height +'px, 0)';
-            } else if( 'right' === direction ) {
-                tarFrom[ 'webkitTransform' ] = 'translate3d(-'+ this._width +'px, 0, 0)';
-            } else if( 'left' === direction ) {
-                tarFrom[ 'webkitTransform' ] = 'translate3d('+ this._width +'px, 0, 0)';
-            }
-            tarTo[ 'webkitTransform' ]   = 'translate3d(0, 0, 0)';
-            this._curFrom = curFrom;
-            this._tarFrom = tarFrom;
-            this._curTo   = curTo;
-            this._tarTo   = tarTo;
         },
 
         _swip : function( direction ) {
@@ -137,46 +89,31 @@ define( function( require, exports, module ){
         /**
          * [doAnim 执行动画操作]
          * @param  {[DOM Object]} cur         [当前显示card]
-         * @param  {[DOM Object]} tar         [需要被显示card]
          * @param  {[String]} direction       [动画方向，各种类型动画有自己的实现，direction表示目标card运行的方向。]
          * @param  {[String]} animType        [动画类型，，默认slide]
          * @param  {[Function]} curCallBack   [当前card动画效果结束时的回调函数]
-         * @param  {[Function]} tarCallBack   [目标card动画效果结束是的回调函数]
          * @return {[void]}
          */
-        doAnim : function( cur, tar, direction, animType, curCallBack, tarCallBack, callBack ) {
+        doAnim : function( cur, animType, direction, curCallBack, callBack ) {
             var that  = this;
             curCallBack && ( this._curCallBack = curCallBack );
-            tarCallBack && ( this._tarCallBack = tarCallBack );
             this._cur = cur.extend ? cur[ 0 ] : cur;
-            this._tar = tar.extend ? tar[ 0 ] : tar;
             this._cur.addEventListener( 'webkitTransitionEnd', function( event ) {
                 event.stopPropagation();
-                this.style.display = 'none';
-                that._curCallBack( 'hide' );
+                that._curCallBack();
                 callBack && callBack();
-                this.removeEventListener( 'webkitTransitionEnd', arguments.callee );
-            } );
-            this._tar.addEventListener( 'webkitTransitionEnd', function( event ) {
-                event.stopPropagation();
-                that._tarCallBack( 'show' );
                 this.removeEventListener( 'webkitTransitionEnd', arguments.callee );
             } );
             this._cur.style.webkitTransitionDuration = 0;
             this._cur.style.zIndex = 1;
-            this._tar.style.webkitTransitionDuration = 0;
-            this._tar.style.zIndex = 2;
             this[ '_' + animType.toLowerCase() ]( direction );
             $.extend( true, this._cur.style, this._curFrom );
-            $.extend( true, this._tar.style, this._tarFrom );
-            this._tar.style.display = '-webkit-box';
-            this._tar.style.webkitTransitionDelay = this._animDelay;
             this._cur.style.webkitTransitionDelay = this._animDelay;
             setTimeout( function() {
                 $.extend( true, that._cur.style, that._curTo );
-                $.extend( true, that._tar.style, that._tarTo );                
             }, 1 );
         }
+
     } );
 
     return BaseAnim;

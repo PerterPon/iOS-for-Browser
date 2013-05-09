@@ -29,22 +29,19 @@ define( function( require, exports, modules ) {
                 "name"    : "notesListCard",
                 "default" : true,
                 "cards"   : {
-                    "rightBtn" : "notesEditCard",
-                    "list"     : "notesContentCard"
+                    "rightBtn" : {
+                        "cardName"  : "notesEditCard",
+                        "direction" : "top"
+                    },
+                    "list"     : {
+                       "cardName"   : "notesContentCard"
+                    }
                 },
                 "subView" : [ {
                     "class"      : NotesBar,
                     "clsList"    : [ "iOS_notes_listBar", "iOS_notes_topBar" ],
-                    "name"       : "notesListBar",
+                    "name"       : "notesListBar",                    
                     "btns"       : [ {
-                        "text"      : "备忘录",
-                        "type"      : "arrow",
-                        "direction" : "left"
-                    }, {
-                        "text"      : "备忘录()",
-                        "type"      : "title",
-                        "direction" : "center"
-                    }, {
                         "text"      : "+",
                         "type"      : "round",
                         "direction" : "right",
@@ -64,13 +61,19 @@ define( function( require, exports, modules ) {
                 "clsList"  : [ "iOS_notes_contentCard" ],
                 "name"     : "notesContentCard",
                 "cards"    : {
-                    "leftBtn"  : "notesListCard",
-                    "rightBtn" : "notesEditCard"
+                    "leftBtn"  : { 
+                        "cardName"  : "notesListCard" 
+                    },
+                    "rightBtn" : {
+                        "cardName"  : "notesEditCard",
+                        "direction" : "top"
+                    }
                 },
                 "subView"  : [ {
                     "class"      : NotesBar,
                     "clsList"    : [ "iOS_notes_contentBar", "iOS_notes_topBar" ],
                     "name"       : "notesContentBar",
+                    "opacity"    : "0",
                     "btns"       : [ {
                         "text"      : "备忘录",
                         "type"      : "arrow",
@@ -97,6 +100,12 @@ define( function( require, exports, modules ) {
                 "visiable": false,
                 "clsList" : [ "iOS_notes_editCard" ],
                 "name"    : "notesEditCard",
+                "cards"   : {
+                    "rightBtn"   : {
+                        "cardName"  : "notesEditCard",
+                        "direction" : "bottom"
+                    }
+                },
                 "subView" : [ {
                     "class"      : NotesBar,
                     "clsList"    : [ "iOS_notes_editBar", "iOS_notes_topBar" ],

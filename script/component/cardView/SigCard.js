@@ -1,7 +1,8 @@
 ﻿
 define( function( require, exports, modules ) {
     // "use strict";
-
+    
+    var Aminations = require( '../../animations/CardAnim' );
     Ext.define( "SigCard", {
 
         extend : 'BaseView',
@@ -22,7 +23,10 @@ define( function( require, exports, modules ) {
 
         values : {
             //sigCard里的item
-            itemPool : {}
+            itemPool : {},
+
+            //anim对象
+            amin : null
         },
 
         constructor : function( cfg ) {
@@ -54,7 +58,8 @@ define( function( require, exports, modules ) {
                 this._changedCallBack = cfg.callBack;
                 delete cfg.callBack;
             }
-            sttc.cardView.active( cards[ type ], cfg );
+            cfg[ 'direction' ] || ( cfg[ 'direction' ] = cards[ type ][ 'direction' ] );
+            sttc.cardView.active( cards[ type ][ 'cardName' ], cfg );
         },
 
         setCardView : function( cardView ) {
@@ -65,6 +70,32 @@ define( function( require, exports, modules ) {
 
         getChangedCallBack : function() {
             return this._changedCallBack;
+        },
+
+        transparentTopBar : function() {
+            var topBar = this.values.itemPool.topBar,
+                el;
+            if( topBar ) {
+                el     = topBar.getEl();
+                window.iOS.Anim.doAnim( el, 'filter' );
+            }
+        },
+
+        untransparentTopBar : function() {
+            var topBar = this.values.itemPool.topBar,
+                el;
+            if( topBar ) {
+                el     = topBar.getEl();
+                window.iOS.Anim.doAnim( el, 'unfilter' );
+            }
+        },
+
+        _initView : function() {
+            this.callParent();
+            this.values.anim = new Aminations( {
+                width  : window.iOS.System.width,
+                height : window.iOS.System.height
+            } );
         },
 
         _changedCallBack : function( showOrhide ) {},

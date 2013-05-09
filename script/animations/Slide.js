@@ -5,8 +5,6 @@ define( function( require, exports, module ) {
     require( './BaseAnim' );
     Ext.define( "Slide", {
         extend : 'BaseAnim'
-
-
     } );
 
     return Slide;

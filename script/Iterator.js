@@ -97,11 +97,11 @@ define( function( require ) {
                 instance = new model( cfg );
                 instance instanceof CardView ? cardView = instance : ( ( instance instanceof SigCard ) && ( sigCard = instance ) );
                 if( parentCardView ) {
-                    parentCardView.addSigCard( cfg[ 'name' ], instance );
+                    // parentCardView.addSigCard( cfg[ 'name' ], instance );
                     instance.setCardView( parentCardView );
                 } else if( parentSigCard ) {
                     parentSigCard.addItems( cfg[ 'name' ], instance );
-                    instance.sigCard = parentSigCard;
+                    instance.setSigCard && instance.setSigCard( parentSigCard ) || ( instance.sigCard = parentSigCard );
                 }
                 // parent && ( instance._parent = parent );
                 sttc.curIdx++;

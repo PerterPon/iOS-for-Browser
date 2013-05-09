@@ -2,11 +2,11 @@
 .iOS_notes { display: -webkit-box; width: 100%; height: 100% }
     .iOS_notes_listCard { -webkit-box-orient: block-axis }
       .iOS_notes_notesList { -webkit-box-flex: 1; position: relative }
-      .iOS_notes_cardView { background: url( ../resource/images/apps/notes/topBar.png ) repeat-x left top }
       .iOS_notes_topBar { height: 44px; width: 100% }
 /**
  * topBar
  */
+.iOS_notes_topBar { background: url( ../resource/images/apps/notes/topBar.png ) repeat-x left top }
 .iOS_notes_topBar_centerTtile { color: white }
 
 /**

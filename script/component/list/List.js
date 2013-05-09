@@ -116,8 +116,10 @@ define( function( require, exports, model ) {
          * @return
          */
         clearSelect : function() {
-            this.values.selectedItem.classList.remove( this.self.listItemSelectedCls );
-            this.values.selectedItem = null;
+            if( this.values.selectedItem ) {
+                this.values.selectedItem.classList.remove( this.self.listItemSelectedCls );
+                this.values.selectedItem = null;
+            }
         },
 
         /**

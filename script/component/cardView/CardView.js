@@ -2,7 +2,7 @@
 define( function( require, exports, module ) {
     //"use strict";
     require( '../../view/BaseView' );
-    var Aminations = require( '../../animations/Anim' );
+    var Aminations = require( '../../animations/CardAnim' );
     Ext.define( 'CardView', {
         extend : 'BaseView',
 
@@ -101,6 +101,14 @@ define( function( require, exports, module ) {
             this._tarCard   = tarCard;
             if( !this._tarCard ) {
                 return;
+            }
+            if( 'slide' === animType ) {
+                if( 'right' === direction || 'left' === direction ) {
+                    curCard.transparentTopBar( animType, direction );
+                    tarCard.untransparentTopBar( animType, direction );
+                } else if( 'top' === direction ) {
+                    tarCard.values.cards.rightBtn.cardName = curCard.values.name;
+                }
             }
             this._amin.doAnim( curCard.getEl(), tarCard.getEl(), direction, animType, curCallBack, tarCallBack, function() {
                 that._curCard = tarCard;

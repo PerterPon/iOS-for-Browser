@@ -30,6 +30,13 @@ define( function( require, exports, module ) {
             }
         },
 
+        sigCard : null,
+
+        setSigCard : function( sigCard ) {
+            sigCard.addItems( 'topBar', this );
+            this.sigCard = sigCard;
+        },
+
         _initBtns : function() {
             var sttcs = this.values,
                 that  = this,
@@ -178,13 +185,20 @@ define( function( require, exports, module ) {
             this.sigCard.changeCard( 'leftBtn', cfg );
         },
 
-        _showAndHide : function( showOrHide ) {},
+        _showAndHide : function( showOrHide ) {
+            if( 'hide' === showOrHide ) {
+                this.getEl().css( 'opacity', 0 );
+            }
+        },
 
         /**
          * [_rightBtnClickHandler 右侧按钮单击事件]
          * @return {}
          */
-        _rightBtnClickHandler : function( event ) {},
+        _rightBtnClickHandler : function( event ) {
+            var cfg = {};
+            this.sigCard.changeCard( 'rightBtn', cfg );
+        },
 
     } );
 
