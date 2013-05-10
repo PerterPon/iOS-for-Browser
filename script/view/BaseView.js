@@ -136,6 +136,22 @@ define( function( require, exports, module ) {
             this._getEl().on( evtList, selector );
         },
 
+        /**
+         * [_on 事件绑定，可以用jQuery的方式，第二个参数为eventName和jQuery事件绑定对象都可以]
+         * @param  {[type]} el        [description]
+         * @param  {[type]} eventName [description]
+         * @param  {[type]} callBack  [description]
+         * @return {[type]}           [description]
+         */
+        _on : function( el, eventName, callBack ) {
+            var el = el.extend ? el[ 0 ] : el;
+            if( 'object' === typeof eventName ) {
+                
+            } else if ( 'string' === typeof eventName ) {
+                el.addEventListener( eventName, callBack );
+            }
+        },
+
         _removeElCacheByCls : function( className ){
             var sttc = this.values;
             sttc.elPool[ className ] = null;

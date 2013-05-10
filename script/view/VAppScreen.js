@@ -36,11 +36,13 @@ define( function( require, exports, module ){
 
         EcloseApp : function() {
             var appContainer = this._getEl(),
-                backEnd      = window.iOS.BackEnd;
-            backEnd.addApp( this.values.curAppName, appContainer.children() );
+                backEnd      = window.iOS.BackEnd,
+                curApp       = appContainer.children();
+            backEnd.addApp( this.values.curAppName, curApp );
             appContainer[ 0 ].style.webkitTransform = 'scale3d( 0, 0, 0 )';
             appContainer[ 0 ].addEventListener( 'webkitTransitionEnd', appContainerAnimComplete );
             function appContainerAnimComplete(){
+                curApp.remove( null, true );
                 this.removeEventListener( 'webkitTransitionEnd', appContainerAnimComplete );
             }
         },

@@ -1,5 +1,5 @@
 Bug:
-❑ 通过jQuery添加的DOM事件，将DOM从DOM节点树上移除后，再次添加DOM到节点树上，会导致DOM事件无效，日后将jQuery事件添加替换为原生事件添加，则无此问题。
+✔ 通过jQuery添加的DOM事件，将DOM从DOM节点树上移除后，再次添加DOM到节点树上，会导致DOM事件无效，日后将jQuery事件添加替换为原生事件添加，则无此问题。
 
 Feature:
 ❑ cardView还是没有很好的处理逻辑，日后需要进行重新整理。
